@@ -1,6 +1,6 @@
 <?php
 	/*
-	* Copyright (C) 2010-2013 Loïc BLOT, CNRS <http://www.unix-experience.fr/>
+	* Copyright (C) 2010-2014 Loïc BLOT, CNRS <http://www.unix-experience.fr/>
 	*
 	* This program is free software; you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by
@@ -16,18 +16,28 @@
 	* along with this program; if not, write to the Free Software
 	* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 	*/
+	
+	require_once(dirname(__FILE__)."/rules.php");
+	
+	if(!class_exists("iSnortMgmt")) {
 
-	class iSnortMgmt extends FSModule {
-		function iSnortMgmt($locales) { parent::FSModule($locales); }
+	final class iSnortMgmt extends FSModule {
+		function __construct() {
+			parent::__construct();
+			$this->rulesclass = new rSnortMgmt();
+			
+			$this->menu = _("Z-Eye Engine");
+			$this->menutitle = _("SNORT IDS engine");
+			
+			$this->modulename = "snortmgmt";
+		}
 
 		public function Load() {
-			FS::$iMgr->setTitle($this->loc->s("page-title"));
+			FS::$iMgr->setTitle(_("page-title"));
 			$output = "";
 			$err = FS::$secMgr->checkAndSecuriseGetData("err");
 			switch($err) {
-				case 1: $output .= FS::$iMgr->printError($this->loc->s("bad-data")); break;
-				case 2: $output .= FS::$iMgr->printError($this->loc->s("fail-snort-conf-wr")); break;
-				case 3: $output .= FS::$iMgr->printError($this->loc->s("fail-cron-wr")); break;
+				case 3: $output .= FS::$iMgr->printError("fail-cron-wr"); break;
 			}
 			$output .= $this->showMainConf();
 			return $output;
@@ -36,11 +46,11 @@
 		private function showMainConf() {
 			$output = "";
 			$sh = FS::$secMgr->checkAndSecuriseGetData("sh");
-			if(!FS::isAjaxCall()) {
+			if (!FS::isAjaxCall()) {
 				$output .= FS::$iMgr->h1("page-title");
-				$panElmts = array(array(1,"mod=".$this->mid,$this->loc->s("General")),
-					array(10,"mod=".$this->mid,$this->loc->s("Reports")),
-					array(6,"mod=".$this->mid,$this->loc->s("Remote")),
+				$panElmts = array(array(1,"mod=".$this->mid,_("General")),
+					array(10,"mod=".$this->mid,_("Reports")),
+					array(6,"mod=".$this->mid,_("Remote")),
 					array(2,"mod=".$this->mid,"DNS"),
 					array(3,"mod=".$this->mid,"Mail"),
 					array(7,"mod=".$this->mid,"FTP"),
@@ -50,8 +60,10 @@
 					array(9,"mod=".$this->mid,"SIP"));
 				$output .= FS::$iMgr->tabPan($panElmts,$sh);
 			}
-			else if(!$sh || $sh == 1) {
-				$output .= FS::$iMgr->form("index.php?mod=".$this->mid."&act=".$sh);
+			else if (!$sh || $sh == 1) {
+				FS::$iMgr->setURL("sh=1");
+				
+				$output .= FS::$iMgr->cbkForm($sh);
 				// Load snort keys for db config
 				$dbname = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'dbname'");
 				$dbhost = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'dbhost'");
@@ -59,151 +71,169 @@
 				$dbpwd = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'dbpwd'");
 				$lanlist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'lanlist'");
 				$output .= "<table>";
-				$output .= "<tr><th colspan=\"2\">".$this->loc->s("data-storage")."</th></tr>";
-				$output .= FS::$iMgr->idxLine($this->loc->s("pg-host"),"dbhost",$dbhost);
-				$output .= FS::$iMgr->idxLine($this->loc->s("Database"),"dbname",$dbname);
-				$output .= FS::$iMgr->idxLine($this->loc->s("User"),"dbuser",$dbuser);
-				$output .= FS::$iMgr->idxLine($this->loc->s("Password"),"dbpwd",$dbpwd,array("type" => "pwd"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("lan-list"),"lanlist",array("width" => 250, "height" => 100, "value" => $lanlist));
+				$output .= "<tr><th colspan=\"2\">"._("data-storage")."</th></tr>";
+				$output .= FS::$iMgr->idxLine("pg-host","dbhost",array("value" => $dbhost));
+				$output .= FS::$iMgr->idxLine("Database","dbname",array("value" => $dbname));
+				$output .= FS::$iMgr->idxLine("User","dbuser",array("value" => $dbuser));
+				$output .= FS::$iMgr->idxLine("Password","dbpwd",array("value" => $dbpwd,"type" => "pwd"));
+				$output .= FS::$iMgr->tabledTextArea(_("lan-list"),"lanlist",array("width" => 250, "height" => 100, "value" => $lanlist));
 				$output .= FS::$iMgr->tableSubmit("Register");
 			}
-			else if($sh == 2) {
+			else if ($sh == 2) {
+				FS::$iMgr->setURL("sh=2");
+				
 				$dnsenable = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'dnsenable'");
 				$dnslist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'dnslist'");
-				if(!$dnsenable) $dnsenable = 0;
-				$output .= FS::$iMgr->cbkForm("index.php?mod=".$this->mid."&act=".$sh);
+				if (!$dnsenable) $dnsenable = 0;
+				$output .= FS::$iMgr->cbkForm($sh);
 				$output .= "<table>";
-				$output .= FS::$iMgr->idxLine($this->loc->s("Activate"),"dnsenable",$dnsenable,array("type" => "chk"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("srv-dns"),"dnslist",array("value" => $dnslist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
+				$output .= FS::$iMgr->idxLine("Activate","dnsenable",array("value" => $dnsenable,"type" => "chk"));
+				$output .= FS::$iMgr->tabledTextArea(_("srv-dns"),"dnslist",array("value" => $dnslist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
 				$output .= FS::$iMgr->tableSubmit("Register");
 			}
-			else if($sh == 3) {
+			else if ($sh == 3) {
+				FS::$iMgr->setURL("sh=3");
+				
 				$smtpenable = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'smtpenable'");
 				$smtplist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'smtplist'");
 				$smtpports = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'smtpports'");
-				if(!$smtpenable) $smtpenable = 0;
-				if(!$smtpports) $smtpports = "25,465,587,691";
+				if (!$smtpenable) $smtpenable = 0;
+				if (!$smtpports) $smtpports = "25,465,587,691";
 				$imapenable = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'imapenable'");
 				$imaplist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'imaplist'");
 				$imapports = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'imapports'");
-				if(!$imapenable) $imapenable = 0;
-				if(!$imapports) $imapports = "143,993";
+				if (!$imapenable) $imapenable = 0;
+				if (!$imapports) $imapports = "143,993";
 				$popenable = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'popenable'");
 				$poplist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'poplist'");
 				$popports = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'popports'");
-				if(!$popenable) $popenable = 0;
-				if(!$popports) $popports = "109,110,995";
+				if (!$popenable) $popenable = 0;
+				if (!$popports) $popports = "109,110,995";
 
-				$output .= FS::$iMgr->cbkForm("index.php?mod=".$this->mid."&act=".$sh);
+				$output .= FS::$iMgr->cbkForm($sh);
 				$output .= "<table>";
-				$output .= FS::$iMgr->idxLine($this->loc->s("en-smtp-sensor"),"ensmtp",$smtpenable,array("type" => "chk"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("srv-smtp"),"smtplist",array("value" => $smtplist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("port-smtp"),"smtpports",array("value" => $smtpports, "width" => 250, "height" => 100, "tooltip" => "tooltip-port"));
-				$output .= FS::$iMgr->idxLine("Activer les sondes IMAP","enimap",$imapenable,array("type" => "chk"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("srv-imap"),"imaplist",array("value" => $imaplist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("port-imap"),"imapports",array("value" => $imapports, "width" => 250, "height" => 100, "tooltip" => "tooltip-port"));
-				$output .= FS::$iMgr->idxLine("Activer les sondes POP","enpop",$popenable,array("type" => "chk"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("srv-pop"),"poplist",array("value" => $poplist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("port-pop"),"popports",array("value" => $popports, "width" => 250, "height" => 100, "tooltip" => "tooltip-port"));
+				$output .= FS::$iMgr->idxLine("en-smtp-sensor","ensmtp",array("value" => $smtpenable,"type" => "chk"));
+				$output .= FS::$iMgr->tabledTextArea(_("srv-smtp"),"smtplist",array("value" => $smtplist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
+				$output .= FS::$iMgr->tabledTextArea(_("port-smtp"),"smtpports",array("value" => $smtpports, "width" => 250, "height" => 100, "tooltip" => "tooltip-snort-port"));
+				$output .= FS::$iMgr->idxLine("Activer les sondes IMAP","enimap",array("value" => $imapenable,"type" => "chk","rawlabel" => true));
+				$output .= FS::$iMgr->tabledTextArea(_("srv-imap"),"imaplist",array("value" => $imaplist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
+				$output .= FS::$iMgr->tabledTextArea(_("port-imap"),"imapports",array("value" => $imapports, "width" => 250, "height" => 100, "tooltip" => "tooltip-snort-port"));
+				$output .= FS::$iMgr->idxLine("Activer les sondes POP","enpop",array("value" => $popenable,"type" => "chk","rawlabel" => true));
+				$output .= FS::$iMgr->tabledTextArea(_("srv-pop"),"poplist",array("value" => $poplist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
+				$output .= FS::$iMgr->tabledTextArea(_("port-pop"),"popports",array("value" => $popports, "width" => 250, "height" => 100, "tooltip" => "tooltip-snort-port"));
 				$output .= FS::$iMgr->tableSubmit("Register");
 			}
-			else if($sh == 4) {
+			else if ($sh == 4) {
+				FS::$iMgr->setURL("sh=4");
+				
 				$httpenable = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'httpenable'");
 				$httplist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'httplist'");
 				$httpports = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'httpports'");
-				if(!$httpenable) $httpenable = 0;
-				if(!$httpports) $httpports = "80,443";
+				if (!$httpenable) $httpenable = 0;
+				if (!$httpports) $httpports = "80,443";
 
-				$output .= FS::$iMgr->cbkForm("index.php?mod=".$this->mid."&act=".$sh);
+				$output .= FS::$iMgr->cbkForm($sh);
 				$output .= "<table>";
-				$output .= FS::$iMgr->idxLine($this->loc->s("Activate"),"enhttp",$httpenable,array("type" => "chk"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("srv-http"),"httplist",array("value" => $httplist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
+				$output .= FS::$iMgr->idxLine("Activate","enhttp",array("value" => $httpenable,"type" => "chk"));
+				$output .= FS::$iMgr->tabledTextArea(_("srv-http"),"httplist",array("value" => $httplist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
 
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("port-http"),"httpports",array("value" => $httpports, "width" => 250, "height" => 100, "tooltip" => "tooltip-port"));
+				$output .= FS::$iMgr->tabledTextArea(_("port-http"),"httpports",array("value" => $httpports, "width" => 250, "height" => 100, "tooltip" => "tooltip-snort-port"));
 				$output .= FS::$iMgr->tableSubmit("Register");
 			}
-			else if($sh == 5) {
+			else if ($sh == 5) {
+				FS::$iMgr->setURL("sh=5");
+				
 				$sqlenable = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'sqlenable'");
 				$sqllist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'sqllist'");
-				if(!$sqlenable) $sqlenable = 0;
+				if (!$sqlenable) $sqlenable = 0;
 				$oracleenable = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'oracleenable'");
 				$oraclelist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'oraclelist'");
 				$oracleports = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'oracleports'");
-				if(!$oracleenable) $oracleenable = 0;
+				if (!$oracleenable) $oracleenable = 0;
 
-				$output .= FS::$iMgr->cbkForm("index.php?mod=".$this->mid."&act=".$sh);
+				$output .= FS::$iMgr->cbkForm($sh);
 				$output .= "<table>";
-				$output .= FS::$iMgr->idxLine($this->loc->s("Activate"),"ensql",$sqlenable,array("type" => "chk"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("srv-sql"),"sqllist",array("value" => $sqllist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
-				$output .= FS::$iMgr->idxLine($this->loc->s("Activate"),"enoracle",$oracleenable,array("type" => "chk"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("sql-oracle"),"oraclelist",array("value" => $oraclelist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("port-oracle"),"oracleports",array("value" => $oracleports, "width" => 250, "height" => 100, "tooltip" => "tooltip-port"));
+				$output .= FS::$iMgr->idxLine("Activate","ensql",array("value" => $sqlenable,"type" => "chk"));
+				$output .= FS::$iMgr->tabledTextArea(_("srv-sql"),"sqllist",array("value" => $sqllist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
+				$output .= FS::$iMgr->idxLine("Activate","enoracle",array("value" => $oracleenable,"type" => "chk"));
+				$output .= FS::$iMgr->tabledTextArea(_("sql-oracle"),"oraclelist",array("value" => $oraclelist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
+				$output .= FS::$iMgr->tabledTextArea(_("port-oracle"),"oracleports",array("value" => $oracleports, "width" => 250, "height" => 100, "tooltip" => "tooltip-snort-port"));
 
 				$output .= FS::$iMgr->tableSubmit("Register");
 			}
-			else if($sh == 6) {
+			else if ($sh == 6) {
+				FS::$iMgr->setURL("sh=6");
+				
 				$telnetenable = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'telnetenable'");
 				$telnetlist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'telnetlist'");
-				if(!$telnetenable) $telnetenable = 0;
+				if (!$telnetenable) $telnetenable = 0;
 				$sshenable = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'sshenable'");
 				$sshlist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'sshlist'");
 				$sshports = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'sshports'");
-				if(!$sshenable) $sshenable = 0;
-				if(!$sshports) $sshports = "22";
+				if (!$sshenable) $sshenable = 0;
+				if (!$sshports) $sshports = "22";
 				$tseenable = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'tseenable'");
 				$tselist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'tselist'");
-				if(!$tseenable) $tseenable = 0;
+				if (!$tseenable) $tseenable = 0;
 
-				$output .= FS::$iMgr->cbkForm("index.php?mod=".$this->mid."&act=".$sh);
+				$output .= FS::$iMgr->cbkForm($sh);
 				$output .= "<table>";
-				$output .= FS::$iMgr->idxLine($this->loc->s("en-telnet-sensor"),"entelnet",$telnetenable,array("type" => "chk"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("srv-telnet"),"telnetlist",array("value" => $telnetlist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
-				$output .= FS::$iMgr->idxLine($this->loc->s("en-ssh-sensor"),"enssh",$sshenable,array("type" => "chk"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("srv-ssh"),"sshlist",array("value" => $sshlist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("port-ssh"),"sshports",array("value" => $sshports, "width" => 250, "height" => 100, "tooltip" => "tooltip-port"));
-				$output .= FS::$iMgr->idxLine($this->loc->s("en-tse-sensor"),"entse",$tseenable,array("type" => "chk"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("srv-tse"),"tselist",array("value" => $tselist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
+				$output .= FS::$iMgr->idxLine("en-telnet-sensor","entelnet",array("value" => $telnetenable,"type" => "chk"));
+				$output .= FS::$iMgr->tabledTextArea(_("srv-telnet"),"telnetlist",array("value" => $telnetlist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
+				$output .= FS::$iMgr->idxLine("en-ssh-sensor","enssh",array("value" => $sshenable,"type" => "chk"));
+				$output .= FS::$iMgr->tabledTextArea(_("srv-ssh"),"sshlist",array("value" => $sshlist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
+				$output .= FS::$iMgr->tabledTextArea(_("port-ssh"),"sshports",array("value" => $sshports, "width" => 250, "height" => 100, "tooltip" => "tooltip-snort-port"));
+				$output .= FS::$iMgr->idxLine("en-tse-sensor","entse",array("value" => $tseenable,"type" => "chk"));
+				$output .= FS::$iMgr->tabledTextArea(_("srv-tse"),"tselist",array("value" => $tselist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
 				$output .= FS::$iMgr->tableSubmit("Register");
 			}
-			else if($sh == 7) {
+			else if ($sh == 7) {
+				FS::$iMgr->setURL("sh=7");
+				
 				$ftpenable = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'ftpenable'");
 				$ftplist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'ftplist'");
 				$ftpports = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'ftpports'");
-				if(!$ftpenable) $ftpenable = 0;
-				if(!$ftpports) $ftpports = "21";
+				if (!$ftpenable) $ftpenable = 0;
+				if (!$ftpports) $ftpports = "21";
 
-				$output .= FS::$iMgr->cbkForm("index.php?mod=".$this->mid."&act=".$sh);
+				$output .= FS::$iMgr->cbkForm($sh);
 				$output .= "<table>";
-				$output .= FS::$iMgr->idxLine($this->loc->s("Activate"),"enftp",$ftpenable,array("type" => "chk"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("srv-ftp"),"ftplist",array("value" => $ftplist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("port-ftp"),"ftpports",array("value" => $ftpports, "width" => 250, "height" => 100, "tooltip" => "tooltip-port"));
+				$output .= FS::$iMgr->idxLine("Activate","enftp",array("value" => $ftpenable,"type" => "chk"));
+				$output .= FS::$iMgr->tabledTextArea(_("srv-ftp"),"ftplist",array("value" => $ftplist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
+				$output .= FS::$iMgr->tabledTextArea(_("port-ftp"),"ftpports",array("value" => $ftpports, "width" => 250, "height" => 100, "tooltip" => "tooltip-snort-port"));
 				$output .= FS::$iMgr->tableSubmit("Register");
 			}
-			else if($sh == 8) {
+			else if ($sh == 8) {
+				FS::$iMgr->setURL("sh=8");
+				
 				$snmpenable = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'snmpenable'");
 				$snmplist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'snmplist'");
-				if(!$snmpenable) $snmpenable = 0;
+				if (!$snmpenable) $snmpenable = 0;
 
-				$output .= FS::$iMgr->cbkForm("index.php?mod=".$this->mid."&act=".$sh);
+				$output .= FS::$iMgr->cbkForm($sh);
 				$output .= "<table>";
-				$output .= FS::$iMgr->idxLine($this->loc->s("Activate"),"ensnmp",$snmpenable,array("type" => "chk"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("srv-snmp"),"snmplist",array("value" => $snmplist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
+				$output .= FS::$iMgr->idxLine("Activate","ensnmp",array("value" => $snmpenable,"type" => "chk"));
+				$output .= FS::$iMgr->tabledTextArea(_("srv-snmp"),"snmplist",array("value" => $snmplist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
 				$output .= FS::$iMgr->tableSubmit("Register");
 			}
-			else if($sh == 9) {
+			else if ($sh == 9) {
+				FS::$iMgr->setURL("sh=9");
+				
 				$sipenable = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'sipenable'");
 				$siplist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'siplist'");
 				$sipports = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'sipports'");
-				if(!$sipenable) $sipenable = 0;
+				if (!$sipenable) $sipenable = 0;
 
-				$output .= FS::$iMgr->cbkForm("index.php?mod=".$this->mid."&act=".$sh);
+				$output .= FS::$iMgr->cbkForm($sh);
 				$output .= "<table>";
-				$output .= FS::$iMgr->idxLine($this->loc->s("Activate"),"ensip",$sipenable,array("type" => "chk"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("srv-sip"),"siplist",array("value" => $siplist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
-				$output .= FS::$iMgr->tabledTextArea($this->loc->s("port-sip"),"sipports",array("value" => $sipports, "width" => 250, "height" => 100, "tooltip" => "tooltip-port"));
+				$output .= FS::$iMgr->idxLine("Activate","ensip",array("value" => $sipenable,"type" => "chk"));
+				$output .= FS::$iMgr->tabledTextArea(_("srv-sip"),"siplist",array("value" => $siplist, "width" => 250, "height" => 100, "tooltip" => "tooltip-ipv4"));
+				$output .= FS::$iMgr->tabledTextArea(_("port-sip"),"sipports",array("value" => $sipports, "width" => 250, "height" => 100, "tooltip" => "tooltip-snort-port"));
 				$output .= FS::$iMgr->tableSubmit("Register");
 			}
-			else if($sh == 10) {
+			else if ($sh == 10) {
+				FS::$iMgr->setURL("sh=10");
+				
 				$nightreport = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'report_nighten'");
 				$wereport = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'report_ween'");
 				$nighth = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'report_nighthour'");
@@ -212,15 +242,15 @@
 				$weh = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'report_wehour'");
 				$wem = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'report_wemin'");
 
-				$output .= FS::$iMgr->cbkForm("index.php?mod=".$this->mid."&act=".$sh);
+				$output .= FS::$iMgr->cbkForm($sh);
 				$output .= "<table>";
-				$output .= "<tr><th colspan=\"2\">".$this->loc->s("title-nightreport")."</th></tr>";
-				$output .= FS::$iMgr->idxLine($this->loc->s("Activate"), "nightreport", $nightreport == 1 ? true : false,array("type" => "chk"));
-				$output .= "<tr><td>".$this->loc->s("sent-hour")."</td><td>".FS::$iMgr->hourlist("hnight","mnight",$nighth,$nightm)."</td></tr>";
-				$output .= "<tr><td>".$this->loc->s("prev-hour")."</td><td>".FS::$iMgr->numInput("nightintval",$nightback > 0 ? $nightback : 7,array("size" => 2, "length" => 2, "tooltip" => "tooltip-prev-hour"))."</td></tr>";
-				$output .= "<tr><th colspan=\"2\">".$this->loc->s("title-we")."</th></tr>";
-				$output .= FS::$iMgr->idxLine($this->loc->s("Activate"), "wereport", $wereport == 1 ? true : false,array("type" => "chk"));
-				$output .= "<tr><td>".$this->loc->s("sent-hour")."</td><td>".FS::$iMgr->hourlist("hwe","mwe",$weh,$wem)."</td></tr>";
+				$output .= "<tr><th colspan=\"2\">"._("title-nightreport")."</th></tr>";
+				$output .= FS::$iMgr->idxLine("Activate", "nightreport", array("value" => ($nightreport == 1),"type" => "chk"));
+				$output .= "<tr><td>"._("sent-hour")."</td><td>".FS::$iMgr->hourlist("hnight","mnight",$nighth,$nightm)."</td></tr>";
+				$output .= "<tr><td>"._("prev-hour")."</td><td>".FS::$iMgr->numInput("nightintval",$nightback > 0 ? $nightback : 7,array("size" => 2, "length" => 2, "tooltip" => "tooltip-prev-hour"))."</td></tr>";
+				$output .= "<tr><th colspan=\"2\">"._("title-we")."</th></tr>";
+				$output .= FS::$iMgr->idxLine("Activate", "wereport", array("value" => ($wereport == 1),"type" => "chk"));
+				$output .= "<tr><td>"._("sent-hour")."</td><td>".FS::$iMgr->hourlist("hwe","mwe",$weh,$wem)."</td></tr>";
 				$output .= FS::$iMgr->tableSubmit("Register");
 			}
 			return $output;
@@ -228,10 +258,10 @@
 
 		private function writeConfiguration() {
 			$file = fopen("/usr/local/etc/snort/snort.z_eye.conf","w+");
-			if(!$file) return 1;
+			if (!$file) return 1;
 
 			$homenetworks = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'lanlist'");
-			if(!$homenetworks) $homenetworks = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16";
+			if (!$homenetworks) $homenetworks = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16";
 			fwrite($file,"#\n# Snort configuration, generated by Z-Eye (".date('d-m-Y G:i:s').")\n#\n\n");
 			fwrite($file,"var HOME_NET [".$homenetworks."]\n");
 			fwrite($file,'var EXTERNAL_NET !$HOME_NET'."\n");
@@ -250,7 +280,7 @@
 			
 			$dns = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'dnsenable'");
 			// DNS tab
-			if($dns) {
+			if ($dns) {
 				$dnslist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'dnslist'");
 				fwrite($file,"\n#\n# DNS Section\n#\n\nvar DNS_SERVERS [".$dnslist."]\n");
 				fwrite($file,'preprocessor dns: ports { 53 } enable_rdata_overflow'."\n");
@@ -262,10 +292,10 @@
 			$pop = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'popenable'");
 			// Mail tab
 			// SMTP
-			if($smtp) {
+			if ($smtp) {
 				$smtplist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'smtplist'");
 				$smtpports = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'smtpports'");
-				if(!$smtpports) $smtpports = "25,465,587,691";
+				if (!$smtpports) $smtpports = "25,465,587,691";
 				fwrite($file,"\n#\n# SMTP Section\n#\n\nvar SMTP_SERVERS [".$smtplist."]
 portvar SMTP_PORTS [".$smtpports."]
 preprocessor smtp: ports { ".preg_replace("#[,]#"," ",$smtpports)." } inspection_type stateful b64_decode_depth 0 qp_decode_depth 0 bitenc_decode_depth 0 uu_decode_depth 0 log_mailfrom log_rcptto log_filename log_email_hdrs normalize cmds normalize_cmds { ATRN AUTH BDAT CHUNKING DATA DEBUG EHLO EMAL ESAM ESND ESOM ETRN EVFY EXPN HELO HELP IDENT MAIL NOOP ONEX QUEU QUIT RCPT RSET SAML SEND SOML STARTTLS TICK TIME TURN TURNME VERB VRFY X-ADAT X-DRCP X-ERCP X-EXCH50 X-EXPS X-LINK2STATE XADR XAUTH XCIR XEXCH50 XGEN XLICENSE XQUE XSTA XTRN XUSR } max_command_line_len 512 max_header_line_len 1000 max_response_line_len 512 alt_max_command_line_len 260 { MAIL } alt_max_command_line_len 300 { RCPT } alt_max_command_line_len 500 { HELP HELO ETRN EHLO } alt_max_command_line_len 255 { EXPN VRFY ATRN SIZE BDAT DEBUG EMAL ESAM ESND ESOM EVFY IDENT NOOP RSET } alt_max_command_line_len 246 { SEND SAML SOML AUTH TURN ETRN DATA RSET QUIT ONEX QUEU STARTTLS TICK TIME TURNME VERB X-EXPS X-LINK2STATE XADR XAUTH XCIR XEXCH50 XGEN XLICENSE XQUE XSTA XTRN XUSR } valid_cmds { ATRN AUTH BDAT CHUNKING DATA DEBUG EHLO EMAL ESAM ESND ESOM ETRN EVFY EXPN HELO HELP IDENT MAIL NOOP ONEX QUEU QUIT RCPT RSET SAML SEND SOML STARTTLS TICK TIME TURN TURNME VERB VRFY X-ADAT X-DRCP X-ERCP X-EXCH50 X-EXPS X-LINK2STATE XADR XAUTH XCIR XEXCH50 XGEN XLICENSE XQUE XSTA XTRN XUSR } xlink2state { enabled }
@@ -273,10 +303,10 @@ preprocessor smtp: ports { ".preg_replace("#[,]#"," ",$smtpports)." } inspection
 include $SO_RULE_PATH/smtp.rules'."\n");
 			}
 			// IMAP
-			if($imap) {
+			if ($imap) {
 				$imaplist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'imaplist'");
 				$imapports = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'imapports'");
-				if(!$imapports) $imapports = "143,993";
+				if (!$imapports) $imapports = "143,993";
 				fwrite($file,"\n#\n# IMAP Section\n#\n\nvar IMAP_SERVERS [".$imaplist."]
 portvar IMAP_PORTS [".$imapports."]
 ".'preprocessor imap: ports { '.preg_replace("#[,]#"," ",$imapports).' } b64_decode_depth 0 qp_decode_depth 0 bitenc_decode_depth 0 uu_decode_depth 0
@@ -284,10 +314,10 @@ include $RULE_PATH/imap.rules
 include $SO_RULE_PATH/imap.rules'."\n");
 			}
 			// POP
-			if($pop) {
+			if ($pop) {
 				$poplist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'poplist'");
 				$popports = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'popports'");
-				if(!$popports) $popports = "109,110,995";
+				if (!$popports) $popports = "109,110,995";
 				fwrite($file,"\n#\n# POP Section\n#\n\nvar POP_SERVERS [".$poplist."]\n");
 				fwrite($file,"portvar POP_PORTS [".$popports."]\n");
 				fwrite($file,'preprocessor pop: ports { '.preg_replace("#[,]#"," ",$popports).' } b64_decode_depth 0 qp_decode_depth 0 bitenc_decode_depth 0 uu_decode_depth 0'."\n");
@@ -297,10 +327,10 @@ include $SO_RULE_PATH/imap.rules'."\n");
 			
 			$http = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'httpenable'");
 			// HTTP Tab
-			if($http) {
+			if ($http) {
 				$httplist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'httplist'");
 				$httpports = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'httpports'");
-				if(!$httpports) $httpports = "80,443";
+				if (!$httpports) $httpports = "80,443";
 				fwrite($file,"\n#\n# HTTP Section\n#\n\nvar HTTP_SERVERS [".$httplist."]\n");
 				fwrite($file,"portvar HTTP_PORTS ".$httpports."\n");
 				fwrite($file,'portvar FILE_DATA_PORTS [$HTTP_PORTS,110,143]'."
@@ -357,26 +387,26 @@ preprocessor http_inspect_server: server default \\\n
 			// DB Tab
 			// SQL 
 			// @ TODO: SQL servers contains oracle servers
-			if($sql) {
+			if ($sql) {
 				$sqllist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'sqllist'");
 				fwrite($file,"\n#\n# SQL Section\n#\n\nvar SQL_SERVERS [".$sqllist."]\n");
 				fwrite($file,'include $RULE_PATH/mysql.rules'."\n");
 				fwrite($file,'include $RULE_PATH/sql.rules'."\n");
 			}
 			// Oracle
-			if($oracle) {
+			if ($oracle) {
 				$oracleports = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'oracleports'");
-				if(!$oracleports) $oracleports = "1525,1527,1529,2005";
+				if (!$oracleports) $oracleports = "1525,1527,1529,2005";
 				fwrite($file,"\n#\n# Oracle Section\n#\n\nportvar ORACLE_PORTS [".$oracleports."]\n");
 				fwrite($file,'include $RULE_PATH/oracle.rules'."\n");
 			}
 			
 			$ftp = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'ftpenable'");
 			// FTP tab
-			if($ftp) {
+			if ($ftp) {
 				$ftplist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'ftplist'");
 				$ftpports = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'ftpports'");
-				if(!$ftpports) $ftpports = "20,21";
+				if (!$ftpports) $ftpports = "20,21";
 				fwrite($file,"\n#\n# FTP Section\n#\n\nvar FTP_SERVERS [".$ftplist."]\n");
 				fwrite($file,"portvar FTP_PORTS [".$ftpports."]\n");
 				fwrite($file,'include $RULE_PATH/ftp.rules'."\n");
@@ -387,29 +417,29 @@ preprocessor http_inspect_server: server default \\\n
 			$tse = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'tseenable'");
 			// Remote access tab
 			// Telnet
-			if($telnet) {
+			if ($telnet) {
 					$telnetlist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'telnetlist'");
 					fwrite($file,"\n#\n# Telnet Section\n#\n\nvar TELNET_SERVERS [".$telnetlist."]\n");
 					fwrite($file,'include $RULE_PATH/telnet.rules'."\n");
 			}
 			// ssh
-			if($ssh) {
+			if ($ssh) {
 				$sshlist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'sshlist'");
 				$sshports = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'sshports'");
-				if(!$sshports) $sshports = "22";
+				if (!$sshports) $sshports = "22";
 				fwrite($file,"\n#\n# SSH Section\n#\n\nvar SSH_SERVERS [".$sshlist."]\n");
 				fwrite($file,"portvar SSH_PORTS [".$sshports."]\n");
 				fwrite($file,"preprocessor ssh: server_ports { ".preg_replace("#[,]#"," ",$sshports)." } autodetect max_client_bytes 19600 max_server_version_len 100 max_encrypted_packets 20 enable_respoverflow enable_ssh1crc32 enable_srvoverflow enable_protomismatch\n");
 			}
 			// TSE
-			if($tse) {
+			if ($tse) {
 				$tselist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'tselist'");
 				fwrite($file,"\n#\n# TSE Section\n#\n\nvar TSE_SERVERS [".$tselist."]\n");
 			}
 			
 			// SNMP
 			$snmp = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'snmpenable'");
-			if($snmp) {
+			if ($snmp) {
 				$snmplist = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'snmplist'");
 				fwrite($file,"\n#\n# SNMP Section\n#\n\nvar SNMP_SERVERS [".$snmplist."]\n");
 				fwrite($file,'include $RULE_PATH/snmp.rules'."\n");
@@ -417,9 +447,9 @@ preprocessor http_inspect_server: server default \\\n
 			}
 			
 			$sip = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'sipenable'");
-			if($sip) {
+			if ($sip) {
 				$sipports = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snortmgmt_keys","val","mkey = 'sipports'");
-				if(!$sipports) $sipports = "5060,5061";
+				if (!$sipports) $sipports = "5060,5061";
 				fwrite($file,"\n#\n# SNMP Section\n#\n\nportvar SIP_PORTS [".$sipports."]\n");
 				fwrite($file,'preprocessor sip: max_sessions 10000, ports { '.preg_replace("#[,]#"," ",$sipports).' }, methods { invite cancel ack bye register options refer subscribe update join info message notify benotify do qauth sprack publish service unsubscribe prack }, max_uri_len 512, max_call_id_len 80, max_requestName_len 20, max_from_len 256, max_to_len 256, max_via_len 1024, max_contact_len 512, max_content_len 1024'."\n");
 				fwrite($file,'include $RULE_PATH/voip.rules'."\n");
@@ -429,7 +459,7 @@ preprocessor http_inspect_server: server default \\\n
 			fwrite($file,"preprocessor bo\n");
 			
 			// FTP & telnet only
-			if($ftp && $telnet) {
+			if ($ftp && $telnet) {
 				fwrite($file,"preprocessor ftp_telnet: global inspection_type stateful encrypted_traffic yes\n");
 				fwrite($file,"preprocessor ftp_telnet_protocol: telnet ayt_attack_thresh 20 normalize ports { 23 } detect_anomalies\n");
 				fwrite($file,"preprocessor ftp_telnet_protocol: ftp server default \\
@@ -514,7 +544,7 @@ preprocessor http_inspect_server: server default \\\n
 			fclose($file);
 
 			$file = fopen("/tmp/snort_restart","w+");
-			if($file) {
+			if ($file) {
 				fwrite($file,"1");
 				fclose($file);
 			}
@@ -531,59 +561,58 @@ preprocessor http_inspect_server: server default \\\n
 					$lanlist = FS::$secMgr->checkAndSecurisePostData("lanlist");
 					//$dbport = FS::$secMgr->checkAndSecurisePostData("dbport");
 
-					if(!$dbhost || !$dbname || !$dbuser || !$dbpwd || !$lanlist) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Some fields are missing for main configuration");
-						FS::$iMgr->redir("mod=".$this->mid."&err=1");
+					if (!$dbhost || !$dbname || !$dbuser || !$dbpwd || !$lanlist) {
+						$this->log(2,"Some fields are missing for main configuration");
+						FS::$iMgr->ajaxEchoError("err-bad-datas");
 						return;
 					}
 
 					$tmppgconn = new AbstractSQLMgr();
 					$tmppgconn->setConfig("pg",$dbname,5432,$dbhost,$dbuser,$dbpwd);
-					$tmppgconn->Connect();
+					if (!$tmppgconn->Connect()) {
+						$this->log(1,"Connection failed for ".$dbuser." on ".$dbname."@".$dbhost." lanlist: ".$lanlist);
+						FS::$iMgr->ajaxEchoError("fail-snort-conf-wr");
+					}
 
 					FS::$dbMgr->Connect();
 
+					FS::$dbMgr->BeginTr();
+					
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey IN ('dbhost','dbuser','dbpwd','dbname','lanlist')");
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'dbhost','".$dbhost."'");
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'dbuser','".$dbuser."'");
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'dbpwd','".$dbpwd."'");
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'dbname','".$dbname."'");
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'lanlist','".$lanlist."'");
-					if($this->writeConfiguration() != 0) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Unable to write snort configuration !");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("fail-snort-conf-wr");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=2&err=2");
+					
+					FS::$dbMgr->CommitTr();
+					
+					if ($this->writeConfiguration() != 0) {
+						$this->log(2,"Unable to write snort configuration !");
+						FS::$iMgr->ajaxEchoError("fail-snort-conf-wr");
 						return;
 					}
-					FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",0,"Change snort database values to ".$dbuser.":".$dbpwd." on ".$dbname."@".$dbhost." lanlist: ".$lanlist);
-					FS::$iMgr->redir("mod=".$this->mid);
+					$this->log(0,"Change snort database values to ".$dbuser.":".$dbpwd." on ".$dbname."@".$dbhost." lanlist: ".$lanlist);
+					FS::$iMgr->redir("mod=".$this->mid,true);
 					break;
 				case 2: // DNS edit
 					$srvlist = FS::$secMgr->checkAndSecurisePostData("dnslist");
 					$enable = FS::$secMgr->checkAndSecurisePostData("dnsenable");
 
-					if($enable == "on" && !$srvlist) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Some fields are missing for DNS sensors configuration");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("bad-data");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=2&err=1");
+					if ($enable == "on" && !$srvlist) {
+						$this->log(2,"Some fields are missing for DNS sensors configuration");
+						FS::$iMgr->ajaxEchoError("err-bad-datas");
 						return;
 					}
 
 					$srvlist = trim($srvlist);
 					$srvs = preg_split("#[,]#",$srvlist);
 					$count = count($srvs);
-					if(strlen($srvlist) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if(!FS::$secMgr->isIPorCIDR($srvs[$i])) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for DNS sensors configuration (CIDR)");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&err=1");
+					if (strlen($srvlist) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if (!FS::$secMgr->isIPorCIDR($srvs[$i])) {
+								$this->log(1,"Some fields are wrong for DNS sensors configuration (CIDR)");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
@@ -591,16 +620,13 @@ preprocessor http_inspect_server: server default \\\n
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey IN ('dnsenable','dnslist')");
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'dnsenable',".($enable == "on" ? 1 : 0));
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'dnslist','".$srvlist."'");
-					if($this->writeConfiguration() != 0) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Unable to write snort configuration !");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("fail-snort-conf-wr");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=2&err=2");
+					if ($this->writeConfiguration() != 0) {
+						$this->log(2,"Unable to write snort configuration !");
+						FS::$iMgr->ajaxEchoError("fail-snort-conf-wr");
 						return;
 					}
 
-					FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",0,"Change DNS values to srvlist: ".$srvlist." enable: ".$enable);
+					$this->log(0,"Change DNS values to srvlist: ".$srvlist." enable: ".$enable);
 					FS::$iMgr->redir("mod=".$this->mid."&sh=2",true);
 					break;
 				case 3: // Mail conf
@@ -614,26 +640,20 @@ preprocessor http_inspect_server: server default \\\n
 					$popports = FS::$secMgr->checkAndSecurisePostData("popports");
 					$enablepop = FS::$secMgr->checkAndSecurisePostData("enpop");
 
-					if(($enablesmtp == "on" && (!$smtplist || !$smtpports)) || ($enableimap == "on" && (!$imaplist || !$imapports)) || ($enablepop == "on" && (!$poplist || !$popports))) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Some fields are missing for Mail sensors configuration");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("bad-data");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=3&err=1");
+					if (($enablesmtp == "on" && (!$smtplist || !$smtpports)) || ($enableimap == "on" && (!$imaplist || !$imapports)) || ($enablepop == "on" && (!$poplist || !$popports))) {
+						$this->log(2,"Some fields are missing for Mail sensors configuration");
+						FS::$iMgr->ajaxEchoError("err-bad-datas");
 						return;
 					}
 
 					$smtplist = trim($smtplist);
 					$srvs = preg_split("#[,]#",$smtplist);
 					$count = count($srvs);
-					if(strlen($smtplist) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if(!FS::$secMgr->isIPorCIDR($srvs[$i])) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for Mail sensors configuration (SMTP not a CIDR)");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=3&err=1");
+					if (strlen($smtplist) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if (!FS::$secMgr->isIPorCIDR($srvs[$i])) {
+								$this->log(1,"Some fields are wrong for Mail sensors configuration (SMTP not a CIDR)");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
@@ -642,14 +662,11 @@ preprocessor http_inspect_server: server default \\\n
 					$smtpports = trim($smtpports);
 					$ports = preg_split("#[,]#",$smtpports);
 					$count = count($ports);
-					if(strlen($smtpports) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if($ports[$i]<1||$ports[$i]>65535) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for Mail sensors configuration (smtp port = ".$ports[$i].")");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=3&err=1");
+					if (strlen($smtpports) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if ($ports[$i]<1||$ports[$i]>65535) {
+								$this->log(1,"Some fields are wrong for Mail sensors configuration (smtp port = ".$ports[$i].")");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
@@ -658,14 +675,11 @@ preprocessor http_inspect_server: server default \\\n
 					$imaplist = trim($imaplist);
 					$srvs = preg_split("#[,]#",$imaplist);
 					$count = count($srvs);
-					if(strlen($imaplist) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if(!FS::$secMgr->isIPorCIDR($srvs[$i])) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for Mail sensors configuration (IMAP not a CIDR)");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=3&err=1");
+					if (strlen($imaplist) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if (!FS::$secMgr->isIPorCIDR($srvs[$i])) {
+								$this->log(1,"Some fields are wrong for Mail sensors configuration (IMAP not a CIDR)");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
@@ -674,14 +688,11 @@ preprocessor http_inspect_server: server default \\\n
 					$imapports = trim($imapports);
 					$ports = preg_split("#[,]#",$imapports);
 					$count = count($ports);
-					if(strlen($imapports) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if($ports[$i]<1||$ports[$i]>65535) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for Mail sensors configuration (imap port = ".$ports[$i].")");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=3&err=1");
+					if (strlen($imapports) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if ($ports[$i]<1||$ports[$i]>65535) {
+								$this->log(1,"Some fields are wrong for Mail sensors configuration (imap port = ".$ports[$i].")");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
@@ -690,14 +701,11 @@ preprocessor http_inspect_server: server default \\\n
 					$poplist = trim($poplist);
 					$srvs = preg_split("#[,]#",$poplist);
 					$count = count($srvs);
-					if(strlen($poplist) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if(!FS::$secMgr->isIPorCIDR($srvs[$i])) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for Mail sensors configuration (POP not a CIDR)");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=3&err=1");
+					if (strlen($poplist) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if (!FS::$secMgr->isIPorCIDR($srvs[$i])) {
+								$this->log(1,"Some fields are wrong for Mail sensors configuration (POP not a CIDR)");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
@@ -706,18 +714,17 @@ preprocessor http_inspect_server: server default \\\n
 					$popports = trim($popports);
 					$ports = preg_split("#[,]#",$popports);
 					$count = count($ports);
-					if(strlen($popports) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if($ports[$i]<1||$ports[$i]>65535) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for Mail sensors configuration (pop port = ".$ports[$i].")");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=3&err=1");
+					if (strlen($popports) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if ($ports[$i]<1||$ports[$i]>65535) {
+								$this->log(1,"Some fields are wrong for Mail sensors configuration (pop port = ".$ports[$i].")");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
 					}
+					
+					FS::$dbMgr->BeginTr();
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey IN ('smtpenable','smtplist','smtpports')");
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'smtpenable',".($enablesmtp == "on" ? 1 : 0));
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'smtplist','".$smtplist."'");
@@ -730,18 +737,17 @@ preprocessor http_inspect_server: server default \\\n
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'popenable',".($enablepop == "on" ? 1 : 0));
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'poplist','".$poplist."'");
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'popports','".$popports."'");
-					if($this->writeConfiguration() != 0) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Unable to write snort configuration !");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("fail-snort-conf-wr");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=3&err=2");
+					FS::$dbMgr->CommitTr();
+					
+					if ($this->writeConfiguration() != 0) {
+						$this->log(2,"Unable to write snort configuration !");
+						FS::$iMgr->ajaxEchoError("fail-snort-conf-wr");
 						return;
 					}
 
-					FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",0,"Change SMTP values to smtplist: ".$smtplist." smtpports: ".$smtpports." smtenable: ".$enablesmtp);
-					FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",0,"Change POP values to poplist: ".$poplist." popports: ".$popports." popenable: ".$enablepop);
-					FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",0,"Change IMAP values to imaplist: ".$imaplist." imapports: ".$imapports. " imapenable: ".$enableimap);
+					$this->log(0,"Change SMTP values to smtplist: ".$smtplist." smtpports: ".$smtpports." smtenable: ".$enablesmtp);
+					$this->log(0,"Change POP values to poplist: ".$poplist." popports: ".$popports." popenable: ".$enablepop);
+					$this->log(0,"Change IMAP values to imaplist: ".$imaplist." imapports: ".$imapports. " imapenable: ".$enableimap);
 					FS::$iMgr->redir("mod=".$this->mid."&sh=3",true);
 					break;
 				case 4: // HTTP config
@@ -749,26 +755,20 @@ preprocessor http_inspect_server: server default \\\n
 					$httpports = FS::$secMgr->checkAndSecurisePostData("httpports");
 					$enable = FS::$secMgr->checkAndSecurisePostData("enhttp");
 
-					if($enable == "on" && (!$srvlist || !$httpports)) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Some fields are missing for HTTP sensors configuration");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("bad-data");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=4&err=1");
+					if ($enable == "on" && (!$srvlist || !$httpports)) {
+						$this->log(2,"Some fields are missing for HTTP sensors configuration");
+						FS::$iMgr->ajaxEchoError("err-bad-datas");
 						return;
 					}
 
 					$srvlist = trim($srvlist);
 					$srvs = preg_split("#[,]#",$srvlist);
 					$count = count($srvs);
-					if(strlen($srvlist) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if(!FS::$secMgr->isIPorCIDR($srvs[$i])) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for HTTP sensors configuration (not a CIDR)");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=4&err=1");
+					if (strlen($srvlist) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if (!FS::$secMgr->isIPorCIDR($srvs[$i])) {
+								$this->log(1,"Some fields are wrong for HTTP sensors configuration (not a CIDR)");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
@@ -777,14 +777,11 @@ preprocessor http_inspect_server: server default \\\n
 					$httpports = trim($httpports);
 					$ports = preg_split("#[,]#",$httpports);
 					$count = count($ports);
-					if(strlen($httpports) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if($ports[$i]<1||$ports[$i]>65535) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for HTTP (port = ".$ports[$i].")");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=4&err=1");
+					if (strlen($httpports) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if ($ports[$i]<1||$ports[$i]>65535) {
+								$this->log(1,"Some fields are wrong for HTTP (port = ".$ports[$i].")");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
@@ -794,16 +791,13 @@ preprocessor http_inspect_server: server default \\\n
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'httpenable',".($enable == "on" ? 1 : 0));
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'httplist','".$srvlist."'");
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'httpports','".$httpports."'");
-					if($this->writeConfiguration() != 0) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Unable to write snort configuration !");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("fail-snort-conf-wr");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=4&err=2");
+					if ($this->writeConfiguration() != 0) {
+						$this->log(2,"Unable to write snort configuration !");
+						FS::$iMgr->ajaxEchoError("fail-snort-conf-wr");
 						return;
 					}
 
-					FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",0,"Change HTTP values to srvlist: ".$srvlist." ports: ".$httpports." enable: ".$enable);
+					$this->log(0,"Change HTTP values to srvlist: ".$srvlist." ports: ".$httpports." enable: ".$enable);
 					FS::$iMgr->redir("mod=".$this->mid."&sh=4",true);
 					break;
 				case 5: // Sql config
@@ -813,26 +807,20 @@ preprocessor http_inspect_server: server default \\\n
 					$oracleports = FS::$secMgr->checkAndSecurisePostData("oracleports");
 					$oracleenable = FS::$secMgr->checkAndSecurisePostData("enoracle");
 
-					if($sqlenable == "on" && !$sqllist || $oracleenable && (!$oraclelist || !$oracleports)) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Some fields are missing for SQL sensors configuration");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("bad-data");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=5&err=1");
+					if ($sqlenable == "on" && !$sqllist || $oracleenable && (!$oraclelist || !$oracleports)) {
+						$this->log(2,"Some fields are missing for SQL sensors configuration");
+						FS::$iMgr->ajaxEchoError("err-bad-datas");
 						return;
 					}
 
 					$sqllist = trim($sqllist);
 					$srvs = preg_split("#[,]#",$sqllist);
 					$count = count($srvs);
-					if(strlen($sqllist) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if(!FS::$secMgr->isIPorCIDR($srvs[$i])) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for SQL sensors configuration (SQL not a CIDR)");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=5&err=1");
+					if (strlen($sqllist) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if (!FS::$secMgr->isIPorCIDR($srvs[$i])) {
+								$this->log(1,"Some fields are wrong for SQL sensors configuration (SQL not a CIDR)");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
@@ -841,14 +829,11 @@ preprocessor http_inspect_server: server default \\\n
 					$oraclelist = trim($oraclelist);
 					$srvs = preg_split("#[,]#",$oraclelist);
 					$count = count($srvs);
-					if(strlen($oraclelist) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if(!FS::$secMgr->isIPorCIDR($srvs[$i])) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for SQL sensors configuration (Oracle not a CIDR)");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=5&err=1");
+					if (strlen($oraclelist) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if (!FS::$secMgr->isIPorCIDR($srvs[$i])) {
+								$this->log(1,"Some fields are wrong for SQL sensors configuration (Oracle not a CIDR)");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
@@ -857,19 +842,17 @@ preprocessor http_inspect_server: server default \\\n
 					$oracleports = trim($oracleports);
 					$ports = preg_split("#[,]#",$oracleports);
 					$count = count($ports);
-					if(strlen($oracleports) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if($ports[$i]<1||$ports[$i]>65535) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for SQL sensors configuration (Oracle port = ".$ports[$i].")");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=5&err=1");
+					if (strlen($oracleports) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if ($ports[$i]<1||$ports[$i]>65535) {
+								$this->log(1,"Some fields are wrong for SQL sensors configuration (Oracle port = ".$ports[$i].")");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
 					}
 
+					FS::$dbMgr->BeginTr();
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'sqlenable'");
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'sqllist'");
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'sqlenable',".($sqlenable == "on" ? 1 : 0));
@@ -878,16 +861,15 @@ preprocessor http_inspect_server: server default \\\n
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'oracleenable',".($oracleenable == "on" ? 1 : 0));
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'oraclelist','".$oraclelist."'");
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'oracleports','".$oracleports."'");
-					if($this->writeConfiguration() != 0) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Unable to write snort configuration !");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("fail-snort-conf-wr");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=5&err=2");
+					FS::$dbMgr->CommitTr();
+					
+					if ($this->writeConfiguration() != 0) {
+						$this->log(2,"Unable to write snort configuration !");
+						FS::$iMgr->ajaxEchoError("fail-snort-conf-wr");
 						return;
 					}
-					FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",0,"Change SQL values to sqllist: ".$sqllist." sqlenable: ".$sqlenable);
-					FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",0,"Change SQL values to oraclelist: ".$oraclelist." oracleports: ".$oracleports." oracleenable: ".$oracleenable);
+					$this->log(0,"Change SQL values to sqllist: ".$sqllist." sqlenable: ".$sqlenable);
+					$this->log(0,"Change SQL values to oraclelist: ".$oraclelist." oracleports: ".$oracleports." oracleenable: ".$oracleenable);
 					FS::$iMgr->redir("mod=".$this->mid."&sh=5",true);
 					break;
 				case 6: // Remote access
@@ -899,26 +881,20 @@ preprocessor http_inspect_server: server default \\\n
 					$tselist = FS::$secMgr->checkAndSecurisePostData("tselist");
 					$tseenable = FS::$secMgr->checkAndSecurisePostData("entse");
 
-					if(($telnetenable == "on" && !$telnetlist) || ($sshenable && (!$sshlist || !$sshports)) || ($tseenable && !$tselist)) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Some fields are missing for remote access sensors configuration");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("bad-data");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=6&err=1");
+					if (($telnetenable == "on" && !$telnetlist) || ($sshenable && (!$sshlist || !$sshports)) || ($tseenable && !$tselist)) {
+						$this->log(2,"Some fields are missing for remote access sensors configuration");
+						FS::$iMgr->ajaxEchoError("err-bad-datas");
 						return;
 					}
 
 					$telnetlist = trim($telnetlist);
 					$srvs = preg_split("#[,]#",$telnetlist);
 					$count = count($srvs);
-					if(strlen($telnetlist) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if(!FS::$secMgr->isIPorCIDR($srvs[$i])) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for Remote access sensors configuration (telnet not a CIDR)");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data")." #2";
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=6&err=1");
+					if (strlen($telnetlist) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if (!FS::$secMgr->isIPorCIDR($srvs[$i])) {
+								$this->log(1,"Some fields are wrong for Remote access sensors configuration (telnet not a CIDR)");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
@@ -927,14 +903,11 @@ preprocessor http_inspect_server: server default \\\n
 					$sshlist = trim($sshlist);
 					$srvs = preg_split("#[,]#",$sshlist);
 					$count = count($srvs);
-					if(strlen($sshlist) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if(!FS::$secMgr->isIPorCIDR($srvs[$i])) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for Remote access sensors configuration (SSH not a CIDR)");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=6&err=1");
+					if (strlen($sshlist) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if (!FS::$secMgr->isIPorCIDR($srvs[$i])) {
+								$this->log(1,"Some fields are wrong for Remote access sensors configuration (SSH not a CIDR)");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
@@ -943,14 +916,11 @@ preprocessor http_inspect_server: server default \\\n
 					$sshports = trim($sshports);
 					$ports = preg_split("#[,]#",$sshports);
 					$count = count($ports);
-					if(strlen($sshports) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if($ports[$i]<1||$ports[$i]>65535) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for Remote access sensors configuration (SSH port = ".$ports[$i].")");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=6&err=1");
+					if (strlen($sshports) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if ($ports[$i]<1||$ports[$i]>65535) {
+								$this->log(1,"Some fields are wrong for Remote access sensors configuration (SSH port = ".$ports[$i].")");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
@@ -959,19 +929,17 @@ preprocessor http_inspect_server: server default \\\n
 					$tselist = trim($tselist);
 					$srvs = preg_split("#[,]#",$tselist);
 					$count = count($srvs);
-					if(strlen($tselist) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if(!FS::$secMgr->isIPorCIDR($srvs[$i])) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for Remote access sensors configuration (TSE not a CIDR)");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=6&err=1");
+					if (strlen($tselist) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if (!FS::$secMgr->isIPorCIDR($srvs[$i])) {
+								$this->log("Some fields are wrong for Remote access sensors configuration (TSE not a CIDR)");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
 					}
 
+					FS::$dbMgr->BeginTr();
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'sshenable'");
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'sshlist'");
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'sshports'");
@@ -986,19 +954,17 @@ preprocessor http_inspect_server: server default \\\n
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'tselist'");
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'tseenable',".($tseenable == "on" ? 1 : 0));
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'tselist','".$tselist."'");
+					FS::$dbMgr->CommitTr();
 
-					if($this->writeConfiguration() != 0) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Unable to write snort configuration !");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("fail-snort-conf-wr");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=6&err=2");
+					if ($this->writeConfiguration() != 0) {
+						$this->log(2,"Unable to write snort configuration !");
+						FS::$iMgr->ajaxEchoError("fail-snort-conf-wr");
 						return;
 					}
 
-					FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",0,"Change remote access values to sshlist: ".$sshlist." sshports: ".$sshports." sshenable: ".$sshenable);
-					FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",0,"Change remote access values to telnetlist: ".$telnetlist." telnetenable: ".$telnetenable);
-					FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",0,"Change remote access values to tselist: ".$tselist." tseenable: ".$tseenable);
+					$this->log(0,"Change remote access values to sshlist: ".$sshlist." sshports: ".$sshports." sshenable: ".$sshenable);
+					$this->log(0,"Change remote access values to telnetlist: ".$telnetlist." telnetenable: ".$telnetenable);
+					$this->log(0,"Change remote access values to tselist: ".$tselist." tseenable: ".$tseenable);
 					FS::$iMgr->redir("mod=".$this->mid."&sh=6",true);
 					break;
 				case 7: // FTP sensors
@@ -1006,26 +972,20 @@ preprocessor http_inspect_server: server default \\\n
 					$ftpports = FS::$secMgr->checkAndSecurisePostData("ftpports");
 					$enable = FS::$secMgr->checkAndSecurisePostData("enftp");
 
-					if($enable == "on" && (!$srvlist || !$ftpports)) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Some fields are missing for FTP sensors configuration");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("bad-data");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=7&err=1");
+					if ($enable == "on" && (!$srvlist || !$ftpports)) {
+						$this->log(2,"Some fields are missing for FTP sensors configuration");
+						FS::$iMgr->ajaxEchoError("err-bad-datas");
 						return;
 					}
 
 					$srvlist = trim($srvlist);
 					$srvs = preg_split("#[,]#",$srvlist);
 					$count = count($srvs);
-					if(strlen($srvlist) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if(!FS::$secMgr->isIPorCIDR($srvs[$i])) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for FTP sensors configuration (not a CIDR)");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=7&err=1");
+					if (strlen($srvlist) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if (!FS::$secMgr->isIPorCIDR($srvs[$i])) {
+								$this->log(1,"Some fields are wrong for FTP sensors configuration (not a CIDR)");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
@@ -1034,82 +994,71 @@ preprocessor http_inspect_server: server default \\\n
 					$ftpports = trim($ftpports);
 					$ports = preg_split("#[,]#",$ftpports);
 					$count = count($ports);
-					if(strlen($ftpports) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if($ports[$i]<1||$ports[$i]>65535) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for FTP sensors configuration (port = ".$ports[$i].")");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=7&err=1");
+					if (strlen($ftpports) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if ($ports[$i]<1||$ports[$i]>65535) {
+								$this->log(1,"Some fields are wrong for FTP sensors configuration (port = ".$ports[$i].")");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
 					}
-
+	
+					FS::$dbMgr->BeginTr();
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'ftpenable'");
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'ftplist'");
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'ftpports'");
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'ftpenable',".($enable == "on" ? 1 : 0));
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'ftplist','".$srvlist."'");
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'ftpports','".$ftpports."'");
+					FS::$dbMgr->CommitTr();
 
-					if($this->writeConfiguration() != 0) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Unable to write snort configuration !");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("bad-data");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=7&err=2");
+					if ($this->writeConfiguration() != 0) {
+						$this->log(2,"Unable to write snort configuration !");
+						FS::$iMgr->ajaxEchoError("fail-snort-conf-wr");
 						return;
 					}
 
-					FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",0,"Change FTP values to ftplist: ".$ftplist." ftpports: ".$ftpports." ftpenable: ".$enable);
+					$this->log(0,"Change FTP values to ftplist: ".$ftplist." ftpports: ".$ftpports." ftpenable: ".$enable);
 					FS::$iMgr->redir("mod=".$this->mid."&sh=7",true);
 					break;
 				case 8: // SNMP
 					$srvlist = FS::$secMgr->checkAndSecurisePostData("snmplist");
 					$enable = FS::$secMgr->checkAndSecurisePostData("ensnmp");
 
-					if($enable == "on" && !$srvlist) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Some fields are missing for SNMP sensors configuration");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("bad-data");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=8&err=1");
+					if ($enable == "on" && !$srvlist) {
+						$this->log(2,"Some fields are missing for SNMP sensors configuration");
+						FS::$iMgr->ajaxEchoError("err-bad-datas");
 						return;
 					}
 
 					$srvlist = trim($srvlist);
 					$srvs = preg_split("#[,]#",$srvlist);
 					$count = count($srvs);
-					if(strlen($srvlist) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if(!FS::$secMgr->isIPorCIDR($srvs[$i])) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for SNMP sensors configuration (not a CIDR)");
-								if(FS::isAjaxCall())
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=8&err=1");
+					if (strlen($srvlist) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if (!FS::$secMgr->isIPorCIDR($srvs[$i])) {
+								$this->log(1,"Some fields are wrong for SNMP sensors configuration (not a CIDR)");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
 					}
 
+					FS::$dbMgr->BeginTr();
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'snmpenable'");
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'snmplist'");
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'snmpenable',".($enable == "on" ? 1 : 0));
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'snmplist','".$srvlist."'");
+					FS::$dbMgr->CommitTr();
 
-					if($this->writeConfiguration() != 0) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Unable to write snort configuration !");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("fail-snort-conf-wr");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=8&err=2");
+					if ($this->writeConfiguration() != 0) {
+						$this->log(2,"Unable to write snort configuration !");
+						FS::$iMgr->ajaxEchoError("fail-snort-conf-wr");
 						return;
 					}
 
-					FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",0,"Change SNMP values to snmplist: ".$srvlist." snmpenable: ".$enable);
+					$this->log(0,"Change SNMP values to snmplist: ".$srvlist." snmpenable: ".$enable);
 					FS::$iMgr->redir("mod=".$this->mid."&sh=8",true);
 					break;
 				case 9: // SIP
@@ -1117,26 +1066,20 @@ preprocessor http_inspect_server: server default \\\n
 					$sipports = FS::$secMgr->checkAndSecurisePostData("sipports");
 					$enable = FS::$secMgr->checkAndSecurisePostData("ensip");
 
-					if($enable == "on" && (!$srvlist || !$sipports)) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Some fields are missing for SIP sensors configuration");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("bad-data");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=9&err=1");
+					if ($enable == "on" && (!$srvlist || !$sipports)) {
+						$this->log(2,"Some fields are missing for SIP sensors configuration");
+						FS::$iMgr->ajaxEchoError("err-bad-datas");
 						return;
 					}
 
 					$srvlist = trim($srvlist);
 					$srvs = preg_split("#[,]#",$srvlist);
 					$count = count($srvs);
-					if(strlen($srvlist) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if(!FS::$secMgr->isIPorCIDR($srvs[$i])) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for SIP sensors configuration (not a CIDR)");
-								if(FS::isAjaxCall())	
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=9&err=1");
+					if (strlen($srvlist) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if (!FS::$secMgr->isIPorCIDR($srvs[$i])) {
+								$this->log(1,"Some fields are wrong for SIP sensors configuration (not a CIDR)");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
@@ -1145,36 +1088,32 @@ preprocessor http_inspect_server: server default \\\n
 					$sipports = trim($sipports);
 					$ports = preg_split("#[,]#",$sipports);
 					$count = count($ports);
-					if(strlen($sipports) > 0 && $count > 0) {
-						for($i=0;$i<$count;$i++) {
-							if($ports[$i]<1||$ports[$i]>65535) {
-								FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",1,"Some fields are wrong for SIP sensors configuration (port = ".$ports[$i].")");
-								if(FS::isAjaxCall())	
-									echo $this->loc->s("bad-data");
-								else
-									FS::$iMgr->redir("mod=".$this->mid."&sh=9&err=1");
+					if (strlen($sipports) > 0 && $count > 0) {
+						for ($i=0;$i<$count;$i++) {
+							if ($ports[$i]<1||$ports[$i]>65535) {
+								$this->log(1,"Some fields are wrong for SIP sensors configuration (port = ".$ports[$i].")");
+								FS::$iMgr->ajaxEchoError("err-bad-datas");
 								return;
 							}
 						}
 					}
 
+					FS::$dbMgr->BeginTr();
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'sipenable'");
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'siplist'");
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'sipports'");
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'sipenable',".($enable == "on" ? 1 : 0));
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'siplist','".$srvlist."'");
 					FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'sipports','".$sipports."'");
+					FS::$dbMgr->CommitTr();
 
-					if($this->writeConfiguration() != 0) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Unable to write snort configuration !");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("fail-snort-conf-wr");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=9&err=2");
+					if ($this->writeConfiguration() != 0) {
+						$this->log(2,"Unable to write snort configuration !");
+						FS::$iMgr->ajaxEchoError("fail-snort-conf-wr");
 						return;
 					}
 
-					FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",0,"Change SIP values to siplist: ".$srvlist." sippports: ".$sipports." sipenable: ".$enable);
+					$this->log(0,"Change SIP values to siplist: ".$srvlist." sippports: ".$sipports." sipenable: ".$enable);
 					FS::$iMgr->redir("mod=".$this->mid."&sh=9",true);
 					break;
 				case 10:
@@ -1186,16 +1125,14 @@ preprocessor http_inspect_server: server default \\\n
 					$hwe = FS::$secMgr->getPost("hwe","n+=");
 					$mwe = FS::$secMgr->getPost("mwe","n+=");
 
-					if($hnight == NULL || $hnight > 23 || $mnight == NULL || $mnight > 59 || 
+					if ($hnight == NULL || $hnight > 23 || $mnight == NULL || $mnight > 59 || 
 						$hwe == NULL || $hwe > 23 || $mwe == NULL || $mwe > 59 || $nightback == NULL || $nightback > 23) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Some fields are missing/wrong for night/week report configuration");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("bad-data");
-						else 
-							FS::$iMgr->redir("mod=".$this->mid."&sh=10&err=1");
+						$this->log(2,"Some fields are missing/wrong for night/week report configuration");
+						FS::$iMgr->ajaxEchoError("err-bad-datas");
 						return;
 					}
 
+					FS::$dbMgr->BeginTr();
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'report_nighten'");
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'report_nighthour'");
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'report_nightmin'");
@@ -1205,16 +1142,13 @@ preprocessor http_inspect_server: server default \\\n
 					FS::$dbMgr->Delete(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey = 'report_wemin'");
 
 					$file = fopen(dirname(__FILE__)."/../../datas/system/snort.crontab","w+");
-					if(!$file) {
-						FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",2,"Unable to write snort.crontab file !");
-						if(FS::isAjaxCall())
-							echo $this->loc->s("fail-cron-wr");
-						else
-							FS::$iMgr->redir("mod=".$this->mid."&sh=10&err=3");
+					if (!$file) {
+						$this->log(2,"Unable to write snort.crontab file !");
+						FS::$iMgr->ajaxEchoError("fail-cron-wr");
 						return;
 					}
 
-					if($nightreport == "on") {
+					if ($nightreport == "on") {
 						FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'report_nighten','1'");
 						FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'report_nighthour','".$hnight."'");
 						FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'report_nightmin','".$mnight."'");
@@ -1222,20 +1156,27 @@ preprocessor http_inspect_server: server default \\\n
 						fwrite($file,$mnight." ".$hnight."\t* * * root /usr/local/www/z-eye/scripts/snort_report.py night\n");
 					}
 
-					if($wereport == "on") {
+					if ($wereport == "on") {
 						FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'report_ween','1'");
 						FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'report_wehour','".$hwe."'");
 						FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."snortmgmt_keys","mkey,val","'report_wemin','".$mwe."'");
 						fwrite($file,$mnight." ".$hnight."\t* * * root /usr/local/www/z-eye/scripts/snort_report.py we\n");
 					}
 					
-					// TODO: write special cron for tasks & create cron entries for modules
+					// TODO: write special Z-Eye Scheduler for tasks & create cron entries for modules
 					fclose($file);
-					FS::$log->i(FS::$sessMgr->getUserName(),"snortmgmt",0,"Change night reports");
+					
+					FS::$dbMgr->CommitTr();
+					
+					$this->log(0,"Change night reports");
 					FS::$iMgr->redir("mod=".$this->mid."&sh=10",true);
 					break;
 				default: break;
 			}
 		}
 	};
+	
+	}
+	
+	$module = new iSnortMgmt();
 ?>

@@ -1,6 +1,6 @@
 <?php
         /*
-        * Copyright (c) 2010-2013, Loïc BLOT, CNRS <http://www.unix-experience.fr>
+        * Copyright (c) 2010-2014, Loïc BLOT, CNRS <http://www.unix-experience.fr>
         * All rights reserved.
         *
         * Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,9 @@
         */
 
 	require_once(dirname(__FILE__)."/IndexedObject.FS.class.php");
-	class NamedObject extends IndexedObject {
-		function NamedObject() {}
+
+	abstract class NamedObject extends IndexedObject {
+		function __construct() {}
 
 		public function Load() {}
 

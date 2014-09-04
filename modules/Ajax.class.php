@@ -1,6 +1,6 @@
 <?php
 	/*
-	* Copyright (C) 2010-2013 Loïc BLOT, CNRS <http://www.unix-experience.fr/>
+	* Copyright (C) 2010-2014 Loïc BLOT, CNRS <http://www.unix-experience.fr/>
 	*
 	* This program is free software; you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 	
 	require_once(dirname(__FILE__)."/ActionMgr.class.php");
 	class AjaxManager {
-		function AjaxManager() {}
+		function __construct() {}
 		
 		private function honeyPot() {
 		}
@@ -27,18 +27,63 @@
 		public function handle() {
 			$type = FS::$secMgr->checkAndSecuriseGetData("at");
 			switch($type) {
-				case 1: // menu
-					$mid = FS::$secMgr->checkAndSecuriseGetData("mid");
-					echo FS::$iMgr->LoadMenu($mid);
+				// menu
+				case 1:
+					echo json_encode(array(
+						"htmldatas" => FS::$iMgr->showWindowHead(),
+						"jscode" => ""
+					));
 					break;
-				case 2: // module
-					$mid = FS::$secMgr->checkAndSecuriseGetData("mod");
-					echo FS::$iMgr->loadModule($mid);
-					echo FS::$iMgr->renderJS();
+				// module
+				case 2: 
+					$mod = FS::$secMgr->checkAndSecuriseGetData("mod");
+					if($mod == 0) {
+						$mod = FS::$iMgr->getModuleIdByPath("default");
+					}
+					
+					$noJSON = FS::$secMgr->checkAndSecuriseGetData("nojson");
+					if ($noJSON == 1) {
+						echo FS::$iMgr->loadModule($mod);
+						// noJSON is for specific JS modules, then JS mustn't appear here
+					}
+					else {
+						echo json_encode(array(
+							"htmldatas" => FS::$iMgr->loadModule($mod),
+							"jscode" => FS::$iMgr->renderJS()
+						));
+					}
 					break;
-				case 3: // Action Handler
+				// Action Handler
+				case 3:
 					$aMgr = new ActionMgr();
 					$aMgr->DoAction(FS::$secMgr->checkAndSecuriseGetData("act"));
+					break;
+				// module: getIfaceElmt()
+				case 4: 
+					$mod = FS::$secMgr->checkAndSecuriseGetData("mod");
+					echo json_encode(array(
+						"htmldatas" => FS::$iMgr->loadModule($mod,2),
+						"jscode" => FS::$iMgr->renderJS()
+					));
+					break;
+				// special case: disconnect user
+				case 5:
+					if ($module = FS::$iMgr->getModuleByPath("connect")) {
+						$module->Disconnect(true);
+						echo json_encode(array(
+							"htmldatas" => "",
+							"jscode" => FS::$iMgr->renderJS()
+						));
+					}
+					break;
+				// Reload all footer plugins
+				case 6:
+					FS::$iMgr->loadFooterPlugins();
+					//echo FS::$iMgr->renderJS();
+					echo json_encode(array(
+						"htmldatas" => "",
+						"jscode" => FS::$iMgr->renderJS()
+					));
 					break;
 				default: $this->honeyPot(); break;
 			}

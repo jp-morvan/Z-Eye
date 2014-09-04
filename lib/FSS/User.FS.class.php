@@ -1,6 +1,6 @@
 <?php
         /*
-        * Copyright (c) 2010-2013, Loïc BLOT, CNRS <http://www.unix-experience.fr>
+        * Copyright (c) 2010-2014, Loïc BLOT, CNRS <http://www.unix-experience.fr>
         * All rights reserved.
         *
         * Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,9 @@
         */
 
 	require_once("NamedObject.FS.class.php");
+
 	class User extends NamedObject {
-		function User() {}
+		function __construct() {}
 
 		public function LoadByName($username) {
 			$uid = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."users","uid","username = '".$username."'");
@@ -38,8 +39,9 @@
 		}
 
 		public function LoadFromDB($uid) {
-			$query = FS::$dbMgr->Select(PGDbConfig::getDbPrefix()."users","username, ulevel, subname, name, mail, join_date,last_conn, last_ip","uid = '".$uid."'");
-			if($data = pg_fetch_array($query)) {
+			$query = FS::$dbMgr->Select(PGDbConfig::getDbPrefix()."users","username,subname,name,mail,join_date,last_conn,last_ip,failauthnb",
+				"uid = '".$uid."'");
+			if ($data = pg_fetch_array($query)) {
 				$this->id = $uid;
 				$this->username = $data["username"];
 				$this->subname = $data["mail"];
@@ -48,28 +50,33 @@
 				$this->joindate = $data["join_date"];
 				$this->lastconn = $data["last_conn"];
 				$this->lastip = $data["last_ip"];
-				$this->ulevel = $data["ulevel"];
+				$this->failedauth = $data["failauthnb"];
 			}
 		}
 
 		public function Create($uid = 0) {
-			if($uid) $id = $uid;
-			else $id = FS::$dbMgr->GetMax(PGDbConfig::getDbPrefix()."users","uid")+1;
+			if ($uid) {
+				$id = $uid;
+			}
+			else {
+				$id = FS::$dbMgr->GetMax(PGDbConfig::getDbPrefix()."users","uid")+1;
+			}
 			$this->id = $uid;
-			FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."users","uid, username, ulevel, subname, name, mail, join_date, last_ip, sha_pwd, last_conn","'".$id."','".$this->username."','0','".$this->subname."','".$this->name."','".$this->mail."',NOW(),'0.0.0.0','',NOW()");
+			FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."users","uid,username,subname,name,mail,join_date,last_ip,sha_pwd,last_conn,failauthnb",
+				"'".$id."','".$this->username."','".$this->subname."','".$this->name."','".$this->mail."',NOW(),'0.0.0.0','',NOW(),'0'");
 		}
 
 		public function SaveToDB() {
-			FS::$dbMgr->Update(PGDbConfig::getDbPrefix()."users","subname ='".$this->subname."', ulevel = '".$this->ulevel."', join_date = '".$this->joindate."', 
-			last_ip = '".$this->lastip."', last_conn = '".$this->lastconn."', ulevel = '".$this->ulevel."'","uid = '".$_SESSION["uid"]."'");
+			FS::$dbMgr->Update(PGDbConfig::getDbPrefix()."users","subname ='".$this->subname."', join_date = '".$this->joindate."', 
+			last_ip = '".$this->lastip."', last_conn = '".$this->lastconn."'","uid = '".$_SESSION["uid"]."'");
 		}
 
 		public function changePassword($password) {
-			if(strlen($password) < Config::getPasswordMinLength())
+			if (strlen($password) < Config::getPasswordMinLength())
 				return 1;
 
-			if(Config::getPasswordComplexity()) {
-				if(!FS::$secMgr->isStrongPwd($password))
+			if (Config::getPasswordComplexity()) {
+				if (!FS::$secMgr->isStrongPwd($password))
 					return 2;
 			}
 
@@ -83,9 +90,6 @@
 
 		public function getSubName() { return $this->subname; }
 		public function setSubName($sname) { return $this->subname = $sname; }
-
-		public function getUserLevel() { return $this->ulevel;	}
-		public function setUserLevel($ulevel) { $this->ulevel = $ulevel; }
 
 		public function getMail() { return $this->mail; }
 		public function setMail($m) { $this->mail = $m; }
@@ -101,7 +105,7 @@
 		private $joindate;
 		private $lastconn;
 		private $lastip;
-		private $ulevel;
+		private $failedauth;
 	}
 
 ?>

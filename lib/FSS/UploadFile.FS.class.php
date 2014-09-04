@@ -1,6 +1,6 @@
 <?php
         /*
-        * Copyright (c) 2010-2013, Loïc BLOT, CNRS <http://www.unix-experience.fr>
+        * Copyright (c) 2010-2014, Loïc BLOT, CNRS <http://www.unix-experience.fr>
         * All rights reserved.
         *
         * Redistribution and use in source and binary forms, with or without
@@ -29,7 +29,7 @@
         */
 
 	class UploadFile {
-		function UploadFile($data){
+		function __construct($data){
 			$this->field_name = $data;
 		}
 
@@ -38,7 +38,7 @@
 		}
 
 		public function MoveTo($dest,$name = "") {
-			if(file_exists($dest.$name))
+			if (file_exists($dest.$name))
 				return false;
 			return move_uploaded_file($this->getTmpName(),$dest."/".$name);
 		}
@@ -72,17 +72,17 @@
 		}
 		
 		public function upWithoutError() {
-			if(!$this->exist())
+			if (!$this->exist())
 				return false;
 			
-			if($this->getError() != UPLOAD_ERR_OK)
+			if ($this->getError() != UPLOAD_ERR_OK)
 				return false;
 				
 			return true;			
 		}
 		
 		public function exist() {
-			if(isset($_FILES[$this->field_name]))
+			if (isset($_FILES[$this->field_name]))
 				return true;
 			return false;
 		}	

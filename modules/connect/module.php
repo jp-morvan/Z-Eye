@@ -1,6 +1,6 @@
 <?php
 	/*
-	* Copyright (C) 2010-2013 Loïc BLOT, CNRS <http://www.unix-experience.fr/>
+	* Copyright (C) 2010-2014 Loïc BLOT, CNRS <http://www.unix-experience.fr/>
 	*
 	* This program is free software; you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by
@@ -17,33 +17,28 @@
 	* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 	*/
 
+	require_once(dirname(__FILE__)."/rules.php");
 	require_once(dirname(__FILE__)."/../../lib/FSS/LDAP.FS.class.php");
 
-	class iConnect extends FSModule{
-		function iConnect($locales) { parent::FSModule($locales); }
+	if(!class_exists("iConnect")) {
+		
+	final class iConnect extends FSModule {
+		function __construct() {
+			parent::__construct();
+			$this->rulesclass = new rConnect();
+			
+			$this->modulename = "connect";
+			
+			$this->menutitle = _("Connection");
+		}
+
 		public function Load() {
-			FS::$iMgr->setTitle($this->loc->s("title-conn"));
-			$output = "";
-			$err = FS::$secMgr->checkGetData("err");
-			if($err) {
-				FS::$secMgr->SecuriseStringForDB($err);
-				switch($err) {
-					case 1: $output .= FS::$iMgr->printError($this->loc->s("err-bad-user")); break;
-					default: $output .= FS::$iMgr->printError($this->loc->s("err-unk"));	break;
-				}
-			}
-			$output .= "<div>".FS::$iMgr->h1("title-conn");
-			$output .= FS::$iMgr->form("index.php?mod=".$this->mid."&act=1");
-			$output .= FS::$iMgr->input("uname",$this->loc->s("Login"));
-			$output .= "<br />";
-			$output .= FS::$iMgr->password("upwd",$this->loc->s("Password"));
-			$output .= "<br />";
-			$output .= FS::$iMgr->submit("",$this->loc->s("Connect"));
-			$output .= "</form></div>";
-			return $output;
+			FS::$iMgr->setTitle(_("title-conn"));
+			return "";
 		}
 
 		public function TryConnect($username,$password) {
+			$username = strtolower($username);
 			$output = "";
 			$ldapok = false;
 			$ldapident = "";
@@ -53,30 +48,38 @@
 			$ldapmail = "";
 			$found = false;
 			$query = FS::$dbMgr->Select(PGDbConfig::getDbPrefix()."ldap_auth_servers","addr,port,dn,rootdn,dnpwd,ldapuid,filter,ldapmail,ldapname,ldapsurname,ssl");
-			while(!$found && ($data = FS::$dbMgr->Fetch($query))) {
+			while (!$found && ($data = FS::$dbMgr->Fetch($query))) {
 				$tmpldapMgr = new LDAP();
 				$tmpldapMgr->setServerInfos($data["addr"],$data["port"],($data["ssl"] == 1 ? true : false),$data["dn"],$data["rootdn"],$data["dnpwd"],$data["ldapuid"],$data["filter"]);
-				if($tmpldapMgr->Authenticate($username, $password)) {
-					$ldapok = true;
-					$ldapident = $data["ldapuid"];
-					$ldapsurname = $data["ldapsurname"];
-					$ldapname = $data["ldapname"];
-					$ldapmail = $data["ldapmail"];
-					$ldapMgr->setServerInfos($data["addr"],$data["port"],($data["ssl"] == 1 ? true : false),$data["dn"],$data["rootdn"],$data["dnpwd"],$data["ldapuid"],$data["filter"]);
-					$found = true;
+				$tmpldapMgr->RootConnect();
+				if ($tmpldapMgr->GetOneEntry($data["ldapuid"]."=".$username)) {
+					if ($tmpldapMgr->Authenticate($username, $password)) {
+						$ldapok = true;
+						$ldapident = $data["ldapuid"];
+						$ldapsurname = $data["ldapsurname"];
+						$ldapname = $data["ldapname"];
+						$ldapmail = $data["ldapmail"];
+						$ldapMgr->setServerInfos($data["addr"],$data["port"],($data["ssl"] == 1 ? true : false),$data["dn"],$data["rootdn"],$data["dnpwd"],$data["ldapuid"],$data["filter"]);
+						$found = true;
+					}
+					else {
+						FS::$dbMgr->Update(PgDbConfig::getDbPrefix()."users","failauthnb = failauthnb + 1","username = '".$username."'");
+					}
 				}
 			}
 
 			$url = FS::$secMgr->checkAndSecurisePostData("redir");
-			if($url == NULL || $url == "index.php") $url = "m-0.html";
+			if ($url == NULL || $url == "index.php") {
+				$url = "/";
+			}
 			$url = preg_replace("#^/index\.php\?#","",$url);
 
-			if($ldapok) {
+			if ($ldapok) {
 				$ldapMgr->RootConnect();
 				$result = $ldapMgr->GetOneEntry($ldapident."=".$username);
-				if(!$result) {
-					FS::$iMgr->redir("mod=".$this->mid."&err=1");
-					FS::$log->i("None","connect",1,"Login failed for user '".$username."' (Unknown user)");
+				if (!$result) {
+					$this->setLoginResult("err-bad-user");
+					$this->log(1,"Login failed for user '".$username."' (Unknown user)","None");
 					return;
 				}
 
@@ -87,61 +90,164 @@
 				$user->setUsername($username);
 				$user->setSubName($prenom);
 				$user->setName($nom);
-				$user->setUserLevel(4);
 				$user->setMail($mail);
-				$query = FS::$dbMgr->Select(PGDbConfig::getDbPrefix()."users","uid,username,sha_pwd,ulevel","username = '".$username."'");
-				if($data = FS::$dbMgr->Fetch($query)) {
-					$this->connectUser($data["uid"],$data["ulevel"]);
-					FS::$log->i("None","connect",0,"Login success for user '".$username."'");
-					FS::$iMgr->redir($url,true);
+				$query = FS::$dbMgr->Select(PGDbConfig::getDbPrefix()."users","uid","username = '".$username."'");
+				if ($data = FS::$dbMgr->Fetch($query)) {
+					$this->genAPIKeyIfNot($username);
+					$this->connectUser($data["uid"]);
+					$this->log(0,"Login success for user '".$username."'","None");
+					$this->reloadInterface($url);
 					return;
 				}
 				else {
 					$user->Create();
-					$query = FS::$dbMgr->Select(PGDbConfig::getDbPrefix()."users","uid,username,sha_pwd,ulevel","username = '".$username."'");
-					if($data = FS::$dbMgr->Fetch($query)) { 
-						$this->connectUser($data["uid"],$data["ulevel"]);
-						FS::$log->i("None","connect",0,"Login success for user '".$username."'");
-						FS::$iMgr->redir($url,true);
+					$query = FS::$dbMgr->Select(PGDbConfig::getDbPrefix()."users","uid","username = '".$username."'");
+					if ($data = FS::$dbMgr->Fetch($query)) { 
+						$this->genAPIKeyIfNot($username);
+						$this->connectUser($data["uid"]);
+						$this->log(0,"Login success for user '".$username."'","None");
+						$this->reloadInterface($url);
 						return;
 					}
 				}
 			} else {
-				$query = FS::$dbMgr->Select(PGDbConfig::getDbPrefix()."users","uid,username,sha_pwd,ulevel","username = '".$username."'");
-				if($data = FS::$dbMgr->Fetch($query)) {
+				$query = FS::$dbMgr->Select(PGDbConfig::getDbPrefix()."users","uid,username,sha_pwd","username = '".$username."'");
+				if ($data = FS::$dbMgr->Fetch($query)) {
 					$encryptPwd = FS::$secMgr->EncryptPassword($password,$username,$data["uid"]);
-					if($data["sha_pwd"] != $encryptPwd) {
-						FS::$log->i("None","connect",1,"Login failed for user '".$username."' (Bad password)");
-						FS::$iMgr->ajaxEcho("err-bad-user");
+					if ($data["sha_pwd"] != $encryptPwd) {
+						$this->log(1,"Login failed for user '".$username."' (Bad password)","None");
+						FS::$dbMgr->Update(PgDbConfig::getDbPrefix()."users","failauthnb = failauthnb + 1","username = '".$username."'");
+						$this->setLoginResult("err-bad-user");
 						return;
 					}
-					$this->connectUser($data["uid"],$data["ulevel"]);
-					FS::$log->i("None","connect",0,"Login success for user '".$username."'");
-					FS::$iMgr->redir($url,true);
+					$this->genAPIKeyIfNot($username);
+					$this->connectUser($data["uid"]);
+					$this->log(0,"Login success for user '".$username."'","None");
+					$this->reloadInterface($url);
 					return;
 				}
 			}
-			FS::$log->i("None","connect",1,"Login failed for user '".$username."' (Unknown user)");
-			FS::$iMgr->ajaxEcho("err-bad-user");
+			$this->log(1,"Login failed for user '".$username."' (Unknown user)","None");
+			$this->setLoginResult("err-bad-user");
 		}
 		
-		private function connectUser($uid,$ulevel) {
-			$langs = preg_split("#[;]#",$_SERVER["HTTP_ACCEPT_LANGUAGE"]);
-			if(count($langs) > 0)
-				$_SESSION["lang"] = $langs[0];
+		private function setLoginResult($text,$good=false) {
+			if ($text) {
+				FS::$iMgr->js(sprintf("setLoginCbkMsg('<span style=\"color: %s;\">%s</span>');",
+					$good ? "green" : "red",
+					addslashes(_($text))));
+			}
+			else {
+				FS::$iMgr->js("setLoginCbkMsg('');");
+			}
+		}
+
+		private function genAPIKeyIfNot($username) {
+			if (FS::$dbMgr->GetOneData(PgDbConfig::getDbPrefix()."users","android_api_key","username = '".$username."'")) {
+				return;
+			}
+			$dict = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+			$valid = false;
+			do {
+				$bigkey = "";
+				for ($i=0;$i<rand(10,40);$i++) {
+					$bigkey .= substr(str_shuffle($dict),0,rand(8,15));
+				}
+				$apikey = hash("sha256",$bigkey);
+				if (!FS::$dbMgr->GetOneData(PgDbConfig::getDbPrefix()."users","android_api_key","android_api_key = '".$apikey."'")) {
+					FS::$dbMgr->Update(PgDbConfig::getDbPrefix()."users","android_api_key = '".$apikey."'","username = '".$username."'");
+					$valid = true;
+				}
+			}
+			while ($valid == false);
+		}
+		
+		private function connectUser($uid) {
+			$settingsLang = FS::$dbMgr->GetOneData(PgDbConfig::getDbPrefix()."users","lang","uid = '".$uid."'");
+			if ($settingsLang) {
+				$_SESSION["lang"] = $settingsLang;
+			}
+			else {
+				$_SESSION["lang"] = FS::$sessMgr->getBrowserLang();
+			}
+			
+			$inactivityTimer = FS::$dbMgr->GetOneData(PgDbConfig::getDbPrefix()."users","inactivity_timer","uid = '".$uid."'");
+			if ($inactivityTimer) {
+				FS::$iMgr->js("setMaxIdleTimer('".$inactivityTimer."');");
+				$_SESSION["idle_timer"] = $inactivityTimer;
+			}
+			else {
+				FS::$iMgr->js("setMaxIdleTimer('30');");
+				$_SESSION["idle_timer"] = 30;
+			}
 			$_SESSION["uid"] = $uid;
-			$_SESSION["ulevel"] = $ulevel;
-			FS::$dbMgr->Update(PGDbConfig::getDbPrefix()."users","last_conn = NOW(), last_ip = '".FS::$sessMgr->getOnlineIP()."'","uid = '".$uid."'");
+			$_SESSION["prevfailedauth"] = FS::$dbMgr->GetOneData(PgDbConfig::getDbPrefix()."users","failauthnb","uid = '".$uid."'");
+			FS::$dbMgr->Update(PGDbConfig::getDbPrefix()."users","failauthnb = '0', last_conn = NOW(), last_ip = '".FS::$sessMgr->getOnlineIP()."'","uid = '".$uid."'");
+		}
+
+		public function LoadForAndroid() {
+			if (!$this->AuthenticateAndroid()) {
+				return 1;
+			}
+
+			return 0;
+		}
+
+		public function AuthenticateAndroid() {
+			$apikey = FS::$secMgr->checkAndSecurisePostData("apikey");
+			$uid = FS::$dbMgr->GetOneData(PgDbConfig::getDbPrefix()."users","uid","android_api_key = '".$apikey."' AND android_api_key != ''");
+			if (!$uid) {
+				return false;
+			}
+				
+			$_SESSION["uid"] = $uid;
+			return true;
+		}
+
+		public function reloadInterface($url) {
+			if ($url) {
+				$url = "&".$url;
+			}
+			$this->setLoginResult("connok-then-load",true);
+			$js = "loadWindowHead();loadMainContainer('".$url."');closeLogin();";
+			FS::$iMgr->ajaxEchoOK("Done",$js);
+			FS::$iMgr->loadFooterPlugins();
+		}
+
+		public function Disconnect($loginForm=false) {
+			if (FS::$sessMgr->getUid()) {
+				$this->log(0,"User disconnected");
+				FS::$sessMgr->Close(); 
+
+				if ($loginForm) {
+					$this->setLoginResult("inactivity-disconnect");
+					FS::$iMgr->js("openLogin();");
+				}
+				else {
+					$this->setLoginResult("",true);
+				}
+				$js = "loadWindowHead(); loadMainContainer('');unlockScreen(true); setMaxIdleTimer('-1');";
+				FS::$iMgr->ajaxEchoOK("Done",$js);
+			}
+			FS::$iMgr->loadFooterPlugins();
 		}
 
 		public function handlePostDatas($act) {
 			switch($act) {
 				case 1:
-					$user = FS::$secMgr->checkAndSecurisePostData("uname");
-					$pwd = FS::$secMgr->checkAndSecurisePostData("upwd");
+					$user = FS::$secMgr->checkAndSecurisePostData("loginuname");
+					$pwd = FS::$secMgr->checkAndSecurisePostData("loginupwd");
 					$this->TryConnect($user,$pwd);
+					return;
+				case 2:
+					$this->Disconnect();
 					return;
 			}
 		}
 	};
+	
+	}
+	
+	$module = new iConnect();
 ?>

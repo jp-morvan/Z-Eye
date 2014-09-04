@@ -1,6 +1,6 @@
 <?php
 	/*
-	* Copyright (C) 2010-2013 Loïc BLOT, CNRS <http://www.unix-experience.fr/>
+	* Copyright (C) 2010-2014 Loïc BLOT, CNRS <http://www.unix-experience.fr/>
 	*
 	* This program is free software; you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by
@@ -27,28 +27,33 @@
 		*/
 
 		public function showStateOpts() {
-                        $state = $this->getPortState();
-                        return FS::$iMgr->idxLine($this->loc->s("Shutdown"),"shut",$state == 2 ? true : false, array("type" => "chk", "tooltip" => "tooltip-shut"));
-                }
+			$state = $this->getPortState();
+			return FS::$iMgr->idxLine(_("Shutdown"),"shut",$state == 2 ? true : false, array("type" => "chk", "tooltip" => "tooltip-shut"));
+		}
 
-                public function handleState($logvals) {
-                        $port = FS::$secMgr->checkAndSecurisePostData("port");
-                        $shut = FS::$secMgr->checkAndSecurisePostData("shut");
+		public function handleState($logvals, $port = "", $shut = -1) {
+			if ($port == "") {
+				$port = FS::$secMgr->checkAndSecurisePostData("port");
+			}
+			
+			if ($shut == -1) {
+				$shut = FS::$secMgr->checkAndSecurisePostData("shut");
+			}
 
-                        $portstate = $this->getPortState();
+			$portstate = $this->getPortState();
 
-                        // If it's same state do nothing
-                        if($portstate == ($shut == "on" ? 2 : 1))
-                                return;
+			// If it's same state do nothing
+			if($portstate == ($shut == "on" ? 2 : 1))
+				return;
 
-                        $logvals["hostmode"]["src"] = $portstate;
-                        if($this->setPortState($shut == "on" ? 2 : 1) != 0) {
-                                echo "Fail to set switchport shut/no shut state";
-                                return;
-                        }
-                        $logvals["hostmode"]["dst"] = ($shut == "on" ? 2 : 1);
-                        FS::$dbMgr->Update("device_port","up_admin = '".($shut == "on" ? "down" : "up")."'","ip = '".$this->devip."' AND port = '".$port."'");
-                }
+			$logvals["hostmode"]["src"] = $portstate;
+			if($this->setPortState($shut == "on" ? 2 : 1) != 0) {
+				echo "Fail to set switchport shut/no shut state";
+				return;
+			}
+			$logvals["hostmode"]["dst"] = ($shut == "on" ? 2 : 1);
+			FS::$dbMgr->Update("device_port","up_admin = '".($shut == "on" ? "down" : "up")."'","ip = '".$this->devip."' AND port = '".$port."'");
+		}
 
 		/*
 		* Generic port management
@@ -62,31 +67,31 @@
 		}
 
 		public function setPortState($value) {
-                        if($value != 1 && $value != 2)
-                                return NULL;
+			if($value != 1 && $value != 2)
+				return NULL;
 
-                        return $this->setFieldForPortWithPID("ifAdminStatus","i",$value);
-                }
+			return $this->setFieldForPortWithPID("ifAdminStatus","i",$value);
+		}
 
-                public function getPortState() {
-                        $dup = $this->getFieldForPortWithPID("ifAdminStatus");
-                        $dup = preg_replace("#[a-zA-Z()]#","",$dup);
-                        return $dup;
-                }
+		public function getPortState() {
+			$dup = $this->getFieldForPortWithPID("ifAdminStatus");
+			$dup = preg_replace("#[a-zA-Z()]#","",$dup);
+			return $dup;
+		}
 
 		/*
 		* Link Management
 		*/
 
 		public function getPortMtu() {
-                        $dup = $this->getFieldForPortWithPID("ifMtu");
-                        $dup = explode(" ",$dup);
-                        if(count($dup) != 2)
-                        	return -1;
+			$dup = $this->getFieldForPortWithPID("ifMtu");
+			$dup = explode(" ",$dup);
+			if(count($dup) != 2)
+				return -1;
 
-                        $dup = $dup[1];
+			$dup = $dup[1];
 			return $dup;
-                }
+		}
 
 		/*
 		* Generic public functions
@@ -138,23 +143,23 @@
 					continue;
 				$pid = $pid[1];
 				if($vlanFltr == NULL || !FS::$secMgr->isNumeric($vlanFltr) || $vlanFltr < 1 || $vlanFltr > 4096)
-					array_push($plist,$pname);
+					$plist[] = $pname;
 				else {
 					$this->setPortId($pid);
 					$portmode = $this->getSwitchportMode();
 					if($portmode == 1) {
 						$nvlan = $this->getSwitchTrunkNativeVlan();
 						if(!in_array($pname,$plist) && $vlanFltr == $nvlan)
-							array_push($plist,$pname);
+							$plist[] = $pname;
 
 						$vllist = $this->getSwitchportTrunkVlans();
 						if(!in_array($pname,$plist) && in_array($vlanFltr,$vllist))
-							array_push($plist,$pname);
+							$plist[] = $pname;
 					}
 					else if($portmode == 2) {
 						$pvlan = $this->getSwitchAccessVLAN();
 						if(!in_array($pname,$plist) && $vlanFltr == $pvlan)
-							array_push($plist,$pname);
+							$plist[] = $pname;
 					}
 				}
 			}

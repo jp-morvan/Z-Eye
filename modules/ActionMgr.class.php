@@ -1,6 +1,6 @@
 <?php
 	/*
-	* Copyright (C) 2010-2013 Loïc BLOT, CNRS <http://www.unix-experience.fr/>
+	* Copyright (C) 2010-2014 Loïc BLOT, CNRS <http://www.unix-experience.fr/>
 	*
 	* This program is free software; you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 	*/
 
 	class ActionMgr {
-		function ActionMgr() {}
+		function __construct() {}
 
 		public function HoneyPot() {
 			echo "Honeypot";
@@ -41,7 +41,7 @@
 						if(is_dir($dirpath) && /*$elem == $mod_path*/$moduleid == $mid) {
 							$dir2 = opendir($dirpath);
 							while(($elem2 = readdir($dir2)) && $found == false) {
-								if(is_file($dirpath."/".$elem2) && $elem2 == "main.php")
+								if(is_file($dirpath."/".$elem2) && $elem2 == "module.php")
 									$found = true;
 									$mod_path = $elem;
 							}
@@ -49,22 +49,37 @@
 					}
 
 					if($found == false) {
-						header("Location: index.php");
+						FS::$iMgr->redir("/", true);
 						return;
 					}
 
-					require_once(dirname(__FILE__)."/".$mod_path."/main.php");
-
-					if(!$module->getRulesClass()->canAccessToModule()) {
-						header("Location: index.php");
-						return;
+					require_once(dirname(__FILE__)."/".$mod_path."/module.php");
+					
+					
+					
+					$ruleAccess = $module->getRulesClass()->canAccessToModule();
+					if($ruleAccess === false) {
+						if(FS::isAjaxCall()) {
+							FS::$iMgr->echoNoRights("access to module");
+						}
+						else {
+							FS::$iMgr->redir("/", true);
+						}
+					}
+					else if($ruleAccess === -1) {
+						FS::$iMgr->js(sprintf("setLoginCbkMsg('<span style=\"color: red;\">%s</span>');openLogin();",
+							_("err-must-be-connected")));
+					}
+					else {
+						FS::$iMgr->setCurrentModule($module);
+						$module->setModuleId($mid);
+						$module->handlePostDatas($act);
 					}
 
-					FS::$iMgr->setCurrentModule($module->getModuleClass());
-					$module->getModuleClass()->setModuleId($mid);
-					$module->getModuleClass()->handlePostDatas($act);
-					echo FS::$iMgr->renderJS();
-
+					echo json_encode(array(
+						"htmldatas" => FS::$iMgr->getAjaxEchoBuffer(),
+						"jscode" => FS::$iMgr->renderJS()
+					));
 					break;
 			}
 		}

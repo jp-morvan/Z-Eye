@@ -1,6 +1,6 @@
 <?php
         /*
-        * Copyright (c) 2010-2013, Loïc BLOT, CNRS <http://www.unix-experience.fr>
+        * Copyright (c) 2010-2014, Loïc BLOT, CNRS <http://www.unix-experience.fr>
         * All rights reserved.
         *
         * Redistribution and use in source and binary forms, with or without
@@ -29,21 +29,105 @@
         */
 
 	class FSSessionMgr {
-		function FSSessionMgr() {
+		function __construct() {
 			$this->groupBuf = array();
+			$this->secMgr = FS::$secMgr;
+			$this->dbMgr = FS::$dbMgr;
+
+			session_set_save_handler(
+				array($this, 'shopen'),
+				array($this, 'shclose'),
+				array($this, 'shread'),
+				array($this, 'shwrite'),
+				array($this, 'shdestroy'),
+				array($this, 'shgc')
+			);
+		}
+
+		public function shopen() {
+			$limit = time() - Config::getSessionExpirationTime();
+
+			$this->connectDBIfNot();
+			$this->dbMgr->Delete(PgDbConfig::getDbPrefix()."sessions","timestamp < '".$limit."'");
+			return true;
+		}
+
+		public function shclose() {}
+
+		public function shread($id) {
+			FS::$secMgr->SecuriseString($id);
+
+			$this->connectDBIfNot();
+			if ($data = FS::$dbMgr->GetOneData(PgDbConfig::getDbPrefix()."sessions","data","id = '".$id."'")) {
+				FS::$dbMgr->Update(PgDbConfig::getDbPrefix()."sessions","timestamp = '".time()."'","id = '".$id."'");
+				return $data;
+			}
+			else
+				return false;
+		}
+
+		public function shwrite($id, $data) {
+			$this->secMgr->SecuriseString($id);
+			$this->secMgr->SecuriseString($data);
+
+			// Connect is required
+			$this->connectDBIfNot();
+
+			$this->dbMgr->BeginTr();
+			$this->dbMgr->Delete(PgDbConfig::getDbPrefix()."sessions","id = '".$id."'");
+			$this->dbMgr->Insert(PgDbConfig::getDbPrefix()."sessions","id,data,timestamp","'".$id."','".$data."','".time()."'");
+			$this->dbMgr->CommitTr();
+			return true;
+		}
+
+		public function shdestroy($id) {
+			FS::$secMgr->SecuriseString($id);
+
+			// Connect is required
+			$this->connectDBIfNot();
+			$this->dbMgr->Delete(PgDbConfig::getDbPrefix()."sessions","id = '".$id."'");
+			return true;
+		}
+
+		public function shgc($max) {
+			$limit = time() - intval($max);
+
+			// Connect is required
+			$this->connectDBIfNot();
+			return $this->dbMgr->Delete(PgDbConfig::getDbPrefix()."sessions","timestamp < '".$limit."'");
+		}
+
+		public function Start() {
+			session_start();
+			$this->initLang();
+		}
+
+		public function Close() {
+			if (isset($_SESSION["uid"])) {
+				unset($_SESSION["uid"]);
+			}
+			session_destroy();
+		}
+
+		private function connectDBIfNot() {
+			if (!$this->dbMgr) {
+				$this->dbMgr = new AbstractSQLMgr();
+                $this->dbMgr->initForZEye();
+			}
+
+			if (!$this->dbMgr->isPDOOK()) {
+				$this->dbMgr->Connect();
+			}
 		}
 
 		public function InitSessionIfNot() {
-
-			if(!isset($_SESSION["uid"]))
+			if (!isset($_SESSION["uid"])) {
 				$_SESSION["uid"] = 0;
-
-			if(!isset($_SESSION["ulevel"]))
-				$_SESSION["ulevel"] = 0;
+			}
 		}
 
 		public function isConnected() {
-			if(isset($_SESSION["uid"]) && $_SESSION["uid"] > 0)
+			if (isset($_SESSION["uid"]) && $_SESSION["uid"] > 0)
 				return true;
 		}
 
@@ -51,48 +135,85 @@
 			$IP = "0.0.0.0";
 			if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
 				$IP = $_SERVER['HTTP_X_FORWARDED_FOR'] ;
-			else if(isset($_SERVER['HTTP_CLIENT_IP']))
+			else if (isset($_SERVER['HTTP_CLIENT_IP']))
 				$IP = $_SERVER['HTTP_CLIENT_IP'] ;
 			else
 				$IP = $_SERVER['REMOTE_ADDR'] ;
 			return $IP;
 		}
-		
+
 		public function getUserAgent() {
 			return $_SERVER['HTTP_USER_AGENT'];
 		}
-		
+
 		public function getURI() {
 			return $_SERVER['REQUEST_URI'];
 		}
-		
-		public function getLang() {
-			$lang = "fr";
+
+		public function getBrowserLang() {
+			$lang = Config::getSysLang();
 			$tmp = explode(',',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
 			$lang = strtolower(substr(chop($tmp[0]),0,2));
+			return $lang;
 		}
 		
-		public function getUserLevel() { return (isset($_SESSION["ulevel"]) ? $_SESSION["ulevel"] : 0); }
-		public function getUid() { return $_SESSION["uid"]; }
+		public function initLang() {
+			if (isset($_SESSION["lang"])) {
+				setlocale(LC_ALL,$_SESSION["lang"]);
+				putenv("LANG=".$_SESSION["lang"]);
+				bindtextdomain("django", dirname(__FILE__)."/../../service/WebApp/Z_Eye/locale");
+				textdomain("django");
+				bind_textdomain_codeset("django", 'UTF-8');
+			}
+			else {
+				setlocale(LC_ALL,"fr");
+				putenv("LANG=fr");
+				bindtextdomain("django", dirname(__FILE__)."/../../service/WebApp/Z_Eye/locale");
+				textdomain("django");
+				bind_textdomain_codeset("django", 'UTF-8');
+			}
+		}
 
-		public function Close() {
-			session_destroy();
+		public function getUid() {
+			if (isset($_SESSION["uid"])) {
+				return $_SESSION["uid"];
+			}
+			return NULL;
 		}
-		
+
+		public function getIdleTimer() {
+			if (isset($_SESSION["idle_timer"])) {
+				return $_SESSION["idle_timer"];
+			}
+
+			return (Config::getSessionExpirationTime() / 60);
+		}
+
 		public function getUserName() {
-			if($this->getUid())
+			if ($this->getUid()) {
 				return FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."users","username","uid = '".$this->getUid()."'");
+			}
+			return NULL;
+		}
+
+		public function getUserRealName() {
+			if ($this->getUid()) {
+				$name = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."users","name","uid = '".$this->getUid()."'");
+				$surname = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."users","subname","uid = '".$this->getUid()."'");
+				return $surname." ".$name;
+			}
 			return NULL;
 		}
 
 		public function getGroups() {
-			if(is_array($this->groupBuf) && count($this->groupBuf) > 0)
+			if (is_array($this->groupBuf) && count($this->groupBuf) > 0) {
 				return $this->groupBuf;
+			}
 
 			$this->groupBuf = array();
 			$query = FS::$dbMgr->Select(PGDbConfig::getDbPrefix()."user_group","gid","uid = '".$this->getUid()."'");
-			while($data = pg_fetch_array($query)) {
-				array_push($this->groupBuf,$data["gid"]);
+			while($data = FS::$dbMgr->Fetch($query)) {
+				$this->groupBuf[] = $data["gid"];
 			}
 			$this->groupBuf = array_unique($this->groupBuf);
 			return $this->groupBuf;
@@ -102,7 +223,7 @@
 			$users = array();
 			$query = FS::$dbMgr->Select(PGDbConfig::getDbPrefix()."users","uid");
 			while($data = pg_fetch_array($query)) {
-				array_push($users,$data["uid"]);
+				$users[] = $data["uid"];
 			}
 			$users = array_unique($users);
 			return $users;
@@ -110,32 +231,59 @@
 
 		public function isInGroup($gname) {
 			$gid = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."groups","gid","gname = '".$gname."'");
-			if(in_array($gid,$this->getGroups()))
+			if (in_array($gid,$this->getGroups())) {
 				return true;
+			}
 			return false;
 		}
 
 		public function isInGIDGroup($gid) {
-			if(in_array($gid,$this->getGroups()))
+			if (in_array($gid,$this->getGroups())) {
 				return true;
+			}
 			return false;
 		}
 
-		public function hasRight($rulename) {
-			if($this->getUid() == 1 || $this->isInGIDGroup(1))
+		public function hasRight($rulename,$moduleOverride=NULL) {
+			if ($this->getUid() == 1 || $this->isInGIDGroup(1)) {
 				return true;
+			}
+
+			// If no override, we set the rulename with the modulename
+			if ($moduleOverride === NULL) {
+				if (FS::$iMgr->getCurModule()) {
+					$rulename = sprintf("mrule_%s_%s",
+						FS::$iMgr->getCurModule()->getName(),
+						$rulename
+					);
+				}
+			}
+			else {
+				$rulename = sprintf("mrule_%s_%s",
+					$moduleOverride,
+					$rulename
+				);
+			}
 
 			$groups = $this->getGroups();
 			$count = count($groups);
-			for($i=0;$i<$count;$i++) {
-				if(FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."group_rules","ruleval","rulename = '".$rulename."' AND gid = '".$groups[$i]."'") == "on")
+			for ($i=0;$i<$count;$i++) {
+				if (FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."group_rules",
+					"ruleval","rulename = '".
+					$rulename."' AND gid = '".$groups[$i]."'") == "on") {
 					return true;
+				}
 			}
-			if(FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."user_rules","ruleval","rulename = '".$rulename."' AND uid = '".$this->getUid()."'") == "on")
+			if (FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."user_rules",
+				"ruleval","rulename = '".
+				$rulename."' AND uid = '".$this->getUid()."'") == "on") {
 				return true;
+			}
 			return false;
 		}
 
 		private $groupBuf;
+		private $secMgr;
+		private $dbMgr;
 	};
 ?>

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-* Copyright (C) 2010-2013 Loïc BLOT, CNRS <http://www.unix-experience.fr/>
+* Copyright (C) 2010-2014 Loïc BLOT, CNRS <http://www.unix-experience.fr/>
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,50 +20,30 @@
 """
 
 from pyPgSQL import PgSQL
-import datetime, sys, thread, subprocess, string, time, commands, threading
-from threading import Lock
+import sys, thread, subprocess, string, time
 
-import Logger
-import netdiscoCfg
+import zConfig
+import ZEyeUtil
 
-class ZEyeSwitchesPortIDCacher(threading.Thread):
-	tc_mutex = Lock()
-	threadCounter = 0
-	defaultSNMPRO = "public"
-	max_threads = 30
+class ZEyeSwitchesPortIDCacher(ZEyeUtil.Thread):
+	SNMPcc = None
 
-	def __init__(self):
-                """ 1 hour between two refresh """
-                self.sleepingTimer = 60*60
-                threading.Thread.__init__(self)
-
+	def __init__(self,SNMPcc):
+		""" 1 hour between two refresh """
+		self.sleepingTimer = 60*60
+		self.SNMPcc = SNMPcc
+		self.myName = "Switch Port ID Caching"
+		ZEyeUtil.Thread.__init__(self)
 
 	def run(self):
-		Logger.ZEyeLogger().write("Switches Port ID caching launched")
+		self.launchMsg()
 		while True:
+			self.setRunning(True)
 			self.launchCachingProcess()
-			time.sleep(self.sleepingTimer)
-
-	def incrThreadNb(self):
-		self.tc_mutex.acquire()
-		self.threadCounter += 1
-		self.tc_mutex.release()
-
-	def decrThreadNb(self):
-		self.tc_mutex.acquire()
-		self.threadCounter = self.threadCounter - 1
-		self.tc_mutex.release()
-
-	def getThreadNb(self):
-		val = 0
-		self.tc_mutex.acquire()
-		val = self.threadCounter
-		self.tc_mutex.release()
-		return val
+			self.setRunning(False)
 
 	def fetchSNMPInfos(self,ip,devname,devcom,vendor):
 		self.incrThreadNb()
-
 		try:
 			text = ""
 			if vendor == "cisco":
@@ -71,7 +51,7 @@ class ZEyeSwitchesPortIDCacher(threading.Thread):
 			elif vendor == "dell":
 				text = subprocess.check_output(["/usr/local/bin/snmpwalk","-v","2c","-c","%s" % devcom,"%s" % ip,"ifName"])
 			
-			pgsqlCon2 = PgSQL.connect(host=netdiscoCfg.pgHost,user=netdiscoCfg.pgUser,password=netdiscoCfg.pgPwd,database=netdiscoCfg.pgDB)
+			pgsqlCon2 = PgSQL.connect(host=zConfig.pgHost,user=zConfig.pgUser,password=zConfig.pgPwd,database=zConfig.pgDB)
 			pgcursor2 = pgsqlCon2.cursor()
 			stopSwIDSearch = 0
 			pgcursor2.execute("DELETE FROM z_eye_port_id_cache WHERE device = '%s'" % devname)
@@ -107,15 +87,17 @@ class ZEyeSwitchesPortIDCacher(threading.Thread):
 			pgcursor2.close()
 			pgsqlCon2.close()
 		except Exception, e:
-			Logger.ZEyeLogger().write("Port ID Caching: FATAL %s" % e)
+			self.logCritical(e)
 
 		self.decrThreadNb()
 
 	def launchCachingProcess(self):
-		starttime = datetime.datetime.now()
-		Logger.ZEyeLogger().write("Port ID caching started")
+		while self.SNMPcc.isRunning():
+			self.logDebug("SNMP community caching is running, waiting 10 seconds")
+			time.sleep(10)
+
 		try:
-			pgsqlCon = PgSQL.connect(host=netdiscoCfg.pgHost,user=netdiscoCfg.pgUser,password=netdiscoCfg.pgPwd,database=netdiscoCfg.pgDB)
+			pgsqlCon = PgSQL.connect(host=zConfig.pgHost, user=zConfig.pgUser, password=zConfig.pgPwd, database=zConfig.pgDB)
 			pgcursor = pgsqlCon.cursor()
 			pgcursor.execute("SELECT ip,name,vendor FROM device ORDER BY ip")
 			try:
@@ -124,36 +106,29 @@ class ZEyeSwitchesPortIDCacher(threading.Thread):
 					while self.getThreadNb() >= self.max_threads:
 						time.sleep(1)
 
-					pgcursor.execute("SELECT snmpro FROM z_eye_snmp_cache where device = '%s'" % idx[1])
-					pgres2 = pgcursor.fetchone()
-			
 					devip = idx[0]
 					devname = idx[1]
 					vendor = idx[2]
-					if pgres2:
-						devcom = pgres2[0]
+
+					devcom = self.SNMPcc.getReadCommunity(devname)
+					if devcom == None:
+						self.logError("No read community found for %s" % devname)
 					else:
-						devcom = self.defaultSNMPRO
-					thread.start_new_thread(self.fetchSNMPInfos,(devip,devname,devcom,vendor))
+						thread.start_new_thread(self.fetchSNMPInfos,(devip,devname,devcom,vendor))
 				""" Wait 1 second to lock program, else if script is too fast,it exists without discovering"""
 				time.sleep(1)
 			except StandardError, e:
-				Logger.ZEyeLogger().write("Port ID Caching: FATAL %s" % e)
+				self.logCritical(e)
 				
 		except PgSQL.Error, e:
-			Logger.ZEyeLogger().write("Port ID Caching: Pgsql Error %s" % e)
-			sys.exit(1);	
-
+			self.logCritical("Pgsql Error %s" % e)
+			return
 		finally:
-
 			if pgsqlCon:
 				pgsqlCon.close()
 
 			# We must wait 1 sec, else threadCounter == 0 because of fast algo
 			time.sleep(1)
 			while self.getThreadNb() > 0:
+				self.logDebug("waiting %d threads" % self.getThreadNb())
 				time.sleep(1)
-
-			totaltime = datetime.datetime.now() - starttime 
-			Logger.ZEyeLogger().write("Port ID caching done (time: %s)" % totaltime)
-

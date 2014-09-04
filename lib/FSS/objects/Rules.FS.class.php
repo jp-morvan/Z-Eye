@@ -1,6 +1,6 @@
 <?php
 	/*
-        * Copyright (c) 2010-2013, Loïc BLOT, CNRS <http://www.unix-experience.fr>
+        * Copyright (c) 2010-2014, Loïc BLOT, CNRS <http://www.unix-experience.fr>
         * All rights reserved.
         *
         * Redistribution and use in source and binary forms, with or without
@@ -28,13 +28,11 @@
         * either expressed or implied, of the FreeBSD Project.
         */
 
-	class FSRules {
-		function FSRules($locales) { $this->loc = $locales; }
+	abstract class FSRules {
+		function __construct() {}
 
 		public function showMgmtInterface() { return ""; }
 
 		public function canAccessToModule() { return false; }
-
-		protected $loc;
 	};
 ?>

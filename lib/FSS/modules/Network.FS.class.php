@@ -1,6 +1,6 @@
 <?php
 	/*
-        * Copyright (c) 2010-2013, Loïc BLOT, CNRS <http://www.unix-experience.fr>
+        * Copyright (c) 2010-2014, Loïc BLOT, CNRS <http://www.unix-experience.fr>
         * All rights reserved.
         *
         * Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,7 @@
         */
 
 	class FSNetwork {
-		function FSNetwork() {
-		}
+		function __construct() {}
 
 		public function getFirstUsableIP() {
 			return long2ip(ip2long($this->net_addr) + 1);
@@ -49,12 +48,13 @@
 		}
 
 		public function getMaxHosts() {
-			return ip2long("255.255.255.255")-ip2long($this->net_mask)+1;
+			return ip2long("255.255.255.255")-ip2long($this->net_mask);
 		}
 
 		public function isUsableIP($ip) {
-			if(ip2long($ip) >= $this->getFirstUsableIPLong() && ip2long($ip) <= $this->getLastUsableIPLong())
+			if(ip2long($ip) >= $this->getFirstUsableIPLong() && ip2long($ip) <= $this->getLastUsableIPLong()) {
 				return true;
+			}
 
 			return false;
 		}

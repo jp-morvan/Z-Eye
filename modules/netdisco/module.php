@@ -1,6 +1,6 @@
 <?php
 	/*
-	* Copyright (C) 2010-2013 Loïc BLOT, CNRS <http://www.unix-experience.fr/>
+	* Copyright (C) 2010-2014 Loïc BLOT, CNRS <http://www.unix-experience.fr/>
 	*
 	* This program is free software; you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by
@@ -17,30 +17,32 @@
 	* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 	*/
 	
+	require_once(dirname(__FILE__)."/rules.php");
 	require_once(dirname(__FILE__)."/netdiscoCfg.api.php");
 	
-	class iNetdisco extends FSModule{
-		function iNetdisco($locales) { parent::FSModule($locales); }
+	if(!class_exists("iNetdisco")) {
+		
+	final class iNetdisco extends FSModule {
+		function __construct() {
+			parent::__construct();
+			$this->rulesclass = new rNetdisco();
+			
+			$this->menu = _("Z-Eye Engine");
+			$this->menutitle = _("Netdisco collect engine");
+			
+			$this->modulename = "netdisco";
+		}
 		
 		public function Load() {
-			FS::$iMgr->setTitle($this->loc->s("title-netdisco"));
-			$output = "";
-			$err = FS::$secMgr->checkAndSecuriseGetData("err");
-			switch($err) {
-				case 1: $output .= FS::$iMgr->printError($this->loc->s("err-invalid-data")); break;
-				case 2: $output .= FS::$iMgr->printError($this->loc->s("err-write-fail")); break;
-				case 5: $output .= FS::$iMgr->printError($this->loc->s("err-read-fail")); break;
-				case 6: $output .= FS::$iMgr->printError($this->loc->s("err-readorwrite")); break;
-				case -1: $output .= FS::$iMgr->printDebug($this->loc->s("mod-ok")); break;
-				default: break;
-			}
-			$output .= $this->showMain();
-			return $output;
+			FS::$iMgr->setTitle(_("title-netdisco"));
+			return $this->showMain();
 		}
 
 		private function showMain() {
+			FS::$iMgr->setURL("");
+			
 			$output = FS::$iMgr->h1("title-netdisco");
-			$output .= FS::$iMgr->form("index.php?mod=".$this->mid."&act=1");
+			$output .= FS::$iMgr->cbkForm("1");
 			$file = file("/usr/local/etc/netdisco/netdisco.conf");
 
 			$dnssuffix = ".local";
@@ -57,38 +59,42 @@
 			$snmpver = 2;
 
 			$count = FS::$dbMgr->Count(PGDbConfig::getDbPrefix()."snmp_communities","name");
-			if($count < 1) {
-				$output .= FS::$iMgr->printError($this->loc->s("err-no-snmp-community").
-					"<br /><br /><a href=\"index.php?mod=".FS::$iMgr->getModuleIdByPath("snmpmgmt")."&sh=2\">".$this->loc->s("Go")."</a>");
+			if ($count < 1) {
+				$output .= FS::$iMgr->printError(_("err-no-snmp-community").
+					"<br /><br />".FS::$iMgr->aLink(FS::$iMgr->getModuleIdByPath("snmpmgmt")."&sh=2", _("Go")),true);
 				return $output;
 			} 
 
 			$netdiscoCfg = readNetdiscoConf();
-			if(!is_array($netdiscoCfg)) {
-				$output .= FS::$iMgr->printError($this->loc->s("err-unable-read")." /usr/local/etc/netdisco/netdisco.conf");
+			if (!is_array($netdiscoCfg)) {
+				$output .= FS::$iMgr->printError(_("err-unable-read")." /usr/local/etc/netdisco/netdisco.conf",true);
 				return $output;
 			}
 
-			$output .= "<table class=\"standardTable\"><tr><th colspan=\"2\">".$this->loc->s("global-conf")."</th></tr>";
-			$output .= FS::$iMgr->idxLine($this->loc->s("dns-suffix"),"suffix",$netdiscoCfg["dnssuffix"],array("tooltip" => "tooltip-dnssuffix"));
-			$output .= FS::$iMgr->idxLine($this->loc->s("main-node"),"fnode",$netdiscoCfg["firstnode"],array("type" => "ip", "tooltip" => "tooltip-firstnode"));
-			$output .= "<tr><th colspan=\"2\">".$this->loc->s("timer-conf")."</th></tr>";
-			$output .= FS::$iMgr->idxLine($this->loc->s("node-expiration"),"nodetimeout","",array("type" => "num", "value" => $netdiscoCfg["nodetimeout"], "size" => 4, "length" => 4, "tooltip" => "tooltip-nodetimeout"));
-			$output .= FS::$iMgr->idxLine($this->loc->s("device-expiration"),"devicetimeout","",array("type" => "num", "size" => 4, "value" => $netdiscoCfg["devicetimeout"], "length" => 4, "tooltip" => "tooltip-devicetimeout"));
-			$output .= "<tr><th colspan=\"2\">".$this->loc->s("database")."</th></tr>";
-			$output .= FS::$iMgr->idxLine($this->loc->s("pg-host"),"pghost",$netdiscoCfg["pghost"]);
-			$output .= FS::$iMgr->idxLine($this->loc->s("pg-db"),"dbname",$netdiscoCfg["dbname"]);
-			$output .= FS::$iMgr->idxLine($this->loc->s("pg-user"),"dbuser",$netdiscoCfg["dbuser"]);
-			$output .= FS::$iMgr->idxLine($this->loc->s("pg-pwd"),"dbpwd",$netdiscoCfg["dbpwd"],array("type" => "pwd"));
-			$output .= "<tr><th colspan=\"2\">".$this->loc->s("snmp-conf")."</th></tr>";
-			$output .= FS::$iMgr->idxLine($this->loc->s("snmp-timeout"),"snmptimeout","",array("type" => "num", "value" => $netdiscoCfg["snmptimeout"], "size" => 2, "length" => 2, "tooltip" => "tooltip-snmptimeout"));
-			$output .= FS::$iMgr->idxLine($this->loc->s("snmp-try"),"snmptry","",array("type" => "num", "value" => $netdiscoCfg["snmptry"], "size" => 2, "length" => 2, "tooltip" => "tooltip-snmptry"));
-			$output .= "<tr><td>".$this->loc->s("snmp-version")."</td><td>";
-			$output .= FS::$iMgr->select("snmpver");
-			$output .= FS::$iMgr->selElmt("1","1",$netdiscoCfg["snmpver"] == 1 ? true : false);
-			$output .= FS::$iMgr->selElmt("2c","2",$netdiscoCfg["snmpver"] == 2 ? true : false);
-			$output .= "</select></td></tr>";
-			$output .= FS::$iMgr->tableSubmit("Save");
+			$output .= "<table class=\"standardTable\"><tr><th colspan=\"2\">"._("global-conf")."</th></tr>".
+				FS::$iMgr->idxLine("dns-suffix","suffix",array("value" => $netdiscoCfg["dnssuffix"],"tooltip" => "tooltip-dnssuffix")).
+				FS::$iMgr->idxLine("main-node","fnode",array("value" => $netdiscoCfg["firstnode"],"type" => "ip", "tooltip" => "tooltip-firstnode")).
+				"<tr><th colspan=\"2\">"._("timer-conf")."</th></tr>".
+				FS::$iMgr->idxLine("node-expiration","nodetimeout",array("type" => "num", "value" => $netdiscoCfg["nodetimeout"],
+					"size" => 4, "length" => 4, "tooltip" => "tooltip-nodetimeout")).
+				FS::$iMgr->idxLine("device-expiration","devicetimeout",array("type" => "num", "size" => 4,
+					"value" => $netdiscoCfg["devicetimeout"], "length" => 4, "tooltip" => "tooltip-devicetimeout")).
+				"<tr><th colspan=\"2\">"._("database")."</th></tr>".
+				FS::$iMgr->idxLine("pg-host","pghost",array("value" => $netdiscoCfg["pghost"])).
+				FS::$iMgr->idxLine("pg-db","dbname",array("value" => $netdiscoCfg["dbname"])).
+				FS::$iMgr->idxLine("pg-user","dbuser",array("value" => $netdiscoCfg["dbuser"])).
+				FS::$iMgr->idxLine("pg-pwd","dbpwd",array("value" => $netdiscoCfg["dbpwd"],"type" => "pwd")).
+				"<tr><th colspan=\"2\">"._("snmp-conf")."</th></tr>".
+				FS::$iMgr->idxLine("snmp-timeout","snmptimeout",
+					array("type" => "num", "value" => $netdiscoCfg["snmptimeout"], "size" => 2, "length" => 2, "tooltip" => "tooltip-snmptimeout")).
+				FS::$iMgr->idxLine("snmp-try","snmptry",array("type" => "num", "value" => $netdiscoCfg["snmptry"],
+					"size" => 2, "length" => 2, "tooltip" => "tooltip-snmptry")).
+				"<tr><td>"._("snmp-version")."</td><td>".
+				FS::$iMgr->select("snmpver").
+				FS::$iMgr->selElmt("1","1",$netdiscoCfg["snmpver"] == 1 ? true : false).
+				FS::$iMgr->selElmt("2c","2",$netdiscoCfg["snmpver"] == 2 ? true : false).
+				"</select></td></tr>".
+				FS::$iMgr->tableSubmit("Save");
 			return $output;
 		}
 		
@@ -106,21 +112,25 @@
 					$snmptry = FS::$secMgr->checkAndSecurisePostData("snmptry");
 					$snmpver = FS::$secMgr->checkAndSecurisePostData("snmpver");
 					$fnode = FS::$secMgr->checkAndSecurisePostData("fnode");
-					if(checkNetdiscoConf($suffix,$nodetimeout,$devicetimeout,$pghost,$dbname,$dbuser,$dbpwd,$snmptimeout,$snmptry,$snmpver,$fnode) == true) {
-						if(writeNetdiscoConf($suffix,$nodetimeout,$devicetimeout,$pghost,$dbname,$dbuser,$dbpwd,$snmptimeout,$snmptry,$snmpver,$fnode) != 0) {
-							FS::$log->i(FS::$sessMgr->getUserName(),"menumgmt",2,"Fail to write netdisco configuration");
-							FS::$iMgr->redir("mod=".$this->mid."&err=2");
+					if (checkNetdiscoConf($suffix,$nodetimeout,$devicetimeout,$pghost,$dbname,$dbuser,$dbpwd,$snmptimeout,$snmptry,$snmpver,$fnode) == true) {
+						if (writeNetdiscoConf($suffix,$nodetimeout,$devicetimeout,$pghost,$dbname,$dbuser,$dbpwd,$snmptimeout,$snmptry,$snmpver,$fnode) != 0) {
+							$this->log(2,"Fail to write netdisco configuration");
+							FS::$iMgr->ajaxEchoError("err-write-fail");
 							return;
 						}
-						FS::$log->i(FS::$sessMgr->getUserName(),"netdisco",0,"Netdisco configuration changed");
-						FS::$iMgr->redir("mod=".$this->mid."&err=-1");
+						$this->log(0,"Netdisco configuration changed");
+						FS::$iMgr->ajaxEchoOK("Done");
 						return;
 					}
-					FS::$log->i(FS::$sessMgr->getUserName(),"netdisco",2,"Bad netdisco configuration");
-					FS::$iMgr->redir("mod=".$this->mid."&err=1");
+					$this->log(2,"Bad netdisco configuration");
+					FS::$iMgr->ajaxEchoError("err-bad-datas");
 					return;
 				default: break;
 			}
 		}
 	};
+	
+	}
+	
+	$module = new iNetdisco();
 ?>

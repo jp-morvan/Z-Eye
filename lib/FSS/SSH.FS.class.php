@@ -1,6 +1,6 @@
 <?php
 	/*
-	* Copyright (c) 2010-2013, Loïc BLOT, CNRS <http://www.unix-experience.fr>
+	* Copyright (c) 2010-2014, Loïc BLOT, CNRS <http://www.unix-experience.fr>
 	* All rights reserved.
 	*
 	* Redistribution and use in source and binary forms, with or without
@@ -29,7 +29,7 @@
 	*/
 
 	class SSH {
-		function SSH($server,$port=22) {
+		function __construct($server,$port=22) {
 			$this->conn = NULL;
 			$this->addr = $server;
 			$this->port = $port;
@@ -39,16 +39,16 @@
 
 		public function Connect() {
 			$this->conn = ssh2_connect($this->addr,$this->port);
-			if(!$this->conn)
+			if (!$this->conn)
 				return false;
 			return true;
 		}
 
 		public function Authenticate($user,$pwd) {
-			if(!$this->conn)
+			if (!$this->conn)
 				return false;
 
-			if(!ssh2_auth_password($this->conn, $user, $pwd))
+			if (!ssh2_auth_password($this->conn, $user, $pwd))
 				return false;
 
 			$this->is_auth = true;
@@ -56,7 +56,7 @@
 		}
 
 		public function OpenShell() {
-			if(!$this->conn || !$this->is_auth)
+			if (!$this->conn || !$this->is_auth)
 				return false;
 
 			$this->stdio = @ssh2_shell($this->conn,"xterm");
@@ -64,7 +64,7 @@
 		}
 
 		public function tryPrivileged($cmd,$pwd,$failmsg) {
-			if(!$this->conn || !$this->is_auth || !$this->stdio)
+			if (!$this->conn || !$this->is_auth || !$this->stdio)
 				return false;
 
 			fwrite($this->stdio,$cmd."\n");
@@ -74,15 +74,22 @@
 			fwrite($this->stdio,$pwd."\n");
 			usleep(250000);
 			while($line = fgets($this->stdio)) {
-				if($line == $failmsg)
+				if ($line == $failmsg)
 					return false;
 			}
 			return true;
 		}	
 
+		public function execCmd($cmd) {
+			$stream = ssh2_exec($this->conn, $cmd);
+			stream_set_blocking($stream, true);
+			return stream_get_contents($stream); 
+		}
+
 		public function sendCmd($cmd) {
-			if(!$this->conn || !$this->is_auth || !$this->stdio)
+			if (!$this->conn || !$this->is_auth || !$this->stdio) {
 				return false;
+			}
 
 			$output = "";
 			$output_arr = array();
@@ -93,17 +100,61 @@
 
 			while(!$promptfind) {
 				while($line = fgets($this->stdio)) {
-					if(preg_match("# --More-- #",$line))
+					if (preg_match("# --More-- #",$line))
 						fwrite($this->stdio," ");
-					else if(preg_match("/^(.+)[#]$/",$line))
+					else if (preg_match("/^(.+)[#]$/",$line))
 						$promptfind = true;
-					else array_push($output_arr,$line);
+					else
+						$output_arr[] = $line;
 				}
 			}
 
-			for($i=0;$i<count($output_arr)-2;$i++)
+			for ($i=0;$i<count($output_arr)-2;$i++) {
 				$output .= $output_arr[$i];
+			}
+
 			return $output;
+		}
+		
+		public function isRemoteExists($path) {
+			if ($this->execCmd(sprintf("if [ -e \"%s\" ]; then echo -n '0'; else echo -n '1'; fi;",$path)) == "0") {
+				return true;
+			}
+			return false;
+		}
+		
+		public function isRemoteReadable($path) {
+			if ($this->execCmd(sprintf("if [ -r \"%s\" ]; then echo -n '0'; else echo -n '1'; fi;",$path)) == "0") {
+				return true;
+			}
+			return false;
+		}
+		
+		public function isRemoteExecutable($path) {
+			if ($this->execCmd(sprintf("if [ -x \"%s\" ]; then echo -n '0'; else echo -n '1'; fi;",$path)) == "0") {
+				return true;
+			}
+			return false;
+		}
+		
+		public function isRemoteWritable($path) {
+			if ($this->execCmd(sprintf("if [ -w \"%s\" ]; then echo -n '0'; else echo -n '1'; fi;",$path)) == "0") {
+				return true;
+			}
+			return false;
+		}
+		
+		public function isDirectory($path) {
+			if ($this->execCmd(sprintf("if [ -d \"%s\" ]; then echo -n '0'; else echo -n '1'; fi;",$path)) == "0") {
+				return true;
+			}
+			return false;
+		}
+
+		public function Close() {
+			if ($this->conn) {
+				close($this->conn);
+			}
 		}
 		
 		private $conn;

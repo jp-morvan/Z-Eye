@@ -1,6 +1,6 @@
 <?php
 	/*
-	* Copyright (C) 2010-2013 Loïc BLOT, CNRS <http://www.unix-experience.fr/>
+	* Copyright (C) 2010-2014 Loïc BLOT, CNRS <http://www.unix-experience.fr/>
 	*
 	* This program is free software; you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@
 			$this->devip = "";
 			$this->snmpro = "";
 			$this->snmprw = "";
-			$this->loc = NULL;
 		}
 
 		/*
@@ -33,7 +32,7 @@
 		*/
 
 		public function showStateOpts() { return ""; }
-		public function handleState($logvals) {}
+		public function handleState($logvals, $port = "", $shut = -1) {}
 
 		public function showSpeedOpts() { return ""; }
 		public function handleSpeed($logvals) {}
@@ -368,11 +367,11 @@
 			return NULL;
 		}
 
-		public function setDHCPSnoopingMatchMAC() {
+		public function setDHCPSnoopingMatchMAC($value) {
 			return NULL;
 		}
 
-		public function getDHCPSnoopingVlans($dip,$community) {
+		public function getDHCPSnoopingVlans() {
 			return NULL;
 		}
 
@@ -392,9 +391,10 @@
 			return "";
 		}		
 
-		public function showSSHRunCfg($stdio) {
-			return "";
-		}
+		public function showSSHRunCfg() { return ""; }
+		public function showSSHStartCfg() { return ""; }
+		public function showSSHInterfaceCfg($iface) { return ""; }
+		public function showSSHInterfaceStatus($iface) { return ""; }
 
 		public function setPortId($pid) {
 			if(FS::$secMgr->isNumeric($pid))
@@ -405,9 +405,13 @@
 			$this->device = $dev;
 			$this->devip = FS::$dbMgr->GetOneData("device","ip","name = '".$dev."'");
 			$this->snmpro = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snmp_cache","snmpro","device = '".$this->device."'");
-			if(!$this->snmpro) $this->snmpro = SNMPConfig::$SNMPReadCommunity;
+			if(!$this->snmpro) {
+				$this->snmpro = SNMPConfig::$SNMPReadCommunity;
+			}
 			$this->snmprw = FS::$dbMgr->GetOneData(PGDbConfig::getDbPrefix()."snmp_cache","snmprw","device = '".$this->device."'");
-			if(!$this->snmprw) $this->snmprw = SNMPConfig::$SNMPWriteCommunity;
+			if(!$this->snmprw) {
+				$this->snmprw = SNMPConfig::$SNMPWriteCommunity;
+			}
 		}
 
 		public function getDeviceIP() { return $this->devip; }
@@ -415,11 +419,9 @@
 		public function unsetPortId() { $this->portid = -1; }
 		public function unsetDevice() { $this->device = ""; $this->devip = ""; $this->snmpro = ""; $this->snmprw = ""; }
 
-		public function setLocales($locales) { $this->loc = $locales; }
 		public $vendor;
 		protected $portid;
 		protected $device, $devip;
 		protected $snmpro, $snmprw;
-		protected $loc;
 	}
 ?>

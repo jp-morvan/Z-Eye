@@ -1,6 +1,6 @@
 <?php
         /*
-        * Copyright (c) 2010-2013, Loïc BLOT, CNRS <http://www.unix-experience.fr>
+        * Copyright (c) 2010-2014, Loïc BLOT, CNRS <http://www.unix-experience.fr>
         * All rights reserved.
         *
         * Redistribution and use in source and binary forms, with or without
@@ -30,12 +30,20 @@
 
 	require_once(dirname(__FILE__)."/FS.main.php");
 	require_once(dirname(__FILE__)."/AbstractSQLMgr".CLASS_EXT);
+
 	class FSSecurityMgr {
-		function FSSecurityMgr() {
-		}
+		function __construct() {}
 
 		public function isNumeric($str) {
-			return is_numeric($str) == true;
+			/*
+			 * It seems is_numeric matches also the point to decimals.
+			 * We don't use it
+			 */
+
+			if(is_numeric($str) === true && !preg_match("#[.]#",$str))
+				return true;
+
+			return false;
 		}
 
 		public function isAlphaNumeric($str) {
@@ -50,32 +58,108 @@
 			return preg_match("#^[\w]+([- ][\w]+)*$#i",$str) == true;
 		}
 
+		public function isSentence($str) {
+			return preg_match("#^[\w]+([-_ ][\w]+)*$#i",$str) == true;
+		}
+
 		public function isMail($str) {
 			return preg_match('#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#',$str) == true;
 		}
 
+		public function isHostname($str) {
+			if (preg_match("#^(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])$#",$str)) {
+				return true;
+			}
+
+			return false;
+		}
+
+		public function isDNSName($str) {
+			if (preg_match("#^((([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-])*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])\.{0,1}$#", $str)) {
+				return true;
+			}
+
+			return false;
+		}
+
+		public function isDNSRecordCoherent($recordtype,$recordvalue) {
+			if ($recordtype == "A" && $this->isIP($recordvalue) ||
+				$recordtype == "AAAA" && $this->isIPv6($recordvalue) ||
+				$recordtype == "CNAME" && $this->isDNSName($recordvalue) ||
+				$recordtype == "TXT" && strlen($recordvalue) > 0 ||
+				$recordtype == "NS" && $this->isDNSName($recordvalue) ||
+				$recordtype == "PTR" && $this->isDNSName($recordvalue)) {
+				return true;
+			}
+
+			if ($recordtype == "MX") {
+				$mxval = preg_split(" ",$recordvalue);
+				if (count($mxval) != 2) {
+					return false;
+				}
+
+				if (!$this->isNumeric($maxval[0]) || !$this->isDNSName($maxval[1])) {
+					return false;
+				}
+				return true;
+			}
+
+			if ($recordtype == "SRV") {
+				$srvval = preg_split(" ",$recordvalue);
+				if (count($srvval) != 4) {
+					return false;
+				}
+
+				if (!$this->isNumeric($srvval[0]) || !$this->isNumeric($srvval[1]) ||
+					!$this->isNumeric($srvval[2]) || !$this->isDNSName($srvval[3])) {
+					return false;
+				}
+
+				return true;
+			}
+
+			return false;
+		}
+		public function getDNSNameList($buffer) {
+			$tmparr = explode("\r\n",$buffer);
+			$count = count($tmparr);
+			for ($i=0;$i<$count;$i++) {
+				if ($tmparr[$i] == "") {
+					continue;
+				}
+
+				if (!$this->isDNSName($tmparr[$i])) {
+					return NULL;
+				}
+			}
+			$tmparr = array_unique($tmparr);
+			return $tmparr;
+		}
+
 		public function isPath($str) {
-			if($str == "/" || preg_match("#^(/(?:(?:(?:(?:[a-zA-Z0-9\\-_.!~*'():\@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\\-_.!~*'():\@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:/(?:(?:(?:[a-zA-Z0-9\\-_.!~*'():\@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\\-_.!~*'():\@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))$#",$str))
+			if ($str == "/" || preg_match("#^(/(?:(?:(?:(?:[a-zA-Z0-9\\-_.!~*'():\@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\\-_.!~*'():\@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:/(?:(?:(?:[a-zA-Z0-9\\-_.!~*'():\@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\\-_.!~*'():\@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))$#",$str))
 				return true;
 			else
 				return false;
 		}
 
 		public function hasJS($str) {
-			if(preg_match("#<script>#",$str))
+			if (preg_match("#<(.*)script(.*)>#",$str))
 				return true;
 			else
 				return false;
 		}
 
 		public function isIP($str) {
-			if(preg_match("#^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])$#",$str)) {
-				$str_array = split('\.',$str);
-				if(count($str_array) != 4)
+			if (preg_match("#^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])$#",$str)) {
+				$str_array = explode(".",$str);
+				if (count($str_array) != 4)
 					return false;
-				for($i=0;$i<4;$i++)
-					if($str_array[$i] > 255)
+
+				for ($i=0;$i<4;$i++) {
+					if ($str_array[$i] > 255)
 						return false;
+				}
 
 				return true;
 			}
@@ -83,54 +167,90 @@
 				return false;
 		}
 
-		public function isCIDR($str) {
-			if(preg_match("#^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(\/(\d|[1-2]\d|3[0-2]))$#",$str)) {
-					$str_array = split('\.',$str);
-					if(count($str_array) != 4)
-							return false;
+		public function getIPList($buffer) {
+			$tmparr = explode("\r\n",$buffer);
+			$count = count($tmparr);
+			for ($i=0;$i<$count;$i++) {
+				if ($tmparr[$i] == "") {
+					continue;
+				}
 
-					for($i=0;$i<4;$i++)
-							if($str_array[$i] > 255)
-									return false;
-
-					return true;
+				if (!$this->isIP($tmparr[$i])) {
+					return NULL;
+				}
 			}
-				return false;
+			$tmparr = array_unique($tmparr);
+			return $tmparr;
+		}
+
+		public function isCIDR($str) {
+			if (preg_match("#^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(\/(\d|[1-2]\d|3[0-2]))$#",$str)) {
+				$str_array = explode(".",$str);
+				if (count($str_array) != 4)
+					return false;
+
+				for ($i=0;$i<4;$i++) {
+					if ($str_array[$i] > 255)
+						return false;
+				}
+
+				return true;
+			}
+			return false;
 		}
 
 		public function isIPorCIDR($str) {
-			if($this->isIP($str) || $this->isCIDR($str))
+			if ($this->isIP($str) || $this->isCIDR($str))
 				return true;
 			return false;
 		}
 
 		public function isIPv6($str) {
-				if(preg_match("#^([0-9A-F]{4}:){5}[0-9A-F]{4}$#",$str))
-					return true;
+			if (preg_match("#^([0-9a-f]{1,4}:){7}[0-9a-f]{1,4}$#i",$str))
+				return true;
 
-				return false;
+			return false;
+		}
+
+		public function isIPv6NetworkAddr($str) {
+			if (preg_match("#^([0-9a-f]{1,4}:){1,7}:$#i",$str))
+				return true;
+
+			return false;
 		}
 
 		public function isSocketPort($str) {
-			if(!$this->isNumeric($str))
+			if (!$this->isNumeric($str))
 				return false;
 
-			if($str < 0 || $str > 65535)
+			if ($str < 0 || $str > 65535)
 				return false;
 
 			return true;
 		}
 
 		public function isDNSAddr($str) {
-			if(preg_match("#^[a-z][a-z0-9.-]{1,}[a-z0-9]{2,}$#",$str))
+			if (preg_match("#^[a-z][a-z0-9.-]{1,}[a-z0-9]{2,}$#i",$str))
 				return true;
 
 			return false;
 		}
 
 		public function isMacAddr($str) {
-			if(preg_match('#^([0-9A-F]{2}:){5}[0-9A-F]{2}$#i', $str) || preg_match('#^([0-9A-F]{2}-){5}[0-9A-F]{2}$#i', $str))
+			if (preg_match('#^([0-9A-F]{2}:){5}[0-9A-F]{2}$#i', $str) ||
+				preg_match('#^([0-9A-F]{2}-){5}[0-9A-F]{2}$#i', $str)) {
 				return true;
+			}
+
+			return false;
+		}
+
+		public function isMacFragment($str) {
+			// Recognize a MAC Addr if where have a minimum of two mac address frags.
+			if (preg_match('#^([0-9A-F]{2}:){1,5}[0-9A-F]{2}$#i', $str) ||
+				preg_match('#^([0-9A-F]{2}-){1,5}[0-9A-F]{2}$#i', $str)) {
+				return true;
+			}
 
 			return false;
 		}
@@ -139,76 +259,83 @@
 			$mask = 0;
 			$add = 256;
 
-			if($num == 255)
+			if ($num == 255)
 				return true;
-				
+
 			while($add != 1) {
-				if($num == $mask)
+				if ($num == $mask)
 					return true;
-					
+
 				$add /= 2;
 				$mask += $add;
 			}
-			
+
 			return false;
 		}
-		
+
 		public function isMaskAddr($str) {
 			$arr = preg_split("#\.#",$str);
-			if(count($arr) != 4)
-				return false;
-				
-			if($arr[0] == 255) {
-				if($arr[1] == 255) {
-					if($arr[2] == 255) {
-						if(!$this->isMaskElem($arr[3]))
-							return false;
-					}
-					else if($arr[3] != 0)
-						return false;
-						
-					if(!$this->isMaskElem($arr[2]))
-						return false;
-				}
-				else if($arr[2] != 0 || $arr[3] != 0)
-					return false;
-					
-				if(!$this->isMaskElem($arr[1]))
-					return false;
-			}
-			else if($arr[1] != 0 || $arr[2] != 0 || $arr[3] != 0) 
+			if (count($arr) != 4)
 				return false;
 
-			if(!$this->isMaskElem($arr[0]))
+			if ($arr[0] == 255) {
+				if ($arr[1] == 255) {
+					if ($arr[2] == 255) {
+						if (!$this->isMaskElem($arr[3]))
+							return false;
+					}
+					else if ($arr[3] != 0)
+						return false;
+
+					if (!$this->isMaskElem($arr[2]))
+						return false;
+				}
+				else if ($arr[2] != 0 || $arr[3] != 0)
+					return false;
+
+				if (!$this->isMaskElem($arr[1]))
+					return false;
+			}
+			else if ($arr[1] != 0 || $arr[2] != 0 || $arr[3] != 0)
+				return false;
+
+			if (!$this->isMaskElem($arr[0]))
 				return false;
 
 			return true;
 		}
 
 		public function isLDAPDN($str) {
-			if(preg_match("#^(\w+[=]{1}\w+)([,{1}]\w+[=]{1}\w+)*$#",$str))
+			if (preg_match("#^(\w+[=]{1}\w+)([,{1}]\w+[=]{1}\w+)*$#",$str)) {
 				return true;
-			else
-				return false;
+			}
+			return false;
+		}
+
+		public function isBase64($str) {
+			if (base64_decode($str, true)) {
+				return true;
+			}
+			return false;
 		}
 
 		private function checkSentData($data) {
-			if(!isset($data))
+			if (!isset($data))
 				return NULL;
-			if($data == "")
+			if ($data == "")
 				return NULL;
 			return $data;
 		}
 
 		public function checkGetData($data) {
-			if(!isset($_GET[$data]))
+			if (!isset($_GET[$data]))
 				return NULL;
 
 			return $this->checkSentData($_GET[$data]);
 		}
 
 		public function checkPostData($data) {
-			if(!isset($_POST[$data]))
+			if (!isset($_POST[$data]))
 				return NULL;
 
 			return $this->checkSentData($_POST[$data]);
@@ -216,80 +343,91 @@
 
 		public function checkAndSecurisePostData($data) {
 			$data_new = $this->checkPostData($data);
-			if(is_array($data_new)) {
+			if (is_array($data_new)) {
 				$count = count($data_new);
-				for($i=0;$i<$count;$i++)
-					$this->SecuriseStringForDB($data_new[$i]);
+				for ($i=0;$i<$count;$i++) {
+					$this->SecuriseString($data_new[$i]);
+				}
 			}
 			else
-				$this->SecuriseStringForDB($data_new);
+				$this->SecuriseString($data_new);
 			return $data_new;
+		}
 
+		public function genSecuredPostDatas($postVars = array()) {
+			foreach ($postVars as $varName => &$var) {
+				$var = $this->checkAndSecurisePostData($varName);
+			}
 		}
 
 		public function checkAndSecuriseGetData($data) {
 			$data_new = $this->checkGetData($data);
-			if(is_array($data_new)) {
+			if (is_array($data_new)) {
 				$count = count($data_new);
-				for($i=0;$i<$count;$i++)
-					$this->SecuriseStringForDB($data_new[$i]);
+				for ($i=0;$i<$count;$i++) {
+					$this->SecuriseString($data_new[$i]);
+				}
 			}
 			else
-				$this->SecuriseStringForDB($data_new);
+				$this->SecuriseString($data_new);
 			return $data_new;
 
 		}
-		
+
 		// Function to get Post Data + check
 		public function getPost($str,$pattern) {
 			$data = $this->checkAndSecurisePostData($str);
 			// Only numerics
-			if(preg_match("#[n]#",$pattern)) {
-				if(!$this->isNumeric($data))
-					return NULL;	
-				
+			if (preg_match("#[n]#",$pattern)) {
+				if (!$this->isNumeric($data))
+					return NULL;
+
 				// Positive
-				if(preg_match("#[+]#",$pattern)) {
-					if($data < 0 || !preg_match("#[=]#",$pattern) && $data == 0)
+				if (preg_match("#[+]#",$pattern)) {
+					if ($data < 0 || !preg_match("#[=]#",$pattern) && $data == 0)
 						return NULL;
 				}
 				// Negative
-				else if(preg_match("#[-]#",$pattern)) {
-					if($data > 0 || !preg_match("#[=]#",$pattern) && $data > 0)
+				else if (preg_match("#[-]#",$pattern)) {
+					if ($data > 0 || !preg_match("#[=]#",$pattern) && $data > 0)
 						return NULL;
 				}
 				return $data;
 			}
 			// String a-Z
-			else if(preg_match("#[s]#",$pattern) && $this->isAlphabetic($data))
+			else if (preg_match("#[s]#",$pattern) && $this->isAlphabetic($data))
 				return $data;
 			// String a-Z + numerics
-			else if(preg_match("#[w]#",$pattern) && $this->isAlphaNumeric($data))
+			else if (preg_match("#[w]#",$pattern) && $this->isAlphaNumeric($data))
 				return $data;
 			// IPv4/IPv6 + CIDR
-			else if(preg_match("#[i]#",$pattern)) {
-				if(preg_match("#[4]#",$pattern)) {
-					if(preg_match("#[c]#",$pattern) && $this->isIPorCIDR($data))
+			else if (preg_match("#[i]#",$pattern)) {
+				if (preg_match("#[4]#",$pattern)) {
+					if (preg_match("#[c]#",$pattern) && $this->isIPorCIDR($data))
 						return $data;
-					if($this->isIP($data))
+					if ($this->isIP($data))
 						return $data;
 				}
-				else if(preg_match("#[6]#",$pattern) && $this->isIPv6($data))
+				else if (preg_match("#[6]#",$pattern) && $this->isIPv6($data))
 					return $data;
 			}
 			return NULL;
 		}
 
-		public function SecuriseStringForDB(&$str) {
+		public function SecuriseString(&$str) {
 			$str = pg_escape_string($str);
-			if($this->hasJS($str))
+			if ($this->hasJS($str))
 				$str = "";
 		}
 
+		public function cleanForJS($str) {
+			return addslashes(preg_replace("#[\n\r\t]#","",$str));
+		}
+
 		public function isStrongPwd($pwd) {
-			if(strlen($pwd) < Config::getPasswordMinLength())
+			if (strlen($pwd) < Config::getPasswordMinLength())
 				return false;
-			if(Config::getPasswordComplexity() && $this->isAlphaNumeric($pwd))
+			if (Config::getPasswordComplexity() && $this->isAlphaNumeric($pwd))
 				return false;
 			return true;
 		}
@@ -310,8 +448,10 @@
 			$str = "";
 			$chars = "abcdefghijklmnpqrstuvwxyz0123456789@#!-_/";
 			srand((double)microtime()*1000);
-			for($i=0; $i<$nb; $i++)
+
+			for ($i=0; $i<$nb; $i++) {
 				$str .= $chars[rand()%strlen($chars)];
+			}
 			return $str;
 		}
 	};

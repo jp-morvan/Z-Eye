@@ -1,0 +1,5608 @@
+# Z-Eye Fr translation
+# Copyright (C) 2014
+# This file is distributed under the same license as the Z-Eye package.
+# Loic Blot <loic.blot@unix-experience.fr>, 2014
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-08-05 16:02+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: InterfaceManager/__init__.py:31 InterfaceManager/__init__.py:33
+#: InterfaceManager/__init__.py:35 engine/logs/Models/serviceLogs.py:68
+#: engine/snmpmgmt/Forms/__init__.py:36
+msgid "Err-Wrong-Request"
+msgstr "Bad request"
+
+#: InterfaceManager/__init__.py:42
+msgid "Action"
+msgstr "Action"
+
+#: InterfaceManager/__init__.py:43 InterfaceManager/__init__.py:289
+#: InterfaceManager/__init__.py:308 InterfaceManager/__init__.py:488
+#: InterfaceManager/__init__.py:753 InterfaceManager/__init__.py:874
+#: InterfaceManager/__init__.py:1454 InterfaceManager/__init__.py:1624
+msgid "Add"
+msgstr "Add"
+
+#: InterfaceManager/__init__.py:44
+msgid "Cancel"
+msgstr "Cancel"
+
+#: InterfaceManager/__init__.py:45
+msgid "comma"
+msgstr "comma (,)"
+
+#: InterfaceManager/__init__.py:46 InterfaceManager/__init__.py:319
+msgid "Confirm"
+msgstr "Confirm"
+
+#: InterfaceManager/__init__.py:47
+msgid "confirm-disconnect"
+msgstr "Are you sure you want to disconnect ?"
+
+#: InterfaceManager/__init__.py:48 InterfaceManager/__init__.py:1600
+#, fuzzy
+msgid "Connection"
+msgstr "Connection"
+
+#: InterfaceManager/__init__.py:49
+msgid "Connect-to"
+msgstr "Connect to"
+
+#: InterfaceManager/__init__.py:50
+msgid "CSV-content"
+msgstr "CSV content"
+
+#: InterfaceManager/__init__.py:51
+msgid "day"
+msgstr "day"
+
+#: InterfaceManager/__init__.py:52 InterfaceManager/__init__.py:517
+msgid "days"
+msgstr "days"
+
+#: InterfaceManager/__init__.py:53
+msgid "Default"
+msgstr "Default"
+
+#: InterfaceManager/__init__.py:54 InterfaceManager/__init__.py:331
+#: InterfaceManager/__init__.py:1029 InterfaceManager/__init__.py:1251
+msgid "Description"
+msgstr "Description"
+
+#: InterfaceManager/__init__.py:55
+msgid "Disconnection"
+msgstr "Disconnect"
+
+#: InterfaceManager/__init__.py:56
+msgid "Done"
+msgstr "Done"
+
+#: InterfaceManager/__init__.py:57
+msgid "English"
+msgstr "English"
+
+#: InterfaceManager/__init__.py:58 InterfaceManager/__init__.py:897
+msgid "Error"
+msgstr "Error"
+
+#: InterfaceManager/__init__.py:59 InterfaceManager/__init__.py:531
+#: InterfaceManager/__init__.py:758 InterfaceManager/__init__.py:1272
+#: InterfaceManager/__init__.py:1462 InterfaceManager/__init__.py:1629
+msgid "err-bad-datas"
+msgstr "Invalid datas"
+
+#: InterfaceManager/__init__.py:60
+msgid "err-devel"
+msgstr "Development error !"
+
+#: InterfaceManager/__init__.py:61
+msgid "err-devel-locale"
+msgstr ""
+"Development error ! Please verify the following backtrace. A locale is "
+"miscalled.<br /><br />%s"
+
+#: InterfaceManager/__init__.py:62
+msgid "err-must-be-connected"
+msgstr "You must be logged to access to this functionnality"
+
+#: InterfaceManager/__init__.py:63
+msgid "err-no-rights"
+msgstr "You don't have rights to do that"
+
+#: InterfaceManager/__init__.py:64
+msgid "err-sql-query-failed"
+msgstr "Query failed: '%s'"
+
+#: InterfaceManager/__init__.py:65
+msgid "err-unk-module"
+msgstr "Unknown module !"
+
+#: InterfaceManager/__init__.py:66
+msgid "French"
+msgstr "French"
+
+#: InterfaceManager/__init__.py:67
+msgid "hour"
+msgstr "hour"
+
+#: InterfaceManager/__init__.py:68
+msgid "hours"
+msgstr "hours"
+
+#: InterfaceManager/__init__.py:69 InterfaceManager/__init__.py:816
+#: InterfaceManager/__init__.py:1545
+msgid "Import"
+msgstr "Import"
+
+#: InterfaceManager/__init__.py:70
+#, fuzzy
+msgid "Loading"
+msgstr "Loading"
+
+#: InterfaceManager/__init__.py:71
+msgid "minute"
+msgstr "minute"
+
+#: InterfaceManager/__init__.py:72
+msgid "minutes"
+msgstr "minutes"
+
+#: InterfaceManager/__init__.py:73 InterfaceManager/__init__.py:1557
+msgid "Modify"
+msgstr "Modify"
+
+#: InterfaceManager/__init__.py:74
+msgid "Name"
+msgstr "Name"
+
+#: InterfaceManager/__init__.py:75 InterfaceManager/__init__.py:395
+msgid "No"
+msgstr "No"
+
+#: InterfaceManager/__init__.py:76 InterfaceManager/__init__.py:396
+#: InterfaceManager/__init__.py:638 InterfaceManager/__init__.py:768
+#: InterfaceManager/__init__.py:943 InterfaceManager/__init__.py:1352
+#: InterfaceManager/__init__.py:1478 InterfaceManager/__init__.py:1559
+#: InterfaceManager/__init__.py:1641
+msgid "None"
+msgstr "None"
+
+#: InterfaceManager/__init__.py:77
+#, fuzzy
+msgid "Notification"
+msgstr "Notification"
+
+#: InterfaceManager/__init__.py:78 InterfaceManager/__init__.py:944
+#: InterfaceManager/__init__.py:1162
+msgid "OK"
+msgstr "OK"
+
+#: InterfaceManager/__init__.py:79
+msgid "Online"
+msgstr "Online"
+
+#: InterfaceManager/__init__.py:80 InterfaceManager/__init__.py:654
+#: InterfaceManager/__init__.py:1371 InterfaceManager/__init__.py:1563
+msgid "Remove"
+msgstr "Remove"
+
+#: InterfaceManager/__init__.py:81
+msgid "Replace-?"
+msgstr "Replace ?"
+
+#: InterfaceManager/__init__.py:82
+msgid "rule-read-datas"
+msgstr "Read datas"
+
+#: InterfaceManager/__init__.py:83
+msgid "rule-write-datas"
+msgstr "Write datas"
+
+#: InterfaceManager/__init__.py:84 InterfaceManager/__init__.py:241
+#: InterfaceManager/__init__.py:300 InterfaceManager/__init__.py:424
+#: InterfaceManager/__init__.py:665 InterfaceManager/__init__.py:780
+#: InterfaceManager/__init__.py:962 InterfaceManager/__init__.py:1382
+#: InterfaceManager/__init__.py:1499 InterfaceManager/__init__.py:1566
+#: InterfaceManager/__init__.py:1653 engine/snmpmgmt/Forms/__init__.py:48
+msgid "Save"
+msgstr "Save"
+
+#: InterfaceManager/__init__.py:85
+msgid "Searching..."
+msgstr "Searching..."
+
+#: InterfaceManager/__init__.py:86
+msgid "second"
+msgstr "second"
+
+#: InterfaceManager/__init__.py:87
+msgid "seconds"
+msgstr "seconds"
+
+#: InterfaceManager/__init__.py:88
+msgid "semi-colon"
+msgstr "Semi-colon (;)"
+
+#: InterfaceManager/__init__.py:89
+msgid "separator"
+msgstr "Separator"
+
+#: InterfaceManager/__init__.py:90
+msgid "Settings"
+msgstr "Settings"
+
+#: InterfaceManager/__init__.py:91 InterfaceManager/__init__.py:785
+#: InterfaceManager/__init__.py:1004 InterfaceManager/__init__.py:1432
+#: InterfaceManager/__init__.py:1510 InterfaceManager/__init__.py:1658
+msgid "Type"
+msgstr "Type"
+
+#: InterfaceManager/__init__.py:92
+msgid "unknown"
+msgstr "unknown"
+
+#: InterfaceManager/__init__.py:93 InterfaceManager/__init__.py:455
+msgid "Yes"
+msgstr "Yes"
+
+#: InterfaceManager/__init__.py:95
+#, fuzzy
+msgid "Connect"
+msgstr "Connection"
+
+#: InterfaceManager/__init__.py:96
+#, fuzzy
+msgid "err-bad-user"
+msgstr "Invalid datas"
+
+#: InterfaceManager/__init__.py:97
+#, fuzzy
+msgid "err-unk"
+msgstr "Unknown module !"
+
+#: InterfaceManager/__init__.py:98
+#, fuzzy
+msgid "inactivity-disconnect"
+msgstr "Are you sure you want to disconnect ?"
+
+#: InterfaceManager/__init__.py:99 InterfaceManager/__init__.py:221
+#: InterfaceManager/__init__.py:766 InterfaceManager/__init__.py:929
+#: InterfaceManager/__init__.py:1473 InterfaceManager/__init__.py:1637
+msgid "Login"
+msgstr "Login"
+
+#: InterfaceManager/__init__.py:100 InterfaceManager/__init__.py:123
+#: InterfaceManager/__init__.py:227 InterfaceManager/__init__.py:297
+#: InterfaceManager/__init__.py:383 InterfaceManager/__init__.py:472
+#: InterfaceManager/__init__.py:631 InterfaceManager/__init__.py:937
+#: InterfaceManager/__init__.py:1053 InterfaceManager/__init__.py:1188
+#: InterfaceManager/__init__.py:1339 InterfaceManager/__init__.py:1475
+#: InterfaceManager/__init__.py:1555 InterfaceManager/__init__.py:1639
+msgid "menu-title"
+msgstr ""
+
+#: InterfaceManager/__init__.py:101 InterfaceManager/__init__.py:235
+#: InterfaceManager/__init__.py:474 InterfaceManager/__init__.py:947
+#: InterfaceManager/__init__.py:1192 InterfaceManager/__init__.py:1358
+#: InterfaceManager/__init__.py:1479 InterfaceManager/__init__.py:1560
+msgid "Password"
+msgstr "Password"
+
+#: InterfaceManager/__init__.py:102
+msgid "connok-then-load"
+msgstr "Connection success. Loading interface."
+
+#: InterfaceManager/__init__.py:103
+msgid "title-conn"
+msgstr "Connect to the admin panel"
+
+#: InterfaceManager/__init__.py:105
+msgid "alert-on"
+msgstr "alert(s) on"
+
+#: InterfaceManager/__init__.py:106
+msgid "alert-s"
+msgstr "alert(s)"
+
+#: InterfaceManager/__init__.py:107
+msgid "Attack"
+msgstr "Attacks"
+
+#: InterfaceManager/__init__.py:108 InterfaceManager/__init__.py:312
+msgid "Availability"
+msgstr "Availability"
+
+#: InterfaceManager/__init__.py:109
+msgid "CRITICAL"
+msgstr "CRITICAL"
+
+#: InterfaceManager/__init__.py:110
+msgid "critical-s"
+msgstr "critical(s)"
+
+#: InterfaceManager/__init__.py:111
+msgid "DOWN"
+msgstr "DOWN"
+
+#: InterfaceManager/__init__.py:112
+#, fuzzy
+msgid "Duration"
+msgstr "Duration"
+
+#: InterfaceManager/__init__.py:113
+#, fuzzy
+msgid "err-detect-atk"
+msgstr "Threat detected !"
+
+#: InterfaceManager/__init__.py:114
+msgid "err-icinga"
+msgstr "Icinga services report"
+
+#: InterfaceManager/__init__.py:115
+msgid "err-icinga-off"
+msgstr "Service Monitor OFFLINE"
+
+#: InterfaceManager/__init__.py:116
+#, fuzzy
+msgid "err-net"
+msgstr "Bandwidth problems"
+
+#: InterfaceManager/__init__.py:117
+msgid "err-security"
+msgstr "Last 60 minutes' attacks"
+
+#: InterfaceManager/__init__.py:118 InterfaceManager/__init__.py:373
+#: InterfaceManager/__init__.py:925
+msgid "Host"
+msgstr "Host"
+
+#: InterfaceManager/__init__.py:119
+msgid "inc-bw"
+msgstr "Input Bandwidth"
+
+#: InterfaceManager/__init__.py:120
+msgid "ipaddr"
+msgstr "IP Address"
+
+#: InterfaceManager/__init__.py:121
+msgid "Link"
+msgstr "Link"
+
+#: InterfaceManager/__init__.py:122 InterfaceManager/__init__.py:226
+#: InterfaceManager/__init__.py:296 InterfaceManager/__init__.py:382
+#: InterfaceManager/__init__.py:630 InterfaceManager/__init__.py:936
+#: InterfaceManager/__init__.py:1187 InterfaceManager/__init__.py:1338
+#: InterfaceManager/__init__.py:1474 InterfaceManager/__init__.py:1554
+#: InterfaceManager/__init__.py:1638
+msgid "menu-name"
+msgstr ""
+
+#: InterfaceManager/__init__.py:124
+msgid "out-bw"
+msgstr "Output bandwidth"
+
+#: InterfaceManager/__init__.py:125
+msgid "sensors"
+msgstr "sensors"
+
+#: InterfaceManager/__init__.py:126 InterfaceManager/__init__.py:798
+msgid "Service"
+msgstr "Service"
+
+#: InterfaceManager/__init__.py:127 InterfaceManager/__init__.py:426
+msgid "Since-icinga-start"
+msgstr "Since icinga start"
+
+#: InterfaceManager/__init__.py:128 InterfaceManager/__init__.py:1400
+msgid "State"
+msgstr "State"
+
+#: InterfaceManager/__init__.py:129
+msgid "state-net"
+msgstr "Network state"
+
+#: InterfaceManager/__init__.py:130
+msgid "state-security"
+msgstr "Security state"
+
+#: InterfaceManager/__init__.py:131
+msgid "state-srv"
+msgstr "Services state"
+
+#: InterfaceManager/__init__.py:132
+msgid "Status-information"
+msgstr "Status information"
+
+#: InterfaceManager/__init__.py:133
+msgid "WARN"
+msgstr "WARNING"
+
+#: InterfaceManager/__init__.py:134
+msgid "warning-s"
+msgstr "warning(s)"
+
+#: InterfaceManager/__init__.py:136
+msgid "ACL"
+msgstr "ACL"
+
+#: InterfaceManager/__init__.py:137
+msgid "ACL-Mgmt"
+msgstr "ACL Management"
+
+#: InterfaceManager/__init__.py:138
+msgid "acl-name"
+msgstr "ACL Name"
+
+#: InterfaceManager/__init__.py:139
+msgid "acls-to-include"
+msgstr "ACLs to include"
+
+#: InterfaceManager/__init__.py:140
+msgid "Addr"
+msgstr "Address"
+
+#: InterfaceManager/__init__.py:141
+msgid "add-acl"
+msgstr "Add ACL"
+
+#: InterfaceManager/__init__.py:142 InterfaceManager/__init__.py:489
+msgid "add-cluster"
+msgstr "Create a cluster"
+
+#: InterfaceManager/__init__.py:143
+msgid "Add-Record"
+msgstr "Add record"
+
+#: InterfaceManager/__init__.py:144
+msgid "add-server"
+msgstr "Add a server"
+
+#: InterfaceManager/__init__.py:145
+msgid "add-zone"
+msgstr "Add a DNS zone"
+
+#: InterfaceManager/__init__.py:146 InterfaceManager/__init__.py:491
+#: InterfaceManager/__init__.py:1232
+msgid "Advanced-tools"
+msgstr "Advanced tools"
+
+#: InterfaceManager/__init__.py:147
+msgid "algorithm"
+msgstr "Algorithm"
+
+#: InterfaceManager/__init__.py:148
+msgid "allow-notify"
+msgstr "Allow notifications from"
+
+#: InterfaceManager/__init__.py:149
+msgid "allow-query"
+msgstr "Allow queries from"
+
+#: InterfaceManager/__init__.py:150
+msgid "allow-recurse"
+msgstr "Allow recursion from"
+
+#: InterfaceManager/__init__.py:151
+msgid "allow-transfer"
+msgstr "Allow transfer from"
+
+#: InterfaceManager/__init__.py:152
+msgid "allow-update"
+msgstr "Allow update from"
+
+#: InterfaceManager/__init__.py:153
+msgid "Alone"
+msgstr "Alone"
+
+#: InterfaceManager/__init__.py:154
+msgid "Any"
+msgstr "Everybody"
+
+#: InterfaceManager/__init__.py:155
+msgid "caching-servers"
+msgstr "Caching servers"
+
+#: InterfaceManager/__init__.py:156
+msgid "Clusters"
+msgstr "Clusters"
+
+#: InterfaceManager/__init__.py:157
+msgid "confirm-remove-acl"
+msgstr "Are you sure you want to remove ACL '%s' ?"
+
+#: InterfaceManager/__init__.py:158
+msgid "confirm-remove-cluster"
+msgstr "Are you sure you want to remove cluster '%s' ?"
+
+#: InterfaceManager/__init__.py:159
+msgid "confirm-remove-dnssrc"
+msgstr "Are you sure you want to remove this DNS data source '%s' ?"
+
+#: InterfaceManager/__init__.py:160
+msgid "confirm-remove-record"
+msgstr "Are you sure you want to remove this record '%s' ?"
+
+#: InterfaceManager/__init__.py:161
+msgid "confirm-remove-server"
+msgstr "Are you sure you want to remove server '%s' ?"
+
+#: InterfaceManager/__init__.py:162
+msgid "confirm-remove-tsig"
+msgstr "Are you sure you want to remove TSIG key '%s' ?"
+
+#: InterfaceManager/__init__.py:163
+msgid "confirm-remove-zone"
+msgstr "Are you sure you want to remove DNS zone '%s' ?"
+
+#: InterfaceManager/__init__.py:164
+msgid "chroot-path"
+msgstr "Chroot Path"
+
+#: InterfaceManager/__init__.py:165
+msgid "define-tsig-key"
+msgstr "Define a new TSIG key"
+
+#: InterfaceManager/__init__.py:166
+msgid "Desc"
+msgstr "Description"
+
+#: InterfaceManager/__init__.py:167
+msgid "DNSSec-Mgmt"
+msgstr "DNSSec management"
+
+#: InterfaceManager/__init__.py:168
+msgid "dns-to-include"
+msgstr "DNS names to include"
+
+#: InterfaceManager/__init__.py:169
+msgid "DNS-zone"
+msgstr "DNS zone"
+
+#: InterfaceManager/__init__.py:170
+msgid "DNS-zones"
+msgstr "DNS zones"
+
+#: InterfaceManager/__init__.py:171
+msgid "edit-server"
+msgstr "Server edit"
+
+#: InterfaceManager/__init__.py:172
+msgid "enable-dnssec"
+msgstr "Enable DNSSec"
+
+#: InterfaceManager/__init__.py:173
+msgid "enable-dnssec-validation"
+msgstr "Enable DNSSec validation"
+
+#: InterfaceManager/__init__.py:174
+msgid "err-acl-already-exists"
+msgstr "This ACL already exists"
+
+#: InterfaceManager/__init__.py:175
+msgid "err-acl-name-protected"
+msgstr "This ACL name isn't available (protected)"
+
+#: InterfaceManager/__init__.py:176
+msgid "err-acl-not-exists"
+msgstr "This ACL doesn't exists"
+
+#: InterfaceManager/__init__.py:177
+msgid "err-bad-login"
+msgstr "Bad server login"
+
+#: InterfaceManager/__init__.py:178
+msgid "err-bad-zonetype"
+msgstr "Invalid type of zone"
+
+#: InterfaceManager/__init__.py:179 InterfaceManager/__init__.py:540
+msgid "err-cluster-already-exists"
+msgstr "A cluster with this name already exists"
+
+#: InterfaceManager/__init__.py:180
+msgid "err-cluster-member-only-one-category"
+msgstr "Cluster members can only be into one category"
+
+#: InterfaceManager/__init__.py:181
+msgid "err-cluster-need-master"
+msgstr "DNS cluster require masters"
+
+#: InterfaceManager/__init__.py:182 InterfaceManager/__init__.py:542
+msgid "err-cluster-not-exists"
+msgstr "This cluster doesn't exists"
+
+#: InterfaceManager/__init__.py:183
+msgid "err-invalid-db"
+msgstr "No database with those informations"
+
+#: InterfaceManager/__init__.py:184 InterfaceManager/__init__.py:571
+msgid "err-invalid-req"
+msgstr "Invalid request !"
+
+#: InterfaceManager/__init__.py:185
+msgid "err-invalid-zonename"
+msgstr "Invalid zone name"
+
+#: InterfaceManager/__init__.py:186
+msgid "err-masterdir-not-readable"
+msgstr "The named/master directory is not accessible or readable"
+
+#: InterfaceManager/__init__.py:187
+msgid "err-miss-bad-fields"
+msgstr "Some fields are bad or missing"
+
+#: InterfaceManager/__init__.py:188
+msgid "err-namedconf-not-readable"
+msgstr "named.conf is not readable or not accessible"
+
+#: InterfaceManager/__init__.py:189
+msgid "err-named-zeyenamed-different"
+msgstr ""
+"named.conf path and Z-Eye configuration path must be different. You must "
+"include Z-Eye config file into named.conf file."
+
+#: InterfaceManager/__init__.py:190
+msgid "err-no-records"
+msgstr "No record found"
+
+#: InterfaceManager/__init__.py:191
+msgid "err-no-rule-specified"
+msgstr "No rule specified"
+
+#: InterfaceManager/__init__.py:192
+msgid "err-no-zone"
+msgstr "No DNS zone specified !"
+
+#: InterfaceManager/__init__.py:193
+msgid "err-one-dns-server-required"
+msgstr "At least one DNS server is required to create a cluster"
+
+#: InterfaceManager/__init__.py:194
+msgid "err-server-already-exists"
+msgstr "This server already exists"
+
+#: InterfaceManager/__init__.py:195
+msgid "err-server-not-exists"
+msgstr "This server doesn't exists"
+
+#: InterfaceManager/__init__.py:196
+msgid "err-slavedir-not-readable"
+msgstr "The named/slave directory is not accessible or readable"
+
+#: InterfaceManager/__init__.py:197
+msgid "err-some-dns-invalid"
+msgstr "Some DNS names are invalid"
+
+#: InterfaceManager/__init__.py:198
+msgid "err-some-ip-invalid"
+msgstr "Some IP addresses are invalid"
+
+#: InterfaceManager/__init__.py:199
+msgid "err-tsig-key-algo-invalid"
+msgstr "The choosen algorithm is invalid"
+
+#: InterfaceManager/__init__.py:200
+msgid "err-tsig-key-already-exists"
+msgstr "This TSIG key already exists"
+
+#: InterfaceManager/__init__.py:201
+msgid "err-tsig-key-exactly-same"
+msgstr "An existing TSIG key already exists with exactly same values"
+
+#: InterfaceManager/__init__.py:202
+msgid "err-tsig-key-id-invalid"
+msgstr "Key ID is invalid. It can only contain letters, numbers and dashes"
+
+#: InterfaceManager/__init__.py:203
+msgid "err-tsig-key-not-exists"
+msgstr "This TSIG key doesn't exist"
+
+#: InterfaceManager/__init__.py:204
+msgid "err-tsig-not-base64"
+msgstr "TSIG value must be encoded in base64"
+
+#: InterfaceManager/__init__.py:205
+msgid "err-unable-conn"
+msgstr "Unable to connect to specified server"
+
+#: InterfaceManager/__init__.py:206
+msgid "err-zeyenamedpath-together"
+msgstr ""
+"Z-Eye named path, DNS FQDN and master & slave file path must be filled "
+"together"
+
+#: InterfaceManager/__init__.py:207
+msgid "err-z-eye-not-writable"
+msgstr "Z-Eye config file is not writable or a parent folder isn't readble"
+
+#: InterfaceManager/__init__.py:208
+msgid "err-zone-already-exists"
+msgstr "This DNS zone already exists"
+
+#: InterfaceManager/__init__.py:209
+msgid "err-zone-not-exists"
+msgstr "This DNS zone doesn't exists"
+
+#: InterfaceManager/__init__.py:210
+msgid "expert-tools"
+msgstr "Expert tools"
+
+#: InterfaceManager/__init__.py:211 InterfaceManager/__init__.py:361
+#: InterfaceManager/__init__.py:605 InterfaceManager/__init__.py:794
+#: InterfaceManager/__init__.py:814 InterfaceManager/__init__.py:919
+#: InterfaceManager/__init__.py:1185
+msgid "fail-tab"
+msgstr "Unable to load tab, link may be wrong or page unavailable"
+
+#: InterfaceManager/__init__.py:212 InterfaceManager/__init__.py:761
+#: InterfaceManager/__init__.py:795 InterfaceManager/__init__.py:920
+#: InterfaceManager/__init__.py:1468 InterfaceManager/__init__.py:1632
+msgid "Filter"
+msgstr "Filter"
+
+#: InterfaceManager/__init__.py:213 InterfaceManager/__init__.py:1042
+msgid "Forward-only"
+msgstr "Forward only"
+
+#: InterfaceManager/__init__.py:214
+msgid "Forwarders"
+msgstr "Forward servers"
+
+#: InterfaceManager/__init__.py:215
+msgid "found-records"
+msgstr "Old records found !"
+
+#: InterfaceManager/__init__.py:216
+msgid "Herited"
+msgstr "Inherited"
+
+#: InterfaceManager/__init__.py:217 InterfaceManager/__init__.py:765
+#: InterfaceManager/__init__.py:1472 InterfaceManager/__init__.py:1636
+msgid "ip-addr"
+msgstr "IP address"
+
+#: InterfaceManager/__init__.py:218
+msgid "ip-to-include"
+msgstr "IP adresses to include"
+
+#: InterfaceManager/__init__.py:219
+msgid "key-alias"
+msgstr "Key alias"
+
+#: InterfaceManager/__init__.py:220
+msgid "key-id"
+msgstr "Key ID"
+
+#: InterfaceManager/__init__.py:222 InterfaceManager/__init__.py:1051
+msgid "machine-FQDN"
+msgstr "Server FQDN"
+
+#: InterfaceManager/__init__.py:223
+msgid "master-servers"
+msgstr "Master servers"
+
+#: InterfaceManager/__init__.py:224
+msgid "Masters"
+msgstr "Master servers"
+
+#: InterfaceManager/__init__.py:225
+msgid "masterzone-path"
+msgstr "Master zone's file path"
+
+#: InterfaceManager/__init__.py:228 InterfaceManager/__init__.py:384
+#: InterfaceManager/__init__.py:767 InterfaceManager/__init__.py:1476
+#: InterfaceManager/__init__.py:1640 engine/snmpmgmt/Forms/__init__.py:47
+msgid "Modification"
+msgstr "Modifying"
+
+#: InterfaceManager/__init__.py:229
+msgid "modify-servers"
+msgstr "Manage server list"
+
+#: InterfaceManager/__init__.py:230
+msgid "named-conf-path"
+msgstr "named.conf path"
+
+#: InterfaceManager/__init__.py:231
+msgid "named-zeye-path"
+msgstr "named-zeye.conf path"
+
+#: InterfaceManager/__init__.py:232
+msgid "no-data-found"
+msgstr "No data collected"
+
+#: InterfaceManager/__init__.py:233
+msgid "no-found-records"
+msgstr "No old records found"
+
+#: InterfaceManager/__init__.py:234 InterfaceManager/__init__.py:1357
+msgid "Others"
+msgstr "Others"
+
+#: InterfaceManager/__init__.py:236 InterfaceManager/__init__.py:475
+#: InterfaceManager/__init__.py:948 InterfaceManager/__init__.py:1480
+#: InterfaceManager/__init__.py:1561
+msgid "Password-repeat"
+msgstr "Password (repeat)"
+
+#: InterfaceManager/__init__.py:237
+msgid "Record"
+msgstr "Record"
+
+#: InterfaceManager/__init__.py:238
+msgid "Record-TTL"
+msgstr "Record TTL"
+
+#: InterfaceManager/__init__.py:239
+msgid "Record-Type"
+msgstr "Record Type"
+
+#: InterfaceManager/__init__.py:240 InterfaceManager/__init__.py:769
+#: InterfaceManager/__init__.py:959 InterfaceManager/__init__.py:1496
+#: InterfaceManager/__init__.py:1642
+msgid "Return"
+msgstr "Return"
+
+#: InterfaceManager/__init__.py:242 InterfaceManager/__init__.py:666
+#: InterfaceManager/__init__.py:1078 InterfaceManager/__init__.py:1616
+msgid "Search"
+msgstr "Search"
+
+#: InterfaceManager/__init__.py:243 InterfaceManager/__init__.py:667
+#: InterfaceManager/__init__.py:781 InterfaceManager/__init__.py:963
+#: InterfaceManager/__init__.py:1500 InterfaceManager/__init__.py:1567
+#: InterfaceManager/__init__.py:1654
+msgid "Server"
+msgstr "Server"
+
+#: InterfaceManager/__init__.py:244
+msgid "Server-Mgmt"
+msgstr "Servers management"
+
+#: InterfaceManager/__init__.py:245
+msgid "serverlist"
+msgstr "Liste des serveurs"
+
+#: InterfaceManager/__init__.py:246 InterfaceManager/__init__.py:668
+msgid "Servers"
+msgstr "Server(s)"
+
+#: InterfaceManager/__init__.py:247
+msgid "Slave-only"
+msgstr "Slave only"
+
+#: InterfaceManager/__init__.py:248
+msgid "slave-servers"
+msgstr "Slave servers"
+
+#: InterfaceManager/__init__.py:249
+msgid "slavezone-path"
+msgstr "Slave zone's file path"
+
+#: InterfaceManager/__init__.py:250
+msgid "soa-ttl-expire"
+msgstr "Zone validity delay (seconds)"
+
+#: InterfaceManager/__init__.py:251
+msgid "soa-ttl-minimum"
+msgstr "Zone caching duration (seconds)"
+
+#: InterfaceManager/__init__.py:252
+msgid "soa-ttl-refresh"
+msgstr "Zone refresh delay (seconds)"
+
+#: InterfaceManager/__init__.py:253
+msgid "soa-ttl-retry"
+msgstr "Retry delay (seconds)"
+
+#: InterfaceManager/__init__.py:254 InterfaceManager/__init__.py:673
+msgid "ssh-user"
+msgstr "SSH user"
+
+#: InterfaceManager/__init__.py:255 InterfaceManager/__init__.py:677
+#: InterfaceManager/__init__.py:799
+msgid "Stats"
+msgstr "Statistics"
+
+#: InterfaceManager/__init__.py:256
+msgid "subnets-to-include"
+msgstr "Subnets to include"
+
+#: InterfaceManager/__init__.py:257
+msgid "tip-dnsserver"
+msgstr ""
+"You must use a dedicated unprivileged used which is in named group and has "
+"only minimal read/write rights.<br />(*) These facultatives elements must be "
+"filled if you want to manage your DNS server with Z-Eye"
+
+#: InterfaceManager/__init__.py:258
+msgid "title-dns"
+msgstr "DNS supervision"
+
+#: InterfaceManager/__init__.py:259 InterfaceManager/__init__.py:1095
+msgid "title-dns-cluster"
+msgstr "DNS cluster(s)"
+
+#: InterfaceManager/__init__.py:260 InterfaceManager/__init__.py:1098
+msgid "title-dns-server"
+msgstr "DNS server(s)"
+
+#: InterfaceManager/__init__.py:261
+msgid "title-dns-tsig"
+msgstr "DNSSEC key(s)"
+
+#: InterfaceManager/__init__.py:262 InterfaceManager/__init__.py:1099
+msgid "title-dns-zone"
+msgstr "DNS zone(s)"
+
+#: InterfaceManager/__init__.py:263
+msgid "title-old-records"
+msgstr "Search old records"
+
+#: InterfaceManager/__init__.py:264
+msgid "tooltip-chroot"
+msgstr ""
+"Chroot is a DNS environment security. Often it's /var/named directory. If "
+"you don't chroot, write '/'"
+
+#: InterfaceManager/__init__.py:265
+msgid "tooltip-machine-FQDN"
+msgstr ""
+"This FQDN is needed to deduce NS records when Z-Eye manage the DNS zones"
+
+#: InterfaceManager/__init__.py:266
+msgid "tooltip-masterzone-path"
+msgstr ""
+"Absolute path to the master zone files' directory. If named if chrooted it's "
+"the path following the chroot's root."
+
+#: InterfaceManager/__init__.py:267
+msgid "tooltip-rights"
+msgstr ""
+"Warning, your user need read rights. Use a special group (and add your SSH "
+"user into) may be a good idea"
+
+#: InterfaceManager/__init__.py:268
+msgid "tooltip-slavezone-path"
+msgstr ""
+"Absolute path to the slave zone files' directory. If named if chrooted it's "
+"the path following the chroot's root."
+
+#: InterfaceManager/__init__.py:269
+msgid "tooltip-soattl-expire"
+msgstr ""
+"This duration defines zone validity time on slaves, if slave cannot join "
+"masters. A duration between 1 and 2 weeks is recommended."
+
+#: InterfaceManager/__init__.py:270
+msgid "tooltip-soattl-minimum"
+msgstr ""
+"Minimal caching duration on slave servers. You may choose a value between 1 "
+"and 3 hours for a often-updated zone and between 1 and 3 days for a "
+"sometimes-updated zone. If notifications are enabled, you can increase this "
+"value."
+
+#: InterfaceManager/__init__.py:271
+msgid "tooltip-soattl-refresh"
+msgstr ""
+"Time between two zone transfer from slaves. You may choose a value betweek 6 "
+"and 24 hours for a often-updated zone and between 2 and 5 days for a "
+"somtimes-updated zone. If notifications are enabled, you can increase this "
+"value."
+
+#: InterfaceManager/__init__.py:272
+msgid "tooltip-soattl-retry"
+msgstr "Time between two transfer tries, when masters servers are unavailable."
+
+#: InterfaceManager/__init__.py:273
+msgid "tooltip-tsig-transfer"
+msgstr ""
+"TSIG key used to transfer zone and get DNS records. If no key given, Z-Eye "
+"will try to transfer zone in insecure mode"
+
+#: InterfaceManager/__init__.py:274
+msgid "tooltip-tsig-update"
+msgstr ""
+"TSIG key used to update DNS records. If no key given, Z-Eye will try to "
+"update records in insecure mode"
+
+#: InterfaceManager/__init__.py:275
+msgid "tooltip-zeyenamed-path"
+msgstr ""
+"Absolute path (without chroot) to a custom named.conf file which must be "
+"included into original named.conf."
+
+#: InterfaceManager/__init__.py:276
+msgid "tsig-to-include"
+msgstr "TSIG keys to include"
+
+#: InterfaceManager/__init__.py:277
+msgid "tsig-transfer"
+msgstr "TSIG key for transfers"
+
+#: InterfaceManager/__init__.py:278
+msgid "tsig-update"
+msgstr "TSIG key for updates"
+
+#: InterfaceManager/__init__.py:279 InterfaceManager/__init__.py:452
+#: InterfaceManager/__init__.py:482 InterfaceManager/__init__.py:1011
+#: InterfaceManager/__init__.py:1438
+msgid "Value"
+msgstr "Value"
+
+#: InterfaceManager/__init__.py:280
+msgid "Zone"
+msgstr "DNS Zone"
+
+#: InterfaceManager/__init__.py:281
+msgid "Zone-Mgmt"
+msgstr "DNS zone management"
+
+#: InterfaceManager/__init__.py:282 InterfaceManager/__init__.py:1117
+msgid "Zone-type"
+msgstr "Zone type"
+
+#: InterfaceManager/__init__.py:283 InterfaceManager/__init__.py:1027
+msgid "Classic"
+msgstr "Classic"
+
+#: InterfaceManager/__init__.py:284
+#, fuzzy
+msgid "clustername"
+msgstr "Create a cluster"
+
+#: InterfaceManager/__init__.py:285
+#, fuzzy
+msgid "tip-dnscluster"
+msgstr "DNS cluster(s)"
+
+#: InterfaceManager/__init__.py:286
+#, fuzzy
+msgid "tooltip-dnsinclude"
+msgstr ""
+"TSIG key used to update DNS records. If no key given, Z-Eye will try to "
+"update records in insecure mode"
+
+#: InterfaceManager/__init__.py:287
+#, fuzzy
+msgid "tooltip-ipinclude"
+msgstr ""
+"TSIG key used to update DNS records. If no key given, Z-Eye will try to "
+"update records in insecure mode"
+
+#: InterfaceManager/__init__.py:290
+msgid "confirm-removegrp"
+msgstr "Are you sure to want to remove group '%s' ?"
+
+#: InterfaceManager/__init__.py:291 InterfaceManager/__init__.py:889
+msgid "Delete"
+msgstr "Remove"
+
+#: InterfaceManager/__init__.py:292 InterfaceManager/__init__.py:757
+#: InterfaceManager/__init__.py:1154 InterfaceManager/__init__.py:1461
+#: InterfaceManager/__init__.py:1628
+msgid "err-already-exist"
+msgstr "This group already exists !"
+
+#: InterfaceManager/__init__.py:293 InterfaceManager/__init__.py:335
+msgid "err-bad-data"
+msgstr "Invalid data(s)."
+
+#: InterfaceManager/__init__.py:294 InterfaceManager/__init__.py:1158
+msgid "err-not-exist"
+msgstr "This group doesn't exists !"
+
+#: InterfaceManager/__init__.py:295 InterfaceManager/__init__.py:608
+msgid "Groupname"
+msgstr "Groupname"
+
+#: InterfaceManager/__init__.py:298
+msgid "New-group"
+msgstr "New group"
+
+#: InterfaceManager/__init__.py:299
+msgid "Rule"
+msgstr "Rule"
+
+#: InterfaceManager/__init__.py:301
+msgid "sure-delete"
+msgstr "Are you sure to remove group"
+
+#: InterfaceManager/__init__.py:302
+msgid "title-edit"
+msgstr "Group edition"
+
+#: InterfaceManager/__init__.py:303
+msgid "title-mgmt"
+msgstr "Groups management"
+
+#: InterfaceManager/__init__.py:304
+msgid "title-opts"
+msgstr "Modules' options"
+
+#: InterfaceManager/__init__.py:305 InterfaceManager/__init__.py:1007
+msgid "User-nb"
+msgstr "User number"
+
+#: InterfaceManager/__init__.py:307
+msgid "active-check-en"
+msgstr "Active checks"
+
+#: InterfaceManager/__init__.py:309 InterfaceManager/__init__.py:1021
+msgid "Address"
+msgstr "Address"
+
+#: InterfaceManager/__init__.py:310 InterfaceManager/__init__.py:877
+#: InterfaceManager/__init__.py:1022
+msgid "Alias"
+msgstr "Alias"
+
+#: InterfaceManager/__init__.py:311
+msgid "alivecommand"
+msgstr "Alive presence command"
+
+#: InterfaceManager/__init__.py:313
+msgid "checkcmd"
+msgstr "Check command"
+
+#: InterfaceManager/__init__.py:314
+msgid "check-freshness"
+msgstr "Check freshness"
+
+#: InterfaceManager/__init__.py:315
+msgid "check-interval"
+msgstr "Check interval (min)"
+
+#: InterfaceManager/__init__.py:316
+msgid "checkperiod"
+msgstr "Check period"
+
+#: InterfaceManager/__init__.py:317
+msgid "Commands"
+msgstr "Commands"
+
+#: InterfaceManager/__init__.py:318 InterfaceManager/__init__.py:505
+msgid "Comment"
+msgstr "Comment"
+
+#: InterfaceManager/__init__.py:320
+msgid "confirm-remove-command"
+msgstr "Are you sure you want to remove command '%s' ?"
+
+#: InterfaceManager/__init__.py:321
+msgid "confirm-remove-contact"
+msgstr "Are you sure you want to remove contact '%s' ?"
+
+#: InterfaceManager/__init__.py:322
+msgid "confirm-remove-contactgroup"
+msgstr "Are you sure you want to remove contactgroup '%s' ?"
+
+#: InterfaceManager/__init__.py:323
+msgid "confirm-remove-host"
+msgstr "Are you sure you want to remove host '%s' ?"
+
+#: InterfaceManager/__init__.py:324
+msgid "confirm-remove-hostgroup"
+msgstr "Are you sure you want to remove hostgroup '%s' ?"
+
+#: InterfaceManager/__init__.py:325
+msgid "confirm-remove-notif-strategy"
+msgstr "Are you sure you want to remove notification strategy '%s' ?"
+
+#: InterfaceManager/__init__.py:326
+msgid "confirm-remove-service"
+msgstr "Are you sure you want to remove service '%s' ?"
+
+#: InterfaceManager/__init__.py:327
+msgid "confirm-remove-timeperiod"
+msgstr "Are you sure you want to remove timeperiod '%s' ?"
+
+#: InterfaceManager/__init__.py:328
+msgid "Contactgroups"
+msgstr "Contact Groups"
+
+#: InterfaceManager/__init__.py:329
+msgid "Contacts"
+msgstr "Contacts"
+
+#: InterfaceManager/__init__.py:330
+msgid "Critical"
+msgstr "Critical"
+
+#: InterfaceManager/__init__.py:332
+msgid "DisplayName"
+msgstr "Display Name"
+
+#: InterfaceManager/__init__.py:333
+msgid "Down"
+msgstr "Down"
+
+#: InterfaceManager/__init__.py:334
+msgid "Email"
+msgstr "E-Mail"
+
+#: InterfaceManager/__init__.py:336
+msgid "err-binary-not-found"
+msgstr "Binary not found or not usable"
+
+#: InterfaceManager/__init__.py:337
+msgid "err-binary-used"
+msgstr "Command in use. Please remove links with this command."
+
+#: InterfaceManager/__init__.py:338
+msgid "err-contact-used"
+msgstr "Contact in use. Please remove links with this contact."
+
+#: InterfaceManager/__init__.py:339
+msgid "err-ctg-used"
+msgstr "Contactgroup in use. Please remove links with this contactgroup."
+
+#: InterfaceManager/__init__.py:340
+msgid "err-data-exist"
+msgstr "Data already exists"
+
+#: InterfaceManager/__init__.py:341
+msgid "err-data-not-exist"
+msgstr "Data doesn't exist"
+
+#: InterfaceManager/__init__.py:342
+msgid "err-fail-writecfg"
+msgstr ""
+"Unable to write icinga configuration. Write rights may be wrong on the "
+"server."
+
+#: InterfaceManager/__init__.py:343
+msgid "err-hg-used"
+msgstr "Hostgroup in use. Please remove links with this hostgroup."
+
+#: InterfaceManager/__init__.py:344 InterfaceManager/__init__.py:760
+#: InterfaceManager/__init__.py:1465 InterfaceManager/__init__.py:1631
+msgid "err-not-found"
+msgstr "Not found"
+
+#: InterfaceManager/__init__.py:345
+msgid "err-no-cmd"
+msgstr "No command specified"
+
+#: InterfaceManager/__init__.py:346
+msgid "err-no-contact"
+msgstr "This contact doesn't exist or is invalid"
+
+#: InterfaceManager/__init__.py:347
+msgid "err-no-contactgroups"
+msgstr "No contactgroup configured ! It's impossible to create this element"
+
+#: InterfaceManager/__init__.py:348
+msgid "err-no-host"
+msgstr "This host doesn't exist or is invalid"
+
+#: InterfaceManager/__init__.py:349
+msgid "err-no-hostgroup"
+msgstr "This hostgroup doesn't exist or is invalid"
+
+#: InterfaceManager/__init__.py:350
+msgid "err-no-hosts"
+msgstr "No hosts configured ! It's impossible to create this element"
+
+#: InterfaceManager/__init__.py:351
+msgid "err-no-service"
+msgstr "This service doesn't exist or is invalid"
+
+#: InterfaceManager/__init__.py:352
+msgid "err-no-sensor"
+msgstr "No active sensor"
+
+#: InterfaceManager/__init__.py:353
+msgid "err-no-timeperiod"
+msgstr "No timeperiod configured ! It's impossible to create this element"
+
+#: InterfaceManager/__init__.py:354
+msgid "err-notification-strategy-not-exists"
+msgstr "'%s' notification strategy doesn't exist"
+
+#: InterfaceManager/__init__.py:355
+msgid "err-notification-strategy-used-contact"
+msgstr ""
+"'%s' notification strategy is used by contact '%s'. Unable to remove it."
+
+#: InterfaceManager/__init__.py:356
+msgid "err-notification-strategy-used-host"
+msgstr "'%s' notification strategy is used by host '%s'. Unable to remove it."
+
+#: InterfaceManager/__init__.py:357
+msgid "err-notification-strategy-used-service"
+msgstr ""
+"'%s' notification strategy is used by service '%s'. Unable to remove it."
+
+#: InterfaceManager/__init__.py:358
+msgid "err-timeperiod-not-exists"
+msgstr "'%s'timeperiod doesn't exist"
+
+#: InterfaceManager/__init__.py:359
+msgid "eventhdl-en"
+msgstr "Event handler"
+
+#: InterfaceManager/__init__.py:360
+msgid "failpredict-en"
+msgstr "Fail prediction"
+
+#: InterfaceManager/__init__.py:362
+msgid "flap-en"
+msgstr "Flap enable"
+
+#: InterfaceManager/__init__.py:363
+msgid "Friday"
+msgstr "Friday"
+
+#: InterfaceManager/__init__.py:364 InterfaceManager/__init__.py:921
+msgid "From"
+msgstr "From"
+
+#: InterfaceManager/__init__.py:365 InterfaceManager/__init__.py:839
+#: InterfaceManager/__init__.py:1127 InterfaceManager/__init__.py:1189
+msgid "General"
+msgstr "General"
+
+#: InterfaceManager/__init__.py:366
+msgid "hostnotifcmd"
+msgstr "Notification command (hosts)"
+
+#: InterfaceManager/__init__.py:367
+msgid "hostnotifperiod"
+msgstr "Notification period (hosts)"
+
+#: InterfaceManager/__init__.py:368
+msgid "hostoptdown"
+msgstr "Notification (Down, hosts only)"
+
+#: InterfaceManager/__init__.py:369
+msgid "hostoptflap"
+msgstr "Notification (Host flapping)"
+
+#: InterfaceManager/__init__.py:370
+msgid "hostoptrec"
+msgstr "Notification (Host recovery)"
+
+#: InterfaceManager/__init__.py:371
+msgid "hostoptsched"
+msgstr "Notification (Host schedule Up/Down)"
+
+#: InterfaceManager/__init__.py:372
+msgid "hostoptunreach"
+msgstr "Notification (Host unreachable)"
+
+#: InterfaceManager/__init__.py:374
+msgid "Hosts"
+msgstr "Hôtes"
+
+#: InterfaceManager/__init__.py:375
+msgid "Hostgroup"
+msgstr "Hostgroup"
+
+#: InterfaceManager/__init__.py:376
+msgid "Hostgroups"
+msgstr "Hostgroups"
+
+#: InterfaceManager/__init__.py:377
+msgid "Hosttype"
+msgstr "Host type"
+
+#: InterfaceManager/__init__.py:378
+msgid "Icon"
+msgstr "Icon"
+
+#: InterfaceManager/__init__.py:379
+msgid "is-template"
+msgstr "Template ?"
+
+#: InterfaceManager/__init__.py:380
+msgid "max-check"
+msgstr "Max checks (before notification)"
+
+#: InterfaceManager/__init__.py:381 InterfaceManager/__init__.py:1120
+msgid "Members"
+msgstr "Membres"
+
+#: InterfaceManager/__init__.py:385
+msgid "Monitor"
+msgstr "Monitor"
+
+#: InterfaceManager/__init__.py:386
+msgid "Monday"
+msgstr "Monday"
+
+#: InterfaceManager/__init__.py:387
+msgid "new-cmd"
+msgstr "New command"
+
+#: InterfaceManager/__init__.py:388
+msgid "new-contact"
+msgstr "New contact"
+
+#: InterfaceManager/__init__.py:389
+msgid "new-contactgroup"
+msgstr "New contact group"
+
+#: InterfaceManager/__init__.py:390
+msgid "new-host"
+msgstr "New host"
+
+#: InterfaceManager/__init__.py:391
+msgid "new-hostgroup"
+msgstr "New hostgroup"
+
+#: InterfaceManager/__init__.py:392
+msgid "new-service"
+msgstr "New service"
+
+#: InterfaceManager/__init__.py:393
+msgid "new-strategy"
+msgstr "New strategy"
+
+#: InterfaceManager/__init__.py:394
+msgid "new-timeperiod"
+msgstr "New timeperiod"
+
+#: InterfaceManager/__init__.py:397
+msgid "not-implemented"
+msgstr "Not implemented yet !"
+
+#: InterfaceManager/__init__.py:398
+msgid "notif-en"
+msgstr "Notifications"
+
+#: InterfaceManager/__init__.py:399
+msgid "notif-interval"
+msgstr "Notification interval"
+
+#: InterfaceManager/__init__.py:400
+msgid "notifperiod"
+msgstr "Notification period"
+
+#: InterfaceManager/__init__.py:401
+msgid "Notification-strategy"
+msgstr "Notification strategy"
+
+#: InterfaceManager/__init__.py:402
+msgid "Notification-strategy-hosts"
+msgstr "Notification strategy (hosts)"
+
+#: InterfaceManager/__init__.py:403
+msgid "Notification-strategy-services"
+msgstr "Notification strategy (services)"
+
+#: InterfaceManager/__init__.py:404
+msgid "Notification-strategies"
+msgstr "Notification strategies"
+
+#: InterfaceManager/__init__.py:405
+msgid "obs-over-srv"
+msgstr "Necessary service"
+
+#: InterfaceManager/__init__.py:406 InterfaceManager/__init__.py:473
+msgid "Option"
+msgstr "Option"
+
+#: InterfaceManager/__init__.py:407
+msgid "parallel-check"
+msgstr "Parallel checks"
+
+#: InterfaceManager/__init__.py:408
+msgid "Parent"
+msgstr "Parent"
+
+#: InterfaceManager/__init__.py:409
+msgid "passive-check-en"
+msgstr "Passive checks"
+
+#: InterfaceManager/__init__.py:410
+msgid "perfdata"
+msgstr "Check performance data"
+
+#: InterfaceManager/__init__.py:411
+msgid "Periods"
+msgstr "Periods"
+
+#: InterfaceManager/__init__.py:412
+msgid "retainstatus"
+msgstr "Keep status infos (Z-Eye reboot)"
+
+#: InterfaceManager/__init__.py:413
+msgid "retainnonestatus"
+msgstr "Keep non-status infos (Z-Eye reboot)"
+
+#: InterfaceManager/__init__.py:414
+msgid "retry-check-interval"
+msgstr "Retry (min)"
+
+#: InterfaceManager/__init__.py:415
+msgid "rule-modify-cmd"
+msgstr "Modify commands"
+
+#: InterfaceManager/__init__.py:416
+msgid "rule-modify-ctg"
+msgstr "Modify contact groups"
+
+#: InterfaceManager/__init__.py:417
+msgid "rule-modify-contact"
+msgstr "Modify contacts"
+
+#: InterfaceManager/__init__.py:418
+msgid "rule-modify-hg"
+msgstr "Modify hostgroups"
+
+#: InterfaceManager/__init__.py:419
+msgid "rule-modify-host"
+msgstr "Modify hosts"
+
+#: InterfaceManager/__init__.py:420
+msgid "rule-modify-notif"
+msgstr "Modify notification templates"
+
+#: InterfaceManager/__init__.py:421
+msgid "rule-modify-service"
+msgstr "Modify services"
+
+#: InterfaceManager/__init__.py:422
+msgid "rule-modify-timeperiod"
+msgstr "Modify timeperiods"
+
+#: InterfaceManager/__init__.py:423
+msgid "Saturday"
+msgstr "Saturday"
+
+#: InterfaceManager/__init__.py:425
+msgid "Services"
+msgstr "Services"
+
+#: InterfaceManager/__init__.py:427
+msgid "srvnotifcmd"
+msgstr "Notification command (services)"
+
+#: InterfaceManager/__init__.py:428
+msgid "srvnotifperiod"
+msgstr "Notification period (services)"
+
+#: InterfaceManager/__init__.py:429
+msgid "srvoptcrit"
+msgstr "Notification (Critical, services only)"
+
+#: InterfaceManager/__init__.py:430
+msgid "srvoptflap"
+msgstr "Notification (Service/Host flapping)"
+
+#: InterfaceManager/__init__.py:431
+msgid "srvoptrec"
+msgstr "Notification (Service/Host recovery)"
+
+#: InterfaceManager/__init__.py:432
+msgid "srvoptsched"
+msgstr "Notification (Service/Host schedule Up/Down)"
+
+#: InterfaceManager/__init__.py:433
+msgid "srvoptunreach"
+msgstr "Notification (Service/Host unreachable)"
+
+#: InterfaceManager/__init__.py:434
+msgid "srvoptwarn"
+msgstr "Notification (Warning, services only)"
+
+#: InterfaceManager/__init__.py:435
+msgid "Sunday"
+msgstr "Sunday"
+
+#: InterfaceManager/__init__.py:436 InterfaceManager/__init__.py:975
+#: InterfaceManager/__init__.py:1573
+msgid "Template"
+msgstr "Template"
+
+#: InterfaceManager/__init__.py:437
+msgid "Thursday"
+msgstr "Thursday"
+
+#: InterfaceManager/__init__.py:438
+msgid "Timeperiods"
+msgstr "Timeperiods"
+
+#: InterfaceManager/__init__.py:439
+msgid "title-cmd-edit"
+msgstr "Command edit"
+
+#: InterfaceManager/__init__.py:440
+msgid "title-edit-contact"
+msgstr "Contact edit"
+
+#: InterfaceManager/__init__.py:441
+msgid "title-edit-contactgroup"
+msgstr "Contactgroup edit"
+
+#: InterfaceManager/__init__.py:442
+msgid "title-edit-service"
+msgstr "Service edit"
+
+#: InterfaceManager/__init__.py:443
+msgid "title-host-edit"
+msgstr "Host edit"
+
+#: InterfaceManager/__init__.py:444
+msgid "title-hostgroup-edit"
+msgstr "Hostgroup edit"
+
+#: InterfaceManager/__init__.py:445
+msgid "title-icinga"
+msgstr "Icinga services monitor management"
+
+#: InterfaceManager/__init__.py:446 InterfaceManager/__init__.py:990
+msgid "To"
+msgstr "To"
+
+#: InterfaceManager/__init__.py:447
+msgid "tooltip-cmd"
+msgstr ""
+"System command.<br />Needs absolute binary path.<br />$USER1$ is path: /usr/"
+"local/libexec/nagios/.<br />$ARG1$ is the first arg...<br />$HOSTNAME$ is "
+"host name or IP address"
+
+#: InterfaceManager/__init__.py:448
+msgid "tooltip-cmdname"
+msgstr "Command name with numbers, letters and '-_' only"
+
+#: InterfaceManager/__init__.py:449
+msgid "total-problems"
+msgstr "Total problems: "
+
+#: InterfaceManager/__init__.py:450
+msgid "total-sensors"
+msgstr "Total sensors: "
+
+#: InterfaceManager/__init__.py:451
+msgid "Tuesday"
+msgstr "Tuesday"
+
+#: InterfaceManager/__init__.py:453
+msgid "Warn"
+msgstr "Warning"
+
+#: InterfaceManager/__init__.py:454
+msgid "Wednesday"
+msgstr "Wednesday"
+
+#: InterfaceManager/__init__.py:456
+#, fuzzy
+msgid "Command"
+msgstr "Commands"
+
+#: InterfaceManager/__init__.py:457
+#, fuzzy
+msgid "retainnonstatus"
+msgstr "Keep non-status infos (Z-Eye reboot)"
+
+#: InterfaceManager/__init__.py:459
+msgid "err-fields-missing"
+msgstr "Some fields are missing"
+
+#: InterfaceManager/__init__.py:460
+msgid "err-mail-invalid"
+msgstr "Invalid mail address"
+
+#: InterfaceManager/__init__.py:461
+msgid "err-mail-match"
+msgstr "Mail addresses don't match"
+
+#: InterfaceManager/__init__.py:462
+msgid "err-name-invalid"
+msgstr "Name is invalid (letters only)"
+
+#: InterfaceManager/__init__.py:463 InterfaceManager/__init__.py:1537
+msgid "err-pwd-match"
+msgstr "Passwords don't match"
+
+#: InterfaceManager/__init__.py:464
+msgid "err-pwd-too-weak"
+msgstr "Password is too weak"
+
+#: InterfaceManager/__init__.py:465
+msgid "err-step-invalid"
+msgstr "Asked step is invalid !!"
+
+#: InterfaceManager/__init__.py:466
+msgid "err-surname-invalid"
+msgstr "Surname is invalid (letters only)"
+
+#: InterfaceManager/__init__.py:467
+msgid "err-username-invalid"
+msgstr "Username invalid"
+
+#: InterfaceManager/__init__.py:468
+msgid "Finish"
+msgstr "Finish"
+
+#: InterfaceManager/__init__.py:469
+msgid "Lets-Go"
+msgstr "Let's go !"
+
+#: InterfaceManager/__init__.py:470 InterfaceManager/__init__.py:1556
+msgid "Mail"
+msgstr "Mail address"
+
+#: InterfaceManager/__init__.py:471
+msgid "Mail-repeat"
+msgstr "Repeat mail address"
+
+#: InterfaceManager/__init__.py:476 InterfaceManager/__init__.py:1388
+msgid "Send"
+msgstr "Send"
+
+#: InterfaceManager/__init__.py:477
+msgid "Surname"
+msgstr "Surname"
+
+#: InterfaceManager/__init__.py:478
+msgid "title-admin-set"
+msgstr "Admin configuration"
+
+#: InterfaceManager/__init__.py:479
+msgid "title-master-install"
+msgstr "Z-Eye install"
+
+#: InterfaceManager/__init__.py:480
+msgid "title-welcome"
+msgstr "Welcome !"
+
+#: InterfaceManager/__init__.py:481 InterfaceManager/__init__.py:1114
+msgid "Username"
+msgstr "Username"
+
+#: InterfaceManager/__init__.py:483
+#, fuzzy
+msgid "text-admin-set"
+msgstr "Admin configuration"
+
+#: InterfaceManager/__init__.py:484
+msgid "text-finish"
+msgstr ""
+
+#: InterfaceManager/__init__.py:485
+#, fuzzy
+msgid "text-welcome"
+msgstr "Welcome !"
+
+#: InterfaceManager/__init__.py:486
+#, fuzzy
+msgid "title-install-finished"
+msgstr "Z-Eye install"
+
+#: InterfaceManager/__init__.py:490
+msgid "add-to-dynamic-distrib"
+msgstr "Add to dynamic distribution pool"
+
+#: InterfaceManager/__init__.py:492
+msgid "Available-s"
+msgstr "Distributable"
+
+#: InterfaceManager/__init__.py:493
+msgid "bad-filter"
+msgstr "Bad filter"
+
+#: InterfaceManager/__init__.py:494
+msgid "Baux"
+msgstr "Leases"
+
+#: InterfaceManager/__init__.py:495
+msgid "boolean"
+msgstr "boolean"
+
+#: InterfaceManager/__init__.py:496
+msgid "change-interval"
+msgstr "Change interval"
+
+#: InterfaceManager/__init__.py:497
+msgid "choose-net"
+msgstr "Please choose an IP network to monitor"
+
+#: InterfaceManager/__init__.py:498
+msgid "Cluster-master"
+msgstr "Master node"
+
+#: InterfaceManager/__init__.py:499
+msgid "Cluster-members"
+msgstr "Cluster members"
+
+#: InterfaceManager/__init__.py:500
+msgid "Cluster-mode"
+msgstr "Cluster mode"
+
+#: InterfaceManager/__init__.py:501
+msgid "Cluster-name"
+msgstr "Cluster name"
+
+#: InterfaceManager/__init__.py:502
+msgid "clustering-ip"
+msgstr "Cluster IP address"
+
+#: InterfaceManager/__init__.py:503
+msgid "create-option"
+msgstr "Create an option"
+
+#: InterfaceManager/__init__.py:504
+msgid "create-option-group"
+msgstr "Create an option group"
+
+#: InterfaceManager/__init__.py:506
+msgid "configure-ip-range"
+msgstr "Configure dynamic IP ranges"
+
+#: InterfaceManager/__init__.py:507
+msgid "confirm-import-reserv"
+msgstr "Are you sure you want to import reservation for IP '%s' ?"
+
+#: InterfaceManager/__init__.py:508
+msgid "confirm-remove-dhcp-cluster"
+msgstr ""
+"Are you sure you want to remove cluster '%s' ?<br />This action will remove "
+"all link between clusters and subnets."
+
+#: InterfaceManager/__init__.py:509
+msgid "confirm-remove-custom-option"
+msgstr "Are you sure you want to remove custom dhcp option '%s' ?"
+
+#: InterfaceManager/__init__.py:510
+msgid "confirm-remove-declared-subnet"
+msgstr "Are you sure you want to remove declared subnet '%s' ?"
+
+#: InterfaceManager/__init__.py:511
+msgid "confirm-remove-dhcp"
+msgstr "Are you sure you want to remove dhcp source '%s' ?"
+
+#: InterfaceManager/__init__.py:512
+msgid "confirm-remove-option"
+msgstr "Are you sure you want to remove dhcp option '%s' ?"
+
+#: InterfaceManager/__init__.py:513
+msgid "Consult"
+msgstr "Consult datas"
+
+#: InterfaceManager/__init__.py:514 InterfaceManager/__init__.py:1247
+msgid "Contact"
+msgstr "Contact"
+
+#: InterfaceManager/__init__.py:515
+msgid "create-custom-option"
+msgstr "Create a custom option"
+
+#: InterfaceManager/__init__.py:516
+msgid "crit-line"
+msgstr "Critical step"
+
+#: InterfaceManager/__init__.py:518
+msgid "declare-subnet"
+msgstr "Declare IP subnet"
+
+#: InterfaceManager/__init__.py:519
+msgid "default-lease-time"
+msgstr "Default lease time"
+
+#: InterfaceManager/__init__.py:520
+msgid "dhcp-cluster"
+msgstr "DHCP cluster"
+
+#: InterfaceManager/__init__.py:521
+msgid "dhcp-clusters"
+msgstr "DHCP clusters"
+
+#: InterfaceManager/__init__.py:522
+msgid "dhcp-type"
+msgstr "DHCP type"
+
+#: InterfaceManager/__init__.py:523
+msgid "dhcpd-path"
+msgstr "Path to dhcpd.conf"
+
+#: InterfaceManager/__init__.py:524
+msgid "Distributed"
+msgstr "Available"
+
+#: InterfaceManager/__init__.py:525
+msgid "Distributed-by-ipmanager"
+msgstr "Distributed (Z-Eye)"
+
+#: InterfaceManager/__init__.py:526
+msgid "DNS"
+msgstr "Domain Name Server"
+
+#: InterfaceManager/__init__.py:527
+msgid "domain-name"
+msgstr "Domain name"
+
+#: InterfaceManager/__init__.py:528
+msgid "end-ip"
+msgstr "End IP"
+
+#: InterfaceManager/__init__.py:529
+msgid "En-IP-history"
+msgstr "Enable IP history"
+
+#: InterfaceManager/__init__.py:530
+msgid "En-monitor"
+msgstr "Enable capacity monitoring"
+
+#: InterfaceManager/__init__.py:532
+msgid "err-bad-hostname"
+msgstr "Hostname '%s' is invalid"
+
+#: InterfaceManager/__init__.py:533
+msgid "err-bad-ip-addr"
+msgstr "IP address '%s' is invalid"
+
+#: InterfaceManager/__init__.py:534
+msgid "err-bad-mac-addr"
+msgstr "The '%s' MAC address is invalid"
+
+#: InterfaceManager/__init__.py:535
+msgid "err-bad-range-action"
+msgstr "Action not supported"
+
+#: InterfaceManager/__init__.py:536
+msgid "err-bad-subnet"
+msgstr "This subnet is invalid !"
+
+#: InterfaceManager/__init__.py:537
+msgid "err-clustermaster-iscdhcp"
+msgstr "This cluster type needs a master server"
+
+#: InterfaceManager/__init__.py:538
+msgid "err-clustermaster-not-in-members"
+msgstr "The choosen master isn't in cluster members"
+
+#: InterfaceManager/__init__.py:539
+msgid "err-clustermode-require-two"
+msgstr "This cluster mode require exactly 2 DHCP servers"
+
+#: InterfaceManager/__init__.py:541
+msgid "err-cluster-need-members"
+msgstr "A cluster need to have one or more members"
+
+#: InterfaceManager/__init__.py:543
+msgid "err-comment-too-long"
+msgstr "The comment is too long"
+
+#: InterfaceManager/__init__.py:544
+msgid "err-custom-option-already-exists"
+msgstr "This custom option already exists"
+
+#: InterfaceManager/__init__.py:545
+msgid "err-custom-option-not-exists"
+msgstr "This custom option doesn't exists"
+
+#: InterfaceManager/__init__.py:546
+msgid "err-dlease-sup-mlease"
+msgstr "Default lease time is superior than max lease time"
+
+#: InterfaceManager/__init__.py:547
+msgid "err-dhcpserver-invalid-alias"
+msgstr "Invalid DHCP server alias"
+
+#: InterfaceManager/__init__.py:548
+msgid "err-dhcpserver-invalid-clusteraddr"
+msgstr "Cluster source address is invalid"
+
+#: InterfaceManager/__init__.py:549
+msgid "err-dhcpserver-dhcpdpath"
+msgstr "dhcpd.conf path doesn't use an acceptable form"
+
+#: InterfaceManager/__init__.py:550
+msgid "err-dhcpserver-leasepath"
+msgstr "dhcpd.leases path doesn't use an acceptable form"
+
+#: InterfaceManager/__init__.py:551
+msgid "err-dhcpserver-not-exists"
+msgstr "No DHCP server with this name found"
+
+#: InterfaceManager/__init__.py:552
+msgid "err-dhcpserver-reservconf"
+msgstr "Reservations config file doesn't use an acceptable form"
+
+#: InterfaceManager/__init__.py:553
+msgid "err-dhcpserver-subnetconf"
+msgstr "Subnets config file doesn't use an acceptable form"
+
+#: InterfaceManager/__init__.py:554
+msgid "err-dhcp-option-not-exists"
+msgstr "This DHCP option doesn't exist"
+
+#: InterfaceManager/__init__.py:555
+msgid "err-dhcp-opts-group-already-exists"
+msgstr "No DHCP option group with this name exists"
+
+#: InterfaceManager/__init__.py:556
+msgid "err-dhcp-opts-group-not-exists"
+msgstr "This DHCP option group doesn't exist"
+
+#: InterfaceManager/__init__.py:557
+msgid "err-distrib-subnet-need-infos"
+msgstr ""
+"Subnet distribution need the following informations: gateway, dns1 and "
+"domainname"
+
+#: InterfaceManager/__init__.py:558
+msgid "err-endip-not-in-range"
+msgstr "Ending IP isn't in the subnet"
+
+#: InterfaceManager/__init__.py:559
+msgid "err-expiration-date-invalid"
+msgstr "Expiration date is invalid"
+
+#: InterfaceManager/__init__.py:560
+msgid "err-expiration-date-must-be-today-or-more"
+msgstr "The expiration date must be at least today"
+
+#: InterfaceManager/__init__.py:561
+msgid "err-hostname-already-defined"
+msgstr "This hostname is already used by another IP"
+
+#: InterfaceManager/__init__.py:562
+msgid "err-hostname-already-used"
+msgstr "Hostname'%s' is already used by another IP"
+
+#: InterfaceManager/__init__.py:563 InterfaceManager/__init__.py:1279
+msgid "err-invalid-csv"
+msgstr "CSV file is invalid"
+
+#: InterfaceManager/__init__.py:564 InterfaceManager/__init__.py:1281
+msgid "err-invalid-csv-entry"
+msgstr "CSV entry is invalid '%s'"
+
+#: InterfaceManager/__init__.py:565
+msgid "err-invalid-csv-entry-multiple-hostname"
+msgstr "Hostname '%s' is referenced multiple times"
+
+#: InterfaceManager/__init__.py:566
+msgid "err-invalid-csv-entry-multiple-ip"
+msgstr "IP '%s' is referenced multiple times"
+
+#: InterfaceManager/__init__.py:567
+msgid "err-invalid-csv-entry-multiple-mac"
+msgstr "MAC '%s' is referenced multiple times"
+
+#: InterfaceManager/__init__.py:568
+msgid "err-invalid-hostname"
+msgstr "Hostname '%s' is invalid"
+
+#: InterfaceManager/__init__.py:569
+msgid "err-invalid-ip"
+msgstr "IP address'%s' is invalid"
+
+#: InterfaceManager/__init__.py:570
+msgid "err-invalid-mac"
+msgstr "MAC address '%s' is invalid"
+
+#: InterfaceManager/__init__.py:572
+msgid "err-ip-not-in-cache"
+msgstr "'%s' IP address is not in cache"
+
+#: InterfaceManager/__init__.py:573
+msgid "err-ip-already-used"
+msgstr "'%s' IP address is already used"
+
+#: InterfaceManager/__init__.py:574
+msgid "err-ip-not-in-subnet"
+msgstr "'%s' IP address is not in subnet '%s'"
+
+#: InterfaceManager/__init__.py:575
+msgid "err-ip-not-in-declared-subnets"
+msgstr ""
+"This IP address is not in a declared subnet ! Please declare a subnet before."
+
+#: InterfaceManager/__init__.py:576
+msgid "err-mac-already-used"
+msgstr "MAC address '%s is already used"
+
+#: InterfaceManager/__init__.py:577
+msgid "err-mac-already-used-in-subnet"
+msgstr "This MAC address is already used in this subnet. Please choose another"
+
+#: InterfaceManager/__init__.py:578 InterfaceManager/__init__.py:912
+msgid "err-miss-data"
+msgstr "Some datas are missing or invalid !"
+
+#: InterfaceManager/__init__.py:579
+msgid "err-need-dhcp-server"
+msgstr "One or more DHCP servers are required to create a DHCP cluster"
+
+#: InterfaceManager/__init__.py:580
+msgid "err-no-dhcp-custom-option"
+msgstr ""
+"No DHCP custom option defined. This element require at least a DHCP custom "
+"option"
+
+#: InterfaceManager/__init__.py:581
+msgid "err-no-dhcp-option"
+msgstr "No DHCP option defined."
+
+#: InterfaceManager/__init__.py:582
+msgid "err-no-info-for-ip-addr"
+msgstr "No information found for IP address '%s'"
+
+#: InterfaceManager/__init__.py:583
+msgid "err-option-already-exists"
+msgstr "A DHCP option with this name already exists"
+
+#: InterfaceManager/__init__.py:584
+msgid "err-option-code-lower-255"
+msgstr "DHCP option code is a number between 0 and 255"
+
+#: InterfaceManager/__init__.py:585
+msgid "err-option-code-protected"
+msgstr ""
+"This option code is protected. Please use an option code greater than 125"
+
+#: InterfaceManager/__init__.py:586
+msgid "err-option-not-exists"
+msgstr "This DHCP option doesn't exists"
+
+#: InterfaceManager/__init__.py:587
+msgid "err-option-value-invalid"
+msgstr "Value associated with this option is invalid"
+
+#: InterfaceManager/__init__.py:588
+msgid "err-pwd-not-match"
+msgstr "Passwords didn't match"
+
+#: InterfaceManager/__init__.py:589
+msgid "err-remove-dhcpserver-master"
+msgstr ""
+"Unable to remove this DHCP server, it's the cluster master of cluster '"
+
+#: InterfaceManager/__init__.py:590
+msgid "err-remove-dhcpserver-master2"
+msgstr "' You must change cluster configuration or remove cluster."
+
+#: InterfaceManager/__init__.py:591
+msgid "err-reserv-need-fields"
+msgstr "Reservations need a MAC address and an hostname"
+
+#: InterfaceManager/__init__.py:592
+msgid "err-router-not-in-subnet"
+msgstr "This default gateway isn't is the network"
+
+#: InterfaceManager/__init__.py:593
+msgid "err-subnet-already-exists"
+msgstr "This network is already declared"
+
+#: InterfaceManager/__init__.py:594
+msgid "err-subnet-bad-ipv6-infos"
+msgstr "IPv6 network informations are incomplete or invalid"
+
+#: InterfaceManager/__init__.py:595
+msgid "err-subnet-not-exists"
+msgstr "This network doesn't exists"
+
+#: InterfaceManager/__init__.py:596
+msgid "err-ssh-conn-failed"
+msgstr ""
+"Connection to SSH server failed, please verify if it's possible to join "
+"remote server"
+
+#: InterfaceManager/__init__.py:597
+msgid "err-ssh-auth-failed"
+msgstr "Authentication failed to SSH server"
+
+#: InterfaceManager/__init__.py:598
+msgid "err-startip-lower-endip"
+msgstr "Starting IP is greater than ending IP"
+
+#: InterfaceManager/__init__.py:599
+msgid "err-startip-not-in-range"
+msgstr "Starting IP isn't in the subnet"
+
+#: InterfaceManager/__init__.py:600 InterfaceManager/__init__.py:837
+#: InterfaceManager/__init__.py:1160
+msgid "err-unable-read"
+msgstr "Unable to read file (verify if exists and read/write rights)"
+
+#: InterfaceManager/__init__.py:601
+msgid "err-vlan-already-used"
+msgstr "This VLAN is already linked to another network"
+
+#: InterfaceManager/__init__.py:602
+msgid "Expert-tools"
+msgstr "Expert tools"
+
+#: InterfaceManager/__init__.py:603
+msgid "Expiration"
+msgstr "Expiration date"
+
+#: InterfaceManager/__init__.py:604
+msgid "Failover"
+msgstr "Master/slave"
+
+#: InterfaceManager/__init__.py:606
+msgid "Free"
+msgstr "Free"
+
+#: InterfaceManager/__init__.py:607
+msgid "Free-s"
+msgstr "Free"
+
+#: InterfaceManager/__init__.py:609
+msgid "Group-DHCP-opts"
+msgstr "DHCP options linked to group"
+
+#: InterfaceManager/__init__.py:610
+msgid "History"
+msgstr "History"
+
+#: InterfaceManager/__init__.py:611
+msgid "Hostname"
+msgstr "Hostname"
+
+#: InterfaceManager/__init__.py:612
+msgid "import-dhcp-reserv"
+msgstr "Import DHCP reservations"
+
+#: InterfaceManager/__init__.py:613
+msgid "integer-8"
+msgstr "8bits signed integer"
+
+#: InterfaceManager/__init__.py:614
+msgid "integer-16"
+msgstr "16bits signed integer"
+
+#: InterfaceManager/__init__.py:615
+msgid "integer-32"
+msgstr "32bits signed integer"
+
+#: InterfaceManager/__init__.py:616
+msgid "intval-days"
+msgstr "Interval (days)"
+
+#: InterfaceManager/__init__.py:617
+msgid "in-cache"
+msgstr "In cache"
+
+#: InterfaceManager/__init__.py:618
+msgid "IP-Addr"
+msgstr "IP address"
+
+#: InterfaceManager/__init__.py:619
+msgid "last-view"
+msgstr "Last view"
+
+#: InterfaceManager/__init__.py:620
+msgid "Lease-end"
+msgstr "Lease end"
+
+#: InterfaceManager/__init__.py:621
+msgid "lease-path"
+msgstr "Path to dhcpd.leases"
+
+#: InterfaceManager/__init__.py:622
+msgid "Loadbalancing"
+msgstr "Load-balancing"
+
+#: InterfaceManager/__init__.py:623
+msgid "MAC-Addr"
+msgstr "MAC address"
+
+#: InterfaceManager/__init__.py:624
+msgid "Manage-DHCP-Opts"
+msgstr "DHCP options management"
+
+#: InterfaceManager/__init__.py:625
+msgid "Manage-Servers"
+msgstr "Servers management"
+
+#: InterfaceManager/__init__.py:626
+msgid "Manage-Subnets"
+msgstr "IP networks management"
+
+#: InterfaceManager/__init__.py:627
+msgid "max-age"
+msgstr "Max age"
+
+#: InterfaceManager/__init__.py:628
+msgid "max-lease-time"
+msgstr "Max lease time"
+
+#: InterfaceManager/__init__.py:629
+msgid "member-of"
+msgstr "Member of"
+
+#: InterfaceManager/__init__.py:632
+msgid "modif-record"
+msgstr "Saved"
+
+#: InterfaceManager/__init__.py:633 InterfaceManager/__init__.py:1342
+msgid "Monitoring"
+msgstr "Monitoring"
+
+#: InterfaceManager/__init__.py:634 InterfaceManager/__init__.py:1058
+msgid "netid"
+msgstr "Network address"
+
+#: InterfaceManager/__init__.py:635
+msgid "netidv6"
+msgstr "IPv6 network address"
+
+#: InterfaceManager/__init__.py:636 InterfaceManager/__init__.py:1059
+msgid "netmask"
+msgstr "Network mask"
+
+#: InterfaceManager/__init__.py:637 InterfaceManager/__init__.py:1060
+#: InterfaceManager/__init__.py:1350
+msgid "Network"
+msgstr "Network"
+
+#: InterfaceManager/__init__.py:639
+msgid "note-needed"
+msgstr "Required (*)"
+
+#: InterfaceManager/__init__.py:640
+msgid "no-net-found"
+msgstr "No DHCP distributed network found"
+
+#: InterfaceManager/__init__.py:641
+msgid "no-old-record"
+msgstr "No old record found "
+
+#: InterfaceManager/__init__.py:642
+msgid "no-tab"
+msgstr "This tab doesn't exist"
+
+#: InterfaceManager/__init__.py:643
+msgid "not-usable"
+msgstr "Not usable"
+
+#: InterfaceManager/__init__.py:644
+msgid "options"
+msgstr "Options"
+
+#: InterfaceManager/__init__.py:645 InterfaceManager/__init__.py:1063
+msgid "option-alias"
+msgstr "Option alias"
+
+#: InterfaceManager/__init__.py:646 InterfaceManager/__init__.py:1064
+msgid "option-code"
+msgstr "Code"
+
+#: InterfaceManager/__init__.py:647 InterfaceManager/__init__.py:1065
+msgid "option-group"
+msgstr "DHCP option group(s)"
+
+#: InterfaceManager/__init__.py:648 InterfaceManager/__init__.py:1066
+msgid "option-name"
+msgstr "Name"
+
+#: InterfaceManager/__init__.py:649 InterfaceManager/__init__.py:1067
+msgid "option-type"
+msgstr "Type"
+
+#: InterfaceManager/__init__.py:650 InterfaceManager/__init__.py:1068
+msgid "option-value"
+msgstr "Option value"
+
+#: InterfaceManager/__init__.py:651
+msgid "os-name"
+msgstr "OS"
+
+#: InterfaceManager/__init__.py:652 InterfaceManager/__init__.py:951
+msgid "Port"
+msgstr "Port"
+
+#: InterfaceManager/__init__.py:653
+msgid "prefixlen"
+msgstr "Prefix length"
+
+#: InterfaceManager/__init__.py:655
+msgid "remove-from-dynamic-distrib"
+msgstr "Remove from dynamic distribution pool"
+
+#: InterfaceManager/__init__.py:656
+msgid "remove-history"
+msgstr "Remove server DHCP history ?"
+
+#: InterfaceManager/__init__.py:657
+msgid "required-if-cluster"
+msgstr "Required if a cluster is selected"
+
+#: InterfaceManager/__init__.py:658
+msgid "reservconf-path"
+msgstr "Reservation config file"
+
+#: InterfaceManager/__init__.py:659
+msgid "Reserv"
+msgstr "Reserv"
+
+#: InterfaceManager/__init__.py:660
+msgid "Reserved"
+msgstr "Reserved"
+
+#: InterfaceManager/__init__.py:661
+msgid "Reserved-by-ipmanager"
+msgstr "Reserved by Z-Eye"
+
+#: InterfaceManager/__init__.py:662
+msgid "Reservations"
+msgstr "Reservations"
+
+#: InterfaceManager/__init__.py:663
+msgid "router"
+msgstr "Default gateway"
+
+#: InterfaceManager/__init__.py:664
+msgid "rule-manage-server"
+msgstr "DHCP Server management"
+
+#: InterfaceManager/__init__.py:669
+msgid "server-addr"
+msgstr "Server address (IP/DNS)"
+
+#: InterfaceManager/__init__.py:670
+msgid "server-alias"
+msgstr "Alias"
+
+#: InterfaceManager/__init__.py:671
+msgid "server-desc"
+msgstr "Server description"
+
+#: InterfaceManager/__init__.py:672
+msgid "Server-mgmt"
+msgstr "Server management"
+
+#: InterfaceManager/__init__.py:674
+msgid "ssh-pwd"
+msgstr "SSH password"
+
+#: InterfaceManager/__init__.py:675
+msgid "ssh-pwd-repeat"
+msgstr "Repeat password"
+
+#: InterfaceManager/__init__.py:676
+msgid "start-ip"
+msgstr "Starting IP"
+
+#: InterfaceManager/__init__.py:678
+msgid "Status"
+msgstr "Status"
+
+#: InterfaceManager/__init__.py:679
+msgid "Stuck-IP"
+msgstr "Fixed IP"
+
+#: InterfaceManager/__init__.py:680
+msgid "subnetconf-path"
+msgstr "Subnet config file"
+
+#: InterfaceManager/__init__.py:681
+msgid "subnet-desc"
+msgstr "Subnet description"
+
+#: InterfaceManager/__init__.py:682 InterfaceManager/__init__.py:1083
+msgid "subnet-shortname"
+msgstr "Subnet shortname (alias)"
+
+#: InterfaceManager/__init__.py:683
+msgid "Switch"
+msgstr "Device"
+
+#: InterfaceManager/__init__.py:684
+msgid "text"
+msgstr "text"
+
+#: InterfaceManager/__init__.py:685
+msgid "tip-custom-dhcp-opts"
+msgstr ""
+"Custom DHCP options permit to create custom options, useful for some systems "
+"(like TOIP)"
+
+#: InterfaceManager/__init__.py:686
+msgid "tip-dhcp-opts"
+msgstr ""
+"DHCP options are a couple of declared option/value to use with groups and "
+"then associate it with subnets"
+
+#: InterfaceManager/__init__.py:687
+msgid "tip-dhcp-opt-group"
+msgstr ""
+"DHCP option groups define a group of configured options.<br />Those groups "
+"can be linked with subnets to configure client by DHCP"
+
+#: InterfaceManager/__init__.py:688
+msgid "tip-import-reserv"
+msgstr ""
+"You can import reservation in the selected subnet here.<br />3 fields are "
+"required:<ul><li>Hostname</li><li>MAC address</li><li>IP address</li></"
+"ul><br /><b>Warning !</b> If replace option is selected and IP address, MAC "
+"address or hostname are used elsewhere, the import will replace conflicted "
+"entries"
+
+#: InterfaceManager/__init__.py:689
+msgid "tip-inherit-if-null"
+msgstr "Parameter is inherited if zero or empty"
+
+#: InterfaceManager/__init__.py:690
+msgid "tip-range"
+msgstr ""
+"Configure a new dynamic pool address range for DHCPs. You don't have to "
+"exclude DHCP reservations from this pool. Range which overlaps another are "
+"automaticly merged"
+
+#: InterfaceManager/__init__.py:691
+msgid "tip-reserv"
+msgstr "The 00:00:00:00:00:00 MAC address can be used to block some IP on DHCP"
+
+#: InterfaceManager/__init__.py:692
+msgid "title-add-server"
+msgstr "Add DHCP server"
+
+#: InterfaceManager/__init__.py:693
+msgid "title-custom-dhcp-opts"
+msgstr "Custom DHCP options"
+
+#: InterfaceManager/__init__.py:694
+msgid "title-declared-subnets"
+msgstr "Declared networks"
+
+#: InterfaceManager/__init__.py:695
+msgid "title-dhcp-cluster-mgmt"
+msgstr "DHCP cluster management"
+
+#: InterfaceManager/__init__.py:696
+msgid "title-dhcp-opts"
+msgstr "DHCP options"
+
+#: InterfaceManager/__init__.py:697
+msgid "title-dhcp-opts-group"
+msgstr "DHCP options group"
+
+#: InterfaceManager/__init__.py:698
+msgid "title-dhcp-server-mgmt"
+msgstr "DHCP server management"
+
+#: InterfaceManager/__init__.py:699
+msgid "title-history-1d"
+msgstr "History since 24 hours"
+
+#: InterfaceManager/__init__.py:700
+msgid "title-history-1w"
+msgstr "History since 1 week"
+
+#: InterfaceManager/__init__.py:701
+msgid "title-history-1m"
+msgstr "History since 1 month"
+
+#: InterfaceManager/__init__.py:702
+msgid "title-history-1y"
+msgstr "History since 1 year"
+
+#: InterfaceManager/__init__.py:703
+msgid "title-history-since"
+msgstr "History since"
+
+#: InterfaceManager/__init__.py:704
+msgid "title-ip-management"
+msgstr "IP management"
+
+#: InterfaceManager/__init__.py:705
+msgid "title-old-record"
+msgstr "Old reservations found !"
+
+#: InterfaceManager/__init__.py:706
+msgid "title-remove-dhcp"
+msgstr "Remove DHCP server"
+
+#: InterfaceManager/__init__.py:707
+msgid "title-search-old"
+msgstr "Search old reservations"
+
+#: InterfaceManager/__init__.py:708
+msgid "title-subnet-management"
+msgstr "Subnet management"
+
+#: InterfaceManager/__init__.py:709
+msgid "tooltip-clustermaster"
+msgstr ""
+"Define which server is the cluster master. The cluster master is effective "
+"only when Load-balancing or Master/slave mode is choosen. On <b>Load-"
+"balance</b> mode, the master is the server which decide how to load balance "
+"the leases"
+
+#: InterfaceManager/__init__.py:710
+msgid "tooltip-clustermode"
+msgstr ""
+"Define cluster working mode.<br /><b>None</b>: Don't configure cluster "
+"mode<br /><b>Master/slave</b>: define a master and a slave server. Last "
+"doesn't answer to DHCP request. If master is unreachable, the slave answers "
+"the request until master becomes available. This is the best configuration "
+"if you use DHCP relays (ip helpers).<br /><b>Load-balacing</b>: Each server "
+"answers to DHCP requests. If one DHCP become unreachable the other answers "
+"to all requests. Leases are always synchronized between the DHCPs. This is "
+"the best configuration with a directly connected DHCP.<br /><b>Warning</b>: "
+"Master/slave and Load-balacing clusters are only available for ISC DHCP "
+"servers"
+
+#: InterfaceManager/__init__.py:711
+msgid "tooltip-clustering-ip"
+msgstr ""
+"It's the source address on a DHCP Cluster. This address must be exist on the "
+"server. If no address is given, the server address will be used. <br />It's "
+"only used into a ISC-DHCP cluster."
+
+#: InterfaceManager/__init__.py:712
+msgid "tooltip-comment"
+msgstr "A comment to describe the address or the host"
+
+#: InterfaceManager/__init__.py:713
+msgid "tooltip-contact"
+msgstr "mail address which receive alerts"
+
+#: InterfaceManager/__init__.py:714
+msgid "tooltip-default-lease-time"
+msgstr "Default duration (in seconds) for DHCP leases (minimum: 30secs)"
+
+#: InterfaceManager/__init__.py:715
+msgid "tooltip-desc"
+msgstr "Subnet description (max: 128 chars)"
+
+#: InterfaceManager/__init__.py:716
+msgid "tooltip-dhcpdpath"
+msgstr "Path to dhcpd main configuration file, often /etc/dhcpd.conf"
+
+#: InterfaceManager/__init__.py:717
+msgid "tooltip-dhcp-alias"
+msgstr ""
+"A short name to identify server. This name can only contain letters and "
+"numbers and is unique."
+
+#: InterfaceManager/__init__.py:718
+msgid "tooltip-dhcp-cluster-distrib"
+msgstr "One or more DHCP cluster where distribute the subnet"
+
+#: InterfaceManager/__init__.py:719
+msgid "tooltip-dhcp-desc"
+msgstr "A short description (128 chars) of the server"
+
+#: InterfaceManager/__init__.py:720
+msgid "tooltip-dhcp-option-code"
+msgstr ""
+"Specify a DHCP option code. This code is unique and must be greater than 125"
+
+#: InterfaceManager/__init__.py:721
+msgid "tooltip-dhcp-option-group"
+msgstr ""
+"Specify optional DHCP options groups to use when distribute addresses by DHCP"
+
+#: InterfaceManager/__init__.py:722
+msgid "tooltip-dhcp-option-value"
+msgstr ""
+"boolean: true/false<br />integer: positive integer<br />ip: IPv4 address<br /"
+">text: what you want"
+
+#: InterfaceManager/__init__.py:723
+msgid "tooltip-dhcp-server-ip"
+msgstr ""
+"IP or FQDN of the DHCP server. This address is used by Z-Eye to configure "
+"the DHCP service over SSH."
+
+#: InterfaceManager/__init__.py:724
+msgid "tooltip-domainname"
+msgstr "This defines the domain name add to client hostname"
+
+#: InterfaceManager/__init__.py:725
+msgid "tooltip-import-reserv"
+msgstr "Import DHCP reservation from cache"
+
+#: InterfaceManager/__init__.py:726
+msgid "tooltip-ipv6"
+msgstr "An IPv6 network address. It's only used by DNS manager"
+
+#: InterfaceManager/__init__.py:727
+msgid "tooltip-ip-expiration"
+msgstr ""
+"Specify an expiration date for the current reservation. Expiration will be "
+"removed when the expiration date occurs. If the field is empty, the "
+"reservation doesn't expire."
+
+#: InterfaceManager/__init__.py:728
+msgid "tooltip-ip-hostname"
+msgstr ""
+"Machine hostname. It can be different from the machine name, but some "
+"operating system take the DHCP hostname for themselves. This field contains "
+"only letters, numerics and dashes, cannot begin with a dash or a numeric and "
+"cannot end with a dash"
+
+#: InterfaceManager/__init__.py:729
+msgid "tooltip-ip-reserv"
+msgstr ""
+"Set a reservation for this IP. This action doesn't have any effect if subnet "
+"isn't linked with DHCP cluster"
+
+#: InterfaceManager/__init__.py:730
+msgid "tooltip-leasepath"
+msgstr "Path to dhcpd lease database, often /var/db/dhcpd.leases"
+
+#: InterfaceManager/__init__.py:731
+msgid "tooltip-max-age"
+msgstr ""
+"Max delay (in days) before advertise for old datas.<br />0 = No verification"
+
+#: InterfaceManager/__init__.py:732
+msgid "tooltip-max-lease-time"
+msgstr "Max duration (in seconds) for DHCP leases (minimum: 60secs)"
+
+#: InterfaceManager/__init__.py:733
+msgid "tooltip-prefixlen"
+msgstr "It's a value between 1 and 126 (included)"
+
+#: InterfaceManager/__init__.py:734
+msgid "tooltip-reservconfpath"
+msgstr "For future usage. Path to a writeable file for dhcp reservations."
+
+#: InterfaceManager/__init__.py:735
+msgid "tooltip-router"
+msgstr "The default gateway is the client's router"
+
+#: InterfaceManager/__init__.py:736
+msgid "tooltip-shortname"
+msgstr "An alias for the DHCP subnet to identify it"
+
+#: InterfaceManager/__init__.py:737
+msgid "tooltip-subnetconfpath"
+msgstr ""
+"For future usage. Path to a writeable file for dhcp subnet configuration"
+
+#: InterfaceManager/__init__.py:738
+msgid "tooltip-vlanid"
+msgstr "VLAN number (802.1Q tag)"
+
+#: InterfaceManager/__init__.py:739
+#, python-format
+msgid "tooltip-%use"
+msgstr "% of use"
+
+#: InterfaceManager/__init__.py:740
+msgid "uinteger-8"
+msgstr "8bits unsigned integer"
+
+#: InterfaceManager/__init__.py:741
+msgid "uinteger-16"
+msgstr "16bits unsigned integer"
+
+#: InterfaceManager/__init__.py:742
+msgid "uinteger-32"
+msgstr "32bits unsigned integer"
+
+#: InterfaceManager/__init__.py:743
+msgid "Usable"
+msgstr "Usable"
+
+#: InterfaceManager/__init__.py:744
+msgid "Used"
+msgstr "Used"
+
+#: InterfaceManager/__init__.py:745 InterfaceManager/__init__.py:1116
+msgid "vlanid"
+msgstr "VLAN ID"
+
+#: InterfaceManager/__init__.py:746
+msgid "warn-line"
+msgstr "Warning step"
+
+#: InterfaceManager/__init__.py:747
+#, fuzzy
+msgid "confirm-remove-reservation"
+msgstr "Are you sure you want to remove service '%s' ?"
+
+#: InterfaceManager/__init__.py:748
+#, fuzzy
+msgid "err-already-exists"
+msgstr "This group already exists !"
+
+#: InterfaceManager/__init__.py:749
+#, fuzzy
+msgid "rule-manage-servers"
+msgstr "DHCP Server management"
+
+#: InterfaceManager/__init__.py:750
+#, fuzzy
+msgid "title-remove-server"
+msgstr "Are you sure you want to remove server '%s' ?"
+
+#: InterfaceManager/__init__.py:751
+#, fuzzy
+msgid "tooltip-ip-comment"
+msgstr "A comment to describe the address or the host"
+
+#: InterfaceManager/__init__.py:754 InterfaceManager/__init__.py:1233
+#: InterfaceManager/__init__.py:1455 InterfaceManager/__init__.py:1625
+msgid "All"
+msgstr "All"
+
+#: InterfaceManager/__init__.py:755 InterfaceManager/__init__.py:1457
+#: InterfaceManager/__init__.py:1626
+#, fuzzy
+msgid "confirm-remove-groupright"
+msgstr "Are you sure you want to remove right for group '%s' ?"
+
+#: InterfaceManager/__init__.py:756 InterfaceManager/__init__.py:1458
+#: InterfaceManager/__init__.py:1627
+#, fuzzy
+msgid "confirm-remove-userright"
+msgstr "Are you sure you want to remove right for user '%s' ?"
+
+#: InterfaceManager/__init__.py:759 InterfaceManager/__init__.py:1630
+#, fuzzy
+msgid "err-no-subnet"
+msgstr "This subnet is invalid !"
+
+#: InterfaceManager/__init__.py:762 InterfaceManager/__init__.py:840
+#: InterfaceManager/__init__.py:1321 InterfaceManager/__init__.py:1469
+#: InterfaceManager/__init__.py:1633
+msgid "Go"
+msgstr "Go"
+
+#: InterfaceManager/__init__.py:763 InterfaceManager/__init__.py:1470
+#: InterfaceManager/__init__.py:1634
+#, fuzzy
+msgid "group-rights"
+msgstr "Group rights"
+
+#: InterfaceManager/__init__.py:764 InterfaceManager/__init__.py:924
+#: InterfaceManager/__init__.py:1043 InterfaceManager/__init__.py:1471
+#: InterfaceManager/__init__.py:1544 InterfaceManager/__init__.py:1635
+#, fuzzy
+msgid "Groups"
+msgstr "Groups"
+
+#: InterfaceManager/__init__.py:770 InterfaceManager/__init__.py:1497
+#: InterfaceManager/__init__.py:1643
+msgid "Right"
+msgstr "Right"
+
+#: InterfaceManager/__init__.py:771 InterfaceManager/__init__.py:1644
+#, fuzzy
+msgid "right-advancedtools"
+msgstr "Advanced tools"
+
+#: InterfaceManager/__init__.py:772 InterfaceManager/__init__.py:1645
+#, fuzzy
+msgid "right-history"
+msgstr "IP history"
+
+#: InterfaceManager/__init__.py:773 InterfaceManager/__init__.py:1646
+#, fuzzy
+msgid "right-ipmgmt"
+msgstr "IP address management"
+
+#: InterfaceManager/__init__.py:774 InterfaceManager/__init__.py:1647
+#, fuzzy
+msgid "right-optionsgrpmgmt"
+msgstr "DHCP option group management"
+
+#: InterfaceManager/__init__.py:775 InterfaceManager/__init__.py:1648
+#, fuzzy
+msgid "right-optionsmgmt"
+msgstr "DHCP options management"
+
+#: InterfaceManager/__init__.py:776 InterfaceManager/__init__.py:1649
+msgid "right-rangemgmt"
+msgstr "IP range management"
+
+#: InterfaceManager/__init__.py:777 InterfaceManager/__init__.py:1650
+msgid "right-read"
+msgstr "Reading (global)"
+
+#: InterfaceManager/__init__.py:778 InterfaceManager/__init__.py:1651
+#, fuzzy
+msgid "right-servermgmt"
+msgstr "DHCP server management"
+
+#: InterfaceManager/__init__.py:779 InterfaceManager/__init__.py:1652
+#, fuzzy
+msgid "right-subnetmgmt"
+msgstr "Subnet management"
+
+#: InterfaceManager/__init__.py:782 InterfaceManager/__init__.py:1655
+#, fuzzy
+msgid "title-bysubnet"
+msgstr "title-bysubnet"
+
+#: InterfaceManager/__init__.py:783 InterfaceManager/__init__.py:1656
+#, fuzzy
+msgid "title-globalrights"
+msgstr "Global rights"
+
+#: InterfaceManager/__init__.py:784 InterfaceManager/__init__.py:1657
+#, fuzzy
+msgid "title-ipmrightsmgmt"
+msgstr "IP manager rights management"
+
+#: InterfaceManager/__init__.py:786 InterfaceManager/__init__.py:800
+#: InterfaceManager/__init__.py:1005 InterfaceManager/__init__.py:1113
+#: InterfaceManager/__init__.py:1226 InterfaceManager/__init__.py:1436
+#: InterfaceManager/__init__.py:1511 InterfaceManager/__init__.py:1587
+#: InterfaceManager/__init__.py:1659
+#, fuzzy
+msgid "User"
+msgstr "User"
+
+#: InterfaceManager/__init__.py:787 InterfaceManager/__init__.py:1512
+#: InterfaceManager/__init__.py:1660
+#, fuzzy
+msgid "user-rights"
+msgstr "User rights"
+
+#: InterfaceManager/__init__.py:788 InterfaceManager/__init__.py:1010
+#: InterfaceManager/__init__.py:1513 InterfaceManager/__init__.py:1661
+#, fuzzy
+msgid "Users"
+msgstr "Users"
+
+#: InterfaceManager/__init__.py:789 InterfaceManager/__init__.py:1514
+#: InterfaceManager/__init__.py:1662 engine/snmpmgmt/Models/__init__.py:28
+msgid "Writing"
+msgstr "Writing"
+
+#: InterfaceManager/__init__.py:791 InterfaceManager/__init__.py:1125
+#: templates/engine/logs/serviceLogs.html:5
+msgid "Date"
+msgstr "Date"
+
+#: InterfaceManager/__init__.py:792 templates/engine/logs/serviceLogs.html:7
+msgid "Entry"
+msgstr "Entry"
+
+#: InterfaceManager/__init__.py:793
+msgid "err-no-logs"
+msgstr "No log found"
+
+#: InterfaceManager/__init__.py:796 templates/engine/logs/serviceLogs.html:6
+msgid "Level"
+msgstr "Level"
+
+#: InterfaceManager/__init__.py:797
+msgid "Module"
+msgstr "Module"
+
+#: InterfaceManager/__init__.py:801
+msgid "webapp"
+msgstr "Web application"
+
+#: InterfaceManager/__init__.py:803
+msgid "Add-Edge"
+msgstr "Add edge"
+
+#: InterfaceManager/__init__.py:804
+msgid "Add-Node"
+msgstr "Add node"
+
+#: InterfaceManager/__init__.py:805
+msgid "Color"
+msgstr "Color"
+
+#: InterfaceManager/__init__.py:806
+msgid "Dest-node"
+msgstr "Destination node"
+
+#: InterfaceManager/__init__.py:807
+msgid "err-edge-exists"
+msgstr "This edge already exists"
+
+#: InterfaceManager/__init__.py:808
+msgid "err-edge-not-exists"
+msgstr "This edge doesn't exists"
+
+#: InterfaceManager/__init__.py:809
+msgid "err-no-node-found"
+msgstr "No node found"
+
+#: InterfaceManager/__init__.py:810 InterfaceManager/__init__.py:1296
+msgid "err-no-tab"
+msgstr "Bad tab"
+
+#: InterfaceManager/__init__.py:811
+msgid "err-node-exists"
+msgstr "This node already exists"
+
+#: InterfaceManager/__init__.py:812
+msgid "err-node-not-exists"
+msgstr "This node doesn't exists"
+
+#: InterfaceManager/__init__.py:813
+msgid "err-src-equal-dest"
+msgstr "Source and destination are same"
+
+#: InterfaceManager/__init__.py:815
+msgid "icinga-map"
+msgstr "System states"
+
+#: InterfaceManager/__init__.py:817
+msgid "Import-Nodes"
+msgstr "Import nodes (network & Icinga)"
+
+#: InterfaceManager/__init__.py:818
+msgid "link-state"
+msgstr "Links state of"
+
+#: InterfaceManager/__init__.py:819
+msgid "net-map"
+msgstr "Network"
+
+#: InterfaceManager/__init__.py:820
+msgid "net-map-full"
+msgstr "Network (full)"
+
+#: InterfaceManager/__init__.py:821
+msgid "PositionX"
+msgstr "Position X"
+
+#: InterfaceManager/__init__.py:822
+msgid "PositionY"
+msgstr "Position Y"
+
+#: InterfaceManager/__init__.py:823
+msgid "Size"
+msgstr "Size"
+
+#: InterfaceManager/__init__.py:824
+msgid "Source-node"
+msgstr "Source node"
+
+#: InterfaceManager/__init__.py:825
+msgid "title-maps"
+msgstr "Maps"
+
+#: InterfaceManager/__init__.py:827 InterfaceManager/__init__.py:1152
+msgid "Add-community"
+msgstr "Add SNMP community"
+
+#: InterfaceManager/__init__.py:828
+msgid "database"
+msgstr "Database"
+
+#: InterfaceManager/__init__.py:829
+msgid "device-expiration"
+msgstr "Device expiration"
+
+#: InterfaceManager/__init__.py:830
+msgid "dns-suffix"
+msgstr "DNS suffix"
+
+#: InterfaceManager/__init__.py:831
+msgid "err-community-already-exist"
+msgstr "This SNMP community already exists"
+
+#: InterfaceManager/__init__.py:832
+msgid "err-read-netdisco"
+msgstr "Unable to read /usr/local/etc/netdisco/netdisco.conf"
+
+#: InterfaceManager/__init__.py:833 InterfaceManager/__init__.py:1156
+msgid "err-readorwrite"
+msgstr "You must choose read and/or write"
+
+#: InterfaceManager/__init__.py:834 InterfaceManager/__init__.py:1157
+msgid "err-invalid-data"
+msgstr "Some sent datas are wrong !"
+
+#: InterfaceManager/__init__.py:835
+msgid "err-community-not-exist"
+msgstr "This SNMP community doesn't exist"
+
+#: InterfaceManager/__init__.py:836 InterfaceManager/__init__.py:1159
+#: InterfaceManager/__init__.py:1295 InterfaceManager/__init__.py:1464
+msgid "err-no-snmp-community"
+msgstr "No SNMP community found. Please configure them before use"
+
+#: InterfaceManager/__init__.py:838
+msgid "err-netdisco-write-fail"
+msgstr "Unable to write netdisco configuration"
+
+#: InterfaceManager/__init__.py:841
+msgid "global-conf"
+msgstr "Global configuration"
+
+#: InterfaceManager/__init__.py:842
+msgid "main-node"
+msgstr "Main node"
+
+#: InterfaceManager/__init__.py:843
+msgid "mod-ok"
+msgstr "Modification saved"
+
+#: InterfaceManager/__init__.py:844
+msgid "node-expiration"
+msgstr "Node expiration"
+
+#: InterfaceManager/__init__.py:845
+msgid "pg-db"
+msgstr "Database name"
+
+#: InterfaceManager/__init__.py:846 InterfaceManager/__init__.py:1193
+msgid "pg-host"
+msgstr "PostGreSQL host"
+
+#: InterfaceManager/__init__.py:847
+msgid "pg-pwd"
+msgstr "Password"
+
+#: InterfaceManager/__init__.py:848
+msgid "pg-user"
+msgstr "PostGreSQL user"
+
+#: InterfaceManager/__init__.py:849 InterfaceManager/__init__.py:1163
+#, fuzzy
+msgid "Read"
+msgstr "Reading"
+
+#: InterfaceManager/__init__.py:850 InterfaceManager/__init__.py:1164
+#: InterfaceManager/__init__.py:1503 engine/snmpmgmt/Models/__init__.py:26
+msgid "snmp-community"
+msgstr "SNMP Community"
+
+#: InterfaceManager/__init__.py:851
+msgid "SNMP-communities"
+msgstr "SNMP communities"
+
+#: InterfaceManager/__init__.py:852 InterfaceManager/__init__.py:1166
+msgid "snmp-conf"
+msgstr "SNMP configuration "
+
+#: InterfaceManager/__init__.py:853 InterfaceManager/__init__.py:1167
+msgid "snmp-read"
+msgstr "Reading communities"
+
+#: InterfaceManager/__init__.py:854 InterfaceManager/__init__.py:1168
+msgid "snmp-timeout"
+msgstr "Requests timeout"
+
+#: InterfaceManager/__init__.py:855 InterfaceManager/__init__.py:1169
+msgid "snmp-try"
+msgstr "Maximum try"
+
+#: InterfaceManager/__init__.py:856 InterfaceManager/__init__.py:1170
+msgid "snmp-version"
+msgstr "SNMP version"
+
+#: InterfaceManager/__init__.py:857 InterfaceManager/__init__.py:1171
+msgid "snmp-write"
+msgstr "Writing communities"
+
+#: InterfaceManager/__init__.py:858
+msgid "timer-conf"
+msgstr "Timer configuration"
+
+#: InterfaceManager/__init__.py:859
+msgid "title-netdisco"
+msgstr "Netdisco discovering service management"
+
+#: InterfaceManager/__init__.py:860
+msgid "tooltip-devicetimeout"
+msgstr "Expiration time for devices (in days)"
+
+#: InterfaceManager/__init__.py:861
+msgid "tooltip-dnssuffix"
+msgstr "DNS suffix when searching DNS short name discovered by netdisco"
+
+#: InterfaceManager/__init__.py:862
+msgid "tooltip-firstnode"
+msgstr "First node. Reference for discovering all devices"
+
+#: InterfaceManager/__init__.py:863
+msgid "tooltip-nodetimeout"
+msgstr "Expiration time for nodes (IP/MAC addresses, Netdisco), in days"
+
+#: InterfaceManager/__init__.py:864
+msgid "tooltip-community-read"
+msgstr "Specify is community allow reading"
+
+#: InterfaceManager/__init__.py:865
+msgid "tooltip-snmptimeout"
+msgstr "Expiration time for SNMP requests (in seconds)"
+
+#: InterfaceManager/__init__.py:866
+msgid "tooltip-snmptry"
+msgstr "Try number for contacting device"
+
+#: InterfaceManager/__init__.py:867
+msgid "tooltip-community-write"
+msgstr "Specify is community allow writing"
+
+#: InterfaceManager/__init__.py:868
+msgid "Write"
+msgstr "Write"
+
+#: InterfaceManager/__init__.py:870
+msgid "Account"
+msgstr "Account"
+
+#: InterfaceManager/__init__.py:871
+msgid "Account-nb"
+msgstr "Account Number"
+
+#: InterfaceManager/__init__.py:872
+msgid "Acct-expiration-date"
+msgstr "Account expiration date"
+
+#: InterfaceManager/__init__.py:873
+msgid "Acct-start-date"
+msgstr "Account start date"
+
+#: InterfaceManager/__init__.py:875
+msgid "Administrate"
+msgstr "Administrate"
+
+#: InterfaceManager/__init__.py:876
+msgid "advanced-tools"
+msgstr "Advanced tools"
+
+#: InterfaceManager/__init__.py:878
+msgid "Already-valid"
+msgstr "Already valid"
+
+#: InterfaceManager/__init__.py:879
+msgid "Auth-Type"
+msgstr "Authentication type"
+
+#: InterfaceManager/__init__.py:880
+msgid "Attributes"
+msgstr "Attributes"
+
+#: InterfaceManager/__init__.py:881
+msgid "auto-import-dhcp"
+msgstr "DHCP Auto-import"
+
+#: InterfaceManager/__init__.py:882
+msgid "confirm-remove-datasrc"
+msgstr "Are you sure to want to remove data source '%s' ?"
+
+#: InterfaceManager/__init__.py:883
+msgid "confirm-remove-group"
+msgstr "Are you sure you want to remove group '%s' ?"
+
+#: InterfaceManager/__init__.py:884
+msgid "confirm-remove-subnetlink"
+msgstr "Are you sure to want to remove link '%s' ?"
+
+#: InterfaceManager/__init__.py:885
+msgid "confirm-remove-user"
+msgstr "Are you sure you want to remove user '%s' ?"
+
+#: InterfaceManager/__init__.py:886
+msgid "Creation-date"
+msgstr "Account creation date"
+
+#: InterfaceManager/__init__.py:887
+msgid "db-name"
+msgstr "Database name"
+
+#: InterfaceManager/__init__.py:888
+msgid "db-type"
+msgstr "Database type"
+
+#: InterfaceManager/__init__.py:890
+msgid "Delete-accounting"
+msgstr "Delete accounting"
+
+#: InterfaceManager/__init__.py:891
+msgid "Delete-logs"
+msgstr "Delete logs"
+
+#: InterfaceManager/__init__.py:892
+msgid "Delete-profil"
+msgstr "Are you sure to remove this profile"
+
+#: InterfaceManager/__init__.py:893
+msgid "Delete-subnet-import"
+msgstr "Are you sure to remove subnet import"
+
+#: InterfaceManager/__init__.py:894
+msgid "DHCP-zone"
+msgstr "DHCP zone"
+
+#: InterfaceManager/__init__.py:895
+msgid "enable-autoclean"
+msgstr "Enable auto-clean"
+
+#: InterfaceManager/__init__.py:896
+msgid "entitlement"
+msgstr "Entitlement"
+
+#: InterfaceManager/__init__.py:898
+msgid "err-alias-already-used"
+msgstr "Alias '%s' already used"
+
+#: InterfaceManager/__init__.py:899
+msgid "err-bad-server"
+msgstr "Invalid Radius DB"
+
+#: InterfaceManager/__init__.py:900
+msgid "err-bad-tab"
+msgstr "Invalid tab !"
+
+#: InterfaceManager/__init__.py:901
+msgid "err-db-conn-fail"
+msgstr "Unable to connect to radius database"
+
+#: InterfaceManager/__init__.py:902
+msgid "err-delete"
+msgstr "Remove failed, bad datas !"
+
+#: InterfaceManager/__init__.py:903
+msgid "err-end-before-start"
+msgstr "End date is before start date !"
+
+#: InterfaceManager/__init__.py:904
+msgid "err-exist"
+msgstr "This user/group is already referenced !"
+
+#: InterfaceManager/__init__.py:905
+msgid "err-exist2"
+msgstr "Some users are not added because already existing !"
+
+#: InterfaceManager/__init__.py:906
+msgid "err-field-missing"
+msgstr "Some fields are missing or invalid !"
+
+#: InterfaceManager/__init__.py:907 InterfaceManager/__init__.py:1529
+msgid "err-group-not-exists"
+msgstr "Profile '%s' doesn't exists"
+
+#: InterfaceManager/__init__.py:908
+msgid "err-invalid-auth-server"
+msgstr "Bad authentication server !"
+
+#: InterfaceManager/__init__.py:909
+msgid "err-invalid-entry"
+msgstr "Invalid entry"
+
+#: InterfaceManager/__init__.py:910
+msgid "err-invalid-tab"
+msgstr "Invalid tab !"
+
+#: InterfaceManager/__init__.py:911
+msgid "err-invalid-table"
+msgstr "Putted SQL table invalid !"
+
+#: InterfaceManager/__init__.py:913
+msgid "err-no-server"
+msgstr "No radius server"
+
+#: InterfaceManager/__init__.py:914
+msgid "err-no-subnet-for-import"
+msgstr "No DHCP subnet ou Radius profile available for synchronisation"
+
+#: InterfaceManager/__init__.py:915
+msgid "err-no-user"
+msgstr "Inexistant user !"
+
+#: InterfaceManager/__init__.py:916
+msgid "err-radius-not-exist"
+msgstr "No radius server"
+
+#: InterfaceManager/__init__.py:917
+msgid "expiration-field"
+msgstr "Expiration field"
+
+#: InterfaceManager/__init__.py:918
+msgid "Expiration-Date"
+msgstr "Expiration date"
+
+#: InterfaceManager/__init__.py:922
+msgid "Generation-type"
+msgstr "Generation type"
+
+#: InterfaceManager/__init__.py:923 InterfaceManager/__init__.py:1543
+msgid "Group"
+msgstr "Group"
+
+#: InterfaceManager/__init__.py:926
+msgid "Identifier"
+msgstr "Connection identifier"
+
+#: InterfaceManager/__init__.py:927
+msgid "Infinite"
+msgstr "Infinite"
+
+#: InterfaceManager/__init__.py:928
+msgid "ip-addr-dns"
+msgstr "IP/DNS address"
+
+#: InterfaceManager/__init__.py:930
+msgid "Mac-addr"
+msgstr "MAC address"
+
+#: InterfaceManager/__init__.py:931
+msgid "Manage"
+msgstr "Manager"
+
+#: InterfaceManager/__init__.py:932
+msgid "Manage-radius-db"
+msgstr "Manage radius DB list"
+
+#: InterfaceManager/__init__.py:933
+msgid "mass-account-deleg"
+msgstr "Mass account (Deleg)"
+
+#: InterfaceManager/__init__.py:934
+msgid "mass-import"
+msgstr "Mass import"
+
+#: InterfaceManager/__init__.py:935
+msgid "mass-import-restriction"
+msgstr ""
+"<b>Note: </b>Les noms d'utilisateurs ne peuvent pas contenir d'espace.<br /"
+">Les mots de passe doivent être en clair.<br />Caractère de formatage: <b>,</"
+"b>"
+
+#: InterfaceManager/__init__.py:938
+msgid "mono-account-deleg"
+msgstr "Simple account (Deleg)"
+
+#: InterfaceManager/__init__.py:939
+msgid "New-Attribute"
+msgstr "New attribut"
+
+#: InterfaceManager/__init__.py:940
+msgid "New-Group"
+msgstr "New Group"
+
+#: InterfaceManager/__init__.py:941
+msgid "New-Profil"
+msgstr "New profile"
+
+#: InterfaceManager/__init__.py:942
+msgid "New-User"
+msgstr "New User"
+
+#: InterfaceManager/__init__.py:945
+msgid "ok-user"
+msgstr "User creation successfull !"
+
+#: InterfaceManager/__init__.py:946 InterfaceManager/__init__.py:1070
+msgid "Other"
+msgstr "Autre"
+
+#: InterfaceManager/__init__.py:949
+msgid "Permanent"
+msgstr "Permanent"
+
+#: InterfaceManager/__init__.py:950
+msgid "Period"
+msgstr "Period"
+
+#: InterfaceManager/__init__.py:952
+msgid "Prefix"
+msgstr "Prefix"
+
+#: InterfaceManager/__init__.py:953
+msgid "Profil"
+msgstr "Profile"
+
+#: InterfaceManager/__init__.py:954
+msgid "Profilname"
+msgstr "Profile name"
+
+#: InterfaceManager/__init__.py:955
+msgid "Profils"
+msgstr "Profiles"
+
+#: InterfaceManager/__init__.py:956
+msgid "Pwd-Type"
+msgstr "Password type"
+
+#: InterfaceManager/__init__.py:957
+msgid "Radius-profile"
+msgstr "Radius profile"
+
+#: InterfaceManager/__init__.py:958
+msgid "random-name"
+msgstr "Random name"
+
+#: InterfaceManager/__init__.py:960
+msgid "rule-db-mgmt"
+msgstr "Databases management"
+
+#: InterfaceManager/__init__.py:961
+msgid "rule-user-mgmt-deleg"
+msgstr "User management (deleg)"
+
+#: InterfaceManager/__init__.py:964
+msgid "SQL-table"
+msgstr "SQL table"
+
+#: InterfaceManager/__init__.py:965 InterfaceManager/__init__.py:1569
+msgid "Subname"
+msgstr "Subname"
+
+#: InterfaceManager/__init__.py:966
+msgid "sure-delete-user"
+msgstr "Are you sure to remove user"
+
+#: InterfaceManager/__init__.py:967
+msgid "Tables"
+msgstr "SQL Tables"
+
+#: InterfaceManager/__init__.py:968
+msgid "table-radacct"
+msgstr "Accounting table"
+
+#: InterfaceManager/__init__.py:969
+msgid "table-radcheck"
+msgstr "Check attributes (user)"
+
+#: InterfaceManager/__init__.py:970
+msgid "table-radgrpchk"
+msgstr "Check attributes (groups)"
+
+#: InterfaceManager/__init__.py:971
+msgid "table-radgrprep"
+msgstr "Reply attributes (groups)"
+
+#: InterfaceManager/__init__.py:972
+msgid "table-radreply"
+msgstr "Reply attributes (user)"
+
+#: InterfaceManager/__init__.py:973
+msgid "table-radusrgrp"
+msgstr "Group membership"
+
+#: InterfaceManager/__init__.py:974
+msgid "Target"
+msgstr "Target"
+
+#: InterfaceManager/__init__.py:976
+msgid "Temporary"
+msgstr "Termporary"
+
+#: InterfaceManager/__init__.py:977
+msgid "title-add-radius"
+msgstr "Add Radius DB"
+
+#: InterfaceManager/__init__.py:978
+msgid "title-auto-import"
+msgstr "New auto import"
+
+#: InterfaceManager/__init__.py:979
+msgid "title-auto-import2"
+msgstr "Existing auto imports"
+
+#: InterfaceManager/__init__.py:980
+msgid "title-cleanusers"
+msgstr "Cleanup users"
+
+#: InterfaceManager/__init__.py:981
+msgid "title-deleg"
+msgstr "Authentication delegation tool"
+
+#: InterfaceManager/__init__.py:982
+msgid "title-edit-radius"
+msgstr "Edit Radius DB"
+
+#: InterfaceManager/__init__.py:983
+msgid "title-groupmod"
+msgstr "Group edition"
+
+#: InterfaceManager/__init__.py:984
+msgid "title-mass-import"
+msgstr "User mass import"
+
+#: InterfaceManager/__init__.py:985
+msgid "title-profillist"
+msgstr "Profile list"
+
+#: InterfaceManager/__init__.py:986
+msgid "title-radius-db"
+msgstr "Radius databases list"
+
+#: InterfaceManager/__init__.py:987
+msgid "title-userlist"
+msgstr "User list"
+
+#: InterfaceManager/__init__.py:988
+msgid "title-usermod"
+msgstr "User edition"
+
+#: InterfaceManager/__init__.py:989 InterfaceManager/__init__.py:1578
+msgid "title-usermgmt"
+msgstr "Radius user/group edition"
+
+#: InterfaceManager/__init__.py:991
+msgid "tooltip-ac-expirationfield"
+msgstr "Expiration field in SQL table"
+
+#: InterfaceManager/__init__.py:992
+msgid "tooltip-ac-sqltable"
+msgstr "SQL table in which search for user expiration"
+
+#: InterfaceManager/__init__.py:993
+msgid "tooltip-ac-sqluserfield"
+msgstr "Username field in SQL table"
+
+#: InterfaceManager/__init__.py:994
+msgid "tooltip-alias"
+msgstr "An alias for delegation (unique)"
+
+#: InterfaceManager/__init__.py:995
+msgid "tooltip-dbname"
+msgstr "Remote SQL Database name"
+
+#: InterfaceManager/__init__.py:996
+msgid "tooltip-port"
+msgstr "Database port<br /><b>MySQL</b>: 3306<br /><b>PgSQL</b>: 5432"
+
+#: InterfaceManager/__init__.py:997
+msgid "tooltip-radacct"
+msgstr "Radius accounting table. It's used for search and stats"
+
+#: InterfaceManager/__init__.py:998
+msgid "tooltip-radcheck"
+msgstr ""
+"This table contains user attributes for Radius requets.<br />The table is "
+"the support for user creation and authentication (password)"
+
+#: InterfaceManager/__init__.py:999
+msgid "tooltip-radgrpchk"
+msgstr ""
+"This table contains group attributes for Radius requets.<br />The table is "
+"the support for group creation"
+
+#: InterfaceManager/__init__.py:1000
+msgid "tooltip-radgrprep"
+msgstr ""
+"This table contain user attributes for a Radius reply.<br />They are sent to "
+"emitter/device"
+
+#: InterfaceManager/__init__.py:1001
+msgid "tooltip-radreply"
+msgstr ""
+"This table contain group attributes for a Radius reply.<br />They are sent "
+"to emitter/device"
+
+#: InterfaceManager/__init__.py:1002
+msgid "tooltip-radusrgrp"
+msgstr "This table links Radius users and groups"
+
+#: InterfaceManager/__init__.py:1003
+msgid "tooltip-user"
+msgstr "Database username. Reading and writing rights are required."
+
+#: InterfaceManager/__init__.py:1006
+msgid "user-field"
+msgstr "User field"
+
+#: InterfaceManager/__init__.py:1008
+msgid "Userlist-CSV"
+msgstr "User list (CSV format)"
+
+#: InterfaceManager/__init__.py:1009 InterfaceManager/__init__.py:1588
+msgid "User-type"
+msgstr "User type"
+
+#: InterfaceManager/__init__.py:1012 InterfaceManager/__init__.py:1115
+msgid "Validity"
+msgstr "Validity"
+
+#: InterfaceManager/__init__.py:1013
+#, fuzzy
+msgid "Attribut"
+msgstr "Attributes"
+
+#: InterfaceManager/__init__.py:1014
+#, fuzzy
+msgid "mass-account"
+msgstr "Mass account (Deleg)"
+
+#: InterfaceManager/__init__.py:1015
+#, fuzzy
+msgid "mono-account"
+msgstr "Simple account (Deleg)"
+
+#: InterfaceManager/__init__.py:1016
+#, fuzzy
+msgid "tooltip-ac-sqlexpirationfield"
+msgstr "Expiration field in SQL table"
+
+#: InterfaceManager/__init__.py:1018 InterfaceManager/__init__.py:1228
+msgid "Active"
+msgstr "Active ?"
+
+#: InterfaceManager/__init__.py:1019
+msgid "Accounting"
+msgstr "Accounting"
+
+#: InterfaceManager/__init__.py:1020
+msgid "active-reserv"
+msgstr "Reservation enabled"
+
+#: InterfaceManager/__init__.py:1023
+msgid "and-the"
+msgstr "and"
+
+#: InterfaceManager/__init__.py:1024
+msgid "attribution-type"
+msgstr "Attribution type"
+
+#: InterfaceManager/__init__.py:1025
+msgid "Between"
+msgstr "Between"
+
+#: InterfaceManager/__init__.py:1026
+msgid "Bytes"
+msgstr "Bytes"
+
+#: InterfaceManager/__init__.py:1028
+msgid "comment"
+msgstr "Comment"
+
+#: InterfaceManager/__init__.py:1030 InterfaceManager/__init__.py:1253
+msgid "Device"
+msgstr "Device"
+
+#: InterfaceManager/__init__.py:1031
+msgid "DHCP-name"
+msgstr "DHCP name"
+
+#: InterfaceManager/__init__.py:1032
+msgid "DHCP-type"
+msgstr "DHCP type"
+
+#: InterfaceManager/__init__.py:1033
+msgid "dig-results"
+msgstr "DIG output"
+
+#: InterfaceManager/__init__.py:1034
+msgid "dynamic"
+msgstr "Dynamic"
+
+#: InterfaceManager/__init__.py:1035
+msgid "dhcp-hostname"
+msgstr "DHCP hostname"
+
+#: InterfaceManager/__init__.py:1036
+msgid "Download"
+msgstr "Download"
+
+#: InterfaceManager/__init__.py:1037
+msgid "end-session"
+msgstr "Session end"
+
+#: InterfaceManager/__init__.py:1038
+msgid "end-session-cause"
+msgstr "Why session ends"
+
+#: InterfaceManager/__init__.py:1039
+msgid "err-no-res"
+msgstr "No result found"
+
+#: InterfaceManager/__init__.py:1040
+msgid "err-no-search"
+msgstr "No data to find"
+
+#: InterfaceManager/__init__.py:1041
+msgid "First-view"
+msgstr "First seend"
+
+#: InterfaceManager/__init__.py:1044
+msgid "inactive-reserv"
+msgstr "Reservation disabled"
+
+#: InterfaceManager/__init__.py:1045
+msgid "Informations"
+msgstr "Informations"
+
+#: InterfaceManager/__init__.py:1046
+msgid "ipv4-addr"
+msgstr "IPv4 address"
+
+#: InterfaceManager/__init__.py:1047
+msgid "ipv6-addr"
+msgstr "IPv6 address"
+
+#: InterfaceManager/__init__.py:1048
+msgid "Last-view"
+msgstr "Last seen"
+
+#: InterfaceManager/__init__.py:1049
+msgid "link-ip"
+msgstr "Linked IP address"
+
+#: InterfaceManager/__init__.py:1050
+msgid "link-mac-addr"
+msgstr "Linked MAC address"
+
+#: InterfaceManager/__init__.py:1052
+msgid "Manufacturer"
+msgstr "Manufacturer"
+
+#: InterfaceManager/__init__.py:1054 InterfaceManager/__init__.py:1341
+msgid "Model"
+msgstr "Model"
+
+#: InterfaceManager/__init__.py:1055
+msgid "Modify-IPM-Infos"
+msgstr "Modifier IPM informations"
+
+#: InterfaceManager/__init__.py:1056
+msgid "netbios-machine"
+msgstr "Netbios machine"
+
+#: InterfaceManager/__init__.py:1057
+msgid "netbios-user"
+msgstr "Netbios user"
+
+#: InterfaceManager/__init__.py:1061
+msgid "Network-device"
+msgstr "Network device"
+
+#: InterfaceManager/__init__.py:1062
+msgid "Node"
+msgstr "Node"
+
+#: InterfaceManager/__init__.py:1069
+msgid "os"
+msgstr "Operating system"
+
+#: InterfaceManager/__init__.py:1071 InterfaceManager/__init__.py:1360
+msgid "Plug"
+msgstr "Plug"
+
+#: InterfaceManager/__init__.py:1072
+msgid "Radius-Server"
+msgstr "Radius server"
+
+#: InterfaceManager/__init__.py:1073
+msgid "Radius-user"
+msgstr "Radius user"
+
+#: InterfaceManager/__init__.py:1074
+msgid "Ref-desc"
+msgstr "Referenced description(s)"
+
+#: InterfaceManager/__init__.py:1075
+msgid "Ref-plug"
+msgstr "Referenced plug(s)"
+
+#: InterfaceManager/__init__.py:1076
+msgid "Ref-room"
+msgstr "Referenced room(s)"
+
+#: InterfaceManager/__init__.py:1077 InterfaceManager/__init__.py:1376
+msgid "Room"
+msgstr "Pièce"
+
+#: InterfaceManager/__init__.py:1079
+msgid "Since"
+msgstr "Since"
+
+#: InterfaceManager/__init__.py:1080
+msgid "start-session"
+msgstr "Session start"
+
+#: InterfaceManager/__init__.py:1081
+msgid "Static"
+msgstr "Static"
+
+#: InterfaceManager/__init__.py:1082
+msgid "static"
+msgstr "static"
+
+#: InterfaceManager/__init__.py:1084
+msgid "title-8021x-bw"
+msgstr "802.1X bandwidth"
+
+#: InterfaceManager/__init__.py:1085
+msgid "title-8021x-users"
+msgstr "802.1X users"
+
+#: InterfaceManager/__init__.py:1086
+msgid "title-dhcp-custom-options"
+msgstr "Custom DHCP options"
+
+#: InterfaceManager/__init__.py:1087
+msgid "title-dhcp-distrib"
+msgstr "DHCP collect cache"
+
+#: InterfaceManager/__init__.py:1088
+msgid "title-dhcp-distrib-z-eye"
+msgstr "Z-Eye IPM datas"
+
+#: InterfaceManager/__init__.py:1089
+msgid "title-dhcp-hostname"
+msgstr "DHCP hostname"
+
+#: InterfaceManager/__init__.py:1090
+msgid "title-dhcp-options"
+msgstr "DHCP option(s)"
+
+#: InterfaceManager/__init__.py:1091
+msgid "title-dhcp-option-groups"
+msgstr "DHCP option group(s)"
+
+#: InterfaceManager/__init__.py:1092
+msgid "title-dhcp-servers"
+msgstr "DHCP server(s)"
+
+#: InterfaceManager/__init__.py:1093
+msgid "title-dns-acl"
+msgstr "DNS ACL(s)"
+
+#: InterfaceManager/__init__.py:1094
+msgid "title-dns-assoc"
+msgstr "Linked DNS names"
+
+#: InterfaceManager/__init__.py:1096
+msgid "title-dns-records"
+msgstr "DNS records"
+
+#: InterfaceManager/__init__.py:1097
+msgid "title-dns-resolution"
+msgstr "DNS resolutions"
+
+#: InterfaceManager/__init__.py:1100
+msgid "title-ip-addr"
+msgstr "IP addresses"
+
+#: InterfaceManager/__init__.py:1101
+msgid "title-last-device"
+msgstr "Last device"
+
+#: InterfaceManager/__init__.py:1102
+msgid "title-mac-addr"
+msgstr "MAC addresses"
+
+#: InterfaceManager/__init__.py:1103
+msgid "title-netbios"
+msgstr "Netbios Domain/Workgroup"
+
+#: InterfaceManager/__init__.py:1104
+msgid "title-netbios-name"
+msgstr "Netbios names"
+
+#: InterfaceManager/__init__.py:1105
+msgid "title-network-places"
+msgstr "Network places"
+
+#: InterfaceManager/__init__.py:1106
+msgid "title-res-nb"
+msgstr "Number of results"
+
+#: InterfaceManager/__init__.py:1107
+msgid "title-subnet-ipmanager"
+msgstr "Declared subnet in IP manager"
+
+#: InterfaceManager/__init__.py:1108
+msgid "title-vlan-device"
+msgstr "VLAN in this devices"
+
+#: InterfaceManager/__init__.py:1109
+msgid "title-vlan-ipmanager"
+msgstr "Declared VLAN in IP manager"
+
+#: InterfaceManager/__init__.py:1110
+msgid "Total"
+msgstr "Total"
+
+#: InterfaceManager/__init__.py:1111
+msgid "Unknown"
+msgstr "Unknown"
+
+#: InterfaceManager/__init__.py:1112
+msgid "Upload"
+msgstr "Upload"
+
+#: InterfaceManager/__init__.py:1118
+#, fuzzy
+msgid "Active?"
+msgstr "Active ?"
+
+#: InterfaceManager/__init__.py:1119
+#, fuzzy
+msgid "DHCP-cluster"
+msgstr "Clusters"
+
+#: InterfaceManager/__init__.py:1121
+#, fuzzy
+msgid "title-dhcp-cluster"
+msgstr "DHCP cluster management"
+
+#: InterfaceManager/__init__.py:1123
+msgid "Action-nb"
+msgstr "Action count"
+
+#: InterfaceManager/__init__.py:1124
+msgid "Alert"
+msgstr "Alert"
+
+#: InterfaceManager/__init__.py:1126
+msgid "Destination"
+msgstr "Destination"
+
+#: InterfaceManager/__init__.py:1128 InterfaceManager/__init__.py:1326
+msgid "IP-addr"
+msgstr "IP address"
+
+#: InterfaceManager/__init__.py:1129
+msgid "last-100"
+msgstr "Last 100 records"
+
+#: InterfaceManager/__init__.py:1130
+msgid "Last-logs"
+msgstr "Last logs"
+
+#: InterfaceManager/__init__.py:1131
+msgid "Last-visit"
+msgstr "Last visit"
+
+#: InterfaceManager/__init__.py:1132
+msgid "Maximum"
+msgstr "Maximum"
+
+#: InterfaceManager/__init__.py:1133
+msgid "nb-ip-atk"
+msgstr "Attacker IP count"
+
+#: InterfaceManager/__init__.py:1134
+msgid "nb-scan-port"
+msgstr "Portscan count"
+
+#: InterfaceManager/__init__.py:1135
+msgid "nb-ssh-atk"
+msgstr "SSH attack count"
+
+#: InterfaceManager/__init__.py:1136
+msgid "nb-tse-atk"
+msgstr "TSE attack count"
+
+#: InterfaceManager/__init__.py:1137
+msgid "No-alert-found"
+msgstr "No alert found"
+
+#: InterfaceManager/__init__.py:1138
+msgid "Scans"
+msgstr "Scans"
+
+#: InterfaceManager/__init__.py:1139
+msgid "Security"
+msgstr "Security"
+
+#: InterfaceManager/__init__.py:1140
+msgid "Source"
+msgstr "Source"
+
+#: InterfaceManager/__init__.py:1141 InterfaceManager/__init__.py:1397
+msgid "SSH"
+msgstr "SSH"
+
+#: InterfaceManager/__init__.py:1142
+msgid "SSH-atk"
+msgstr "SSH attacks"
+
+#: InterfaceManager/__init__.py:1143
+msgid "The"
+msgstr "The"
+
+#: InterfaceManager/__init__.py:1144
+msgid "total-atk"
+msgstr "Attack count"
+
+#: InterfaceManager/__init__.py:1145
+msgid "TSE"
+msgstr "Terminal Server"
+
+#: InterfaceManager/__init__.py:1146
+msgid "TSE-atk"
+msgstr "TSE attacks"
+
+#: InterfaceManager/__init__.py:1147
+msgid "title-attack-report"
+msgstr "Security reports"
+
+#: InterfaceManager/__init__.py:1148
+msgid "title-z-eye-report"
+msgstr "Attack reports (compressed in Z-Eye DB)"
+
+#: InterfaceManager/__init__.py:1149
+msgid "Update"
+msgstr "Update"
+
+#: InterfaceManager/__init__.py:1150
+msgid "violent-days"
+msgstr " most violent days"
+
+#: InterfaceManager/__init__.py:1153
+msgid "confirm-remove-community"
+msgstr "Are you sure you want to remove community '%s' ?"
+
+#: InterfaceManager/__init__.py:1155
+msgid "err-read-fail"
+msgstr "Unable to read /usr/local/etc/netdisco/netdisco.conf"
+
+#: InterfaceManager/__init__.py:1161
+msgid "err-write-fail"
+msgstr "Unable to write netdisco configuration"
+
+#: InterfaceManager/__init__.py:1165
+msgid "snmp-communities"
+msgstr "SNMP communities"
+
+#: InterfaceManager/__init__.py:1172
+msgid "tooltip-read"
+msgstr "Specify is community allow reading"
+
+#: InterfaceManager/__init__.py:1173
+msgid "tooltip-write"
+msgstr "Specify is community allow writing"
+
+#: InterfaceManager/__init__.py:1175
+msgid "Activate"
+msgstr "Activate"
+
+#: InterfaceManager/__init__.py:1176
+msgid "bad-data"
+msgstr "Invalid data(s) sent"
+
+#: InterfaceManager/__init__.py:1177
+msgid "data-storage"
+msgstr "Data storage"
+
+#: InterfaceManager/__init__.py:1178
+msgid "Database"
+msgstr "Database"
+
+#: InterfaceManager/__init__.py:1179
+msgid "en-smtp-sensor"
+msgstr "Enable SMTP sensors"
+
+#: InterfaceManager/__init__.py:1180
+msgid "en-ssh-sensor"
+msgstr "Enable SSH sensors"
+
+#: InterfaceManager/__init__.py:1181
+msgid "en-telnet-sensor"
+msgstr "Enable Telnet sensors"
+
+#: InterfaceManager/__init__.py:1182
+msgid "en-tse-sensor"
+msgstr "Enable TSE sensors"
+
+#: InterfaceManager/__init__.py:1183
+msgid "fail-cron-wr"
+msgstr ""
+"Unable to write to /home/nerzhul/Devel/Z-Eye/modules/snortmgmt/../../datas/"
+"system/snort.crontab"
+
+#: InterfaceManager/__init__.py:1184
+msgid "fail-snort-conf-wr"
+msgstr "Unable to write to snort.z_eye.conf"
+
+#: InterfaceManager/__init__.py:1186
+msgid "lan-list"
+msgstr "LANs list"
+
+#: InterfaceManager/__init__.py:1190 InterfaceManager/__init__.py:1340
+msgid "mod-in-progress"
+msgstr "Modification in progress..."
+
+#: InterfaceManager/__init__.py:1191
+msgid "page-title"
+msgstr "SNORT IDS Management"
+
+#: InterfaceManager/__init__.py:1194
+msgid "port-ftp"
+msgstr "FTP ports"
+
+#: InterfaceManager/__init__.py:1195
+msgid "port-http"
+msgstr "HTTP ports"
+
+#: InterfaceManager/__init__.py:1196
+msgid "port-imap"
+msgstr "IMAP ports"
+
+#: InterfaceManager/__init__.py:1197
+msgid "port-oracle"
+msgstr "Oracle ports"
+
+#: InterfaceManager/__init__.py:1198
+msgid "port-pop"
+msgstr "POP ports"
+
+#: InterfaceManager/__init__.py:1199
+msgid "port-sip"
+msgstr "SIP ports"
+
+#: InterfaceManager/__init__.py:1200
+msgid "port-smtp"
+msgstr "SMTP ports"
+
+#: InterfaceManager/__init__.py:1201
+msgid "port-ssh"
+msgstr "SSH ports"
+
+#: InterfaceManager/__init__.py:1202
+msgid "prev-hour"
+msgstr "Prev. Hours to begin"
+
+#: InterfaceManager/__init__.py:1203
+msgid "Register"
+msgstr "Register"
+
+#: InterfaceManager/__init__.py:1204
+msgid "Remote"
+msgstr "Remote"
+
+#: InterfaceManager/__init__.py:1205
+msgid "Reports"
+msgstr "Reports"
+
+#: InterfaceManager/__init__.py:1206
+msgid "sent-hour"
+msgstr "Sent time"
+
+#: InterfaceManager/__init__.py:1207
+msgid "sql-oracle"
+msgstr "Oracle servers"
+
+#: InterfaceManager/__init__.py:1208
+msgid "srv-dns"
+msgstr "DNS servers"
+
+#: InterfaceManager/__init__.py:1209
+msgid "srv-ftp"
+msgstr "FTP servers"
+
+#: InterfaceManager/__init__.py:1210
+msgid "srv-http"
+msgstr "HTTP servers"
+
+#: InterfaceManager/__init__.py:1211
+msgid "srv-imap"
+msgstr "IMAP servers"
+
+#: InterfaceManager/__init__.py:1212
+msgid "srv-oracle"
+msgstr "Oracle servers"
+
+#: InterfaceManager/__init__.py:1213
+msgid "srv-pop"
+msgstr "POP servers"
+
+#: InterfaceManager/__init__.py:1214
+msgid "srv-sip"
+msgstr "SIP servers"
+
+#: InterfaceManager/__init__.py:1215
+msgid "srv-smtp"
+msgstr "SMTP servers"
+
+#: InterfaceManager/__init__.py:1216
+msgid "srv-snmp"
+msgstr "SNMP servers"
+
+#: InterfaceManager/__init__.py:1217
+msgid "srv-sql"
+msgstr "SQL servers"
+
+#: InterfaceManager/__init__.py:1218
+msgid "srv-ssh"
+msgstr "SSH servers"
+
+#: InterfaceManager/__init__.py:1219
+msgid "srv-telnet"
+msgstr "Telnet servers"
+
+#: InterfaceManager/__init__.py:1220
+msgid "srv-tse"
+msgstr "TSE servers"
+
+#: InterfaceManager/__init__.py:1221
+msgid "title-nightreport"
+msgstr "Nightly reports"
+
+#: InterfaceManager/__init__.py:1222
+msgid "title-we"
+msgstr "Week-end reports"
+
+#: InterfaceManager/__init__.py:1223
+msgid "tooltip-ipv4"
+msgstr ""
+"<b>Require: </b>IPv4 address, IPv4 CIDR.<br /><b>Separator:</b> decimal point"
+
+#: InterfaceManager/__init__.py:1224
+msgid "tooltip-snort-port"
+msgstr ""
+"<b>Require: </b>Port number (1-65535).<br /><b>Separator:</b> decimal point"
+
+#: InterfaceManager/__init__.py:1225
+msgid "tooltip-prev-hour"
+msgstr "This is the number of hours before the report date to collect datas"
+
+#: InterfaceManager/__init__.py:1229
+msgid "admin-duplex"
+msgstr "Administrative duplex"
+
+#: InterfaceManager/__init__.py:1230
+msgid "admin-speed"
+msgstr "Administrative speed"
+
+#: InterfaceManager/__init__.py:1231
+msgid "Advanced-Functions"
+msgstr "Advanced functions"
+
+#: InterfaceManager/__init__.py:1234
+msgid "Apply"
+msgstr "Apply"
+
+#: InterfaceManager/__init__.py:1235
+msgid "Apply-VLAN"
+msgstr "Applied VLANs"
+
+#: InterfaceManager/__init__.py:1236
+msgid "backuporder-launched"
+msgstr "Backup order launched"
+
+#: InterfaceManager/__init__.py:1237
+msgid "backuporder-terminated"
+msgstr "Backup finished"
+
+#: InterfaceManager/__init__.py:1238
+msgid "backup-all-switches"
+msgstr "Backup and export all devices config"
+
+#: InterfaceManager/__init__.py:1239
+msgid "Building"
+msgstr "Building"
+
+#: InterfaceManager/__init__.py:1240
+msgid "bw-stats"
+msgstr "Bandwidth stats"
+
+#: InterfaceManager/__init__.py:1241
+msgid "cdp-enable"
+msgstr "Enable CDP"
+
+#: InterfaceManager/__init__.py:1242
+msgid "cdp-tooltip"
+msgstr ""
+"Enable CDP on this port.<br /> CDP (Cisco Discovery Protocol) is a "
+"proprietary protocol for discovering Cisco devices"
+
+#: InterfaceManager/__init__.py:1243
+msgid "Channel"
+msgstr "Channel"
+
+#: InterfaceManager/__init__.py:1244
+msgid "Configuration"
+msgstr "Configuration"
+
+#: InterfaceManager/__init__.py:1245
+msgid "confirm-remove-device"
+msgstr "Are you sure you want to remove device "
+
+#: InterfaceManager/__init__.py:1246
+msgid "Connected-devices"
+msgstr "Connected devices"
+
+#: InterfaceManager/__init__.py:1248
+msgid "Copy-in-progress"
+msgstr "Copy in progress"
+
+#: InterfaceManager/__init__.py:1249
+msgid "creation-date"
+msgstr "Creation date"
+
+#: InterfaceManager/__init__.py:1250
+msgid "crit-step"
+msgstr "Critical step (MB)"
+
+#: InterfaceManager/__init__.py:1252
+msgid "Details"
+msgstr "Details"
+
+#: InterfaceManager/__init__.py:1254
+msgid "Device-detail"
+msgstr "Device details"
+
+#: InterfaceManager/__init__.py:1255
+msgid "dhcp-snooping-rate"
+msgstr "DHCP packets rate"
+
+#: InterfaceManager/__init__.py:1256
+msgid "dhcp-snooping-rate-tooltip"
+msgstr "Specify the maximum DHCP packets per second (1-2048, 0: no limit)"
+
+#: InterfaceManager/__init__.py:1257
+msgid "dhcp-snooping-trust-enable"
+msgstr "DHCP snooping trust"
+
+#: InterfaceManager/__init__.py:1258
+msgid "dhcp-snooping-trust-tooltip"
+msgstr ""
+"Enable DHCP snooping trust and allow DHCP server on this port. This is "
+"useful on a secure network. General DHCP snooping configuration must be "
+"enabled"
+
+#: InterfaceManager/__init__.py:1259
+msgid "Disabled"
+msgstr "Disabled"
+
+#: InterfaceManager/__init__.py:1260
+msgid "Discover"
+msgstr "Discover"
+
+#: InterfaceManager/__init__.py:1261
+msgid "Discover-device"
+msgstr "Discover a device"
+
+#: InterfaceManager/__init__.py:1262
+msgid "Discovering-in-progress"
+msgstr "Discovering in progress"
+
+#: InterfaceManager/__init__.py:1263
+msgid "done-with-success"
+msgstr "Done with success"
+
+#: InterfaceManager/__init__.py:1264
+msgid "Dot1x-hostm"
+msgstr "Dot1x Host Mode"
+
+#: InterfaceManager/__init__.py:1265
+msgid "Duplex"
+msgstr "Duplex"
+
+#: InterfaceManager/__init__.py:1266
+msgid "Enable"
+msgstr "Enable"
+
+#: InterfaceManager/__init__.py:1267
+msgid "Enabled"
+msgstr "Enabled"
+
+#: InterfaceManager/__init__.py:1268
+msgid "enable-monitor"
+msgstr "Enable monitoring"
+
+#: InterfaceManager/__init__.py:1269
+msgid "encap-vlan"
+msgstr "Encapsulated Vlans"
+
+#: InterfaceManager/__init__.py:1270
+msgid "Energy"
+msgstr "Energy"
+
+#: InterfaceManager/__init__.py:1271
+msgid "err-auth-fail"
+msgstr "Fail authentication, please verify ssh user and password"
+
+#: InterfaceManager/__init__.py:1273
+msgid "err-bad-ip"
+msgstr "IP address '%s' is invalid"
+
+#: InterfaceManager/__init__.py:1274
+msgid "err-conn-fail"
+msgstr "Unable to connect to device. Maybe ssh is disabled"
+
+#: InterfaceManager/__init__.py:1275
+msgid "err-csv-replace-data"
+msgstr "A CSV entry replace existing datas '"
+
+#: InterfaceManager/__init__.py:1276
+msgid "err-enable-auth-fail"
+msgstr "Wrong privileged password"
+
+#: InterfaceManager/__init__.py:1277
+msgid "err-fail-mod-switch"
+msgstr "Fail to modify datas on the switch"
+
+#: InterfaceManager/__init__.py:1278
+msgid "err-fail-tab"
+msgstr "Fail to load tab, link may be wrong or page unavailable"
+
+#: InterfaceManager/__init__.py:1280
+msgid "err-invalid-csv-device"
+msgstr "CSV device entry is invalid '"
+
+#: InterfaceManager/__init__.py:1282
+msgid "err-invalid-csv-port"
+msgstr "CSV port entry is invalid '"
+
+#: InterfaceManager/__init__.py:1283
+msgid "err-invalid-export"
+msgstr "Invalid export type"
+
+#: InterfaceManager/__init__.py:1284
+msgid "err-no-credentials"
+msgstr "You are not allowed to do that"
+
+#: InterfaceManager/__init__.py:1285
+msgid "err-no-device"
+msgstr "Device not found !"
+
+#: InterfaceManager/__init__.py:1286
+msgid "err-no-device2"
+msgstr "No device found !"
+
+#: InterfaceManager/__init__.py:1287
+msgid "err-no-port-bw"
+msgstr "No bandwidth collected on this port"
+
+#: InterfaceManager/__init__.py:1288
+msgid "err-no-sshlink-configured"
+msgstr "No SSH configuration found for this device"
+
+#: InterfaceManager/__init__.py:1289
+msgid "err-one-bad-value"
+msgstr "Some data is incorrect"
+
+#: InterfaceManager/__init__.py:1290
+msgid "err-output"
+msgstr "Output error"
+
+#: InterfaceManager/__init__.py:1291
+msgid "err-output-value"
+msgstr "Output value invalid"
+
+#: InterfaceManager/__init__.py:1292
+msgid "err-pwd-mismatch"
+msgstr "Password mismatch"
+
+#: InterfaceManager/__init__.py:1293
+msgid "err-not-implemented"
+msgstr "Not implemented"
+
+#: InterfaceManager/__init__.py:1294
+msgid "err-no-snmp-cache"
+msgstr "Read only port, snmp cache is not full"
+
+#: InterfaceManager/__init__.py:1297
+msgid "err-no-vlan"
+msgstr "No vlan found on this device"
+
+#: InterfaceManager/__init__.py:1298
+msgid "err-some-backup-fail"
+msgstr "Some devices were'nt be saved"
+
+#: InterfaceManager/__init__.py:1299
+msgid "err-some-field-missing"
+msgstr "Some fields are missing or invalid"
+
+#: InterfaceManager/__init__.py:1300
+msgid "err-thereis-errors"
+msgstr "Some errors occurs"
+
+#: InterfaceManager/__init__.py:1301
+msgid "err-transfer-abandonned"
+msgstr "Request dropped"
+
+#: InterfaceManager/__init__.py:1302
+msgid "err-transfer-apply"
+msgstr "Failed to apply configuration"
+
+#: InterfaceManager/__init__.py:1303
+msgid "err-transfer-no-mem"
+msgstr "No available memory"
+
+#: InterfaceManager/__init__.py:1304
+msgid "err-transfer-not-ready"
+msgstr "System not ready"
+
+#: InterfaceManager/__init__.py:1305
+msgid "err-transfer-protocol"
+msgstr "Unsupported protocol"
+
+#: InterfaceManager/__init__.py:1306
+msgid "err-transfer-right"
+msgstr "Filename, filepath or rights are incorrect"
+
+#: InterfaceManager/__init__.py:1307
+msgid "err-transfer-timeout"
+msgstr "Connection timeout<br />Remote server did not respond"
+
+#: InterfaceManager/__init__.py:1308
+msgid "err-transfer-src"
+msgstr "Copy source is incorrect"
+
+#: InterfaceManager/__init__.py:1309
+msgid "err-transfer-unk"
+msgstr "Unknown error"
+
+#: InterfaceManager/__init__.py:1310
+msgid "err-unhandled-port-number"
+msgstr "Unhandled port number %s for switch ID %s"
+
+#: InterfaceManager/__init__.py:1311
+msgid "err-unknown-action"
+msgstr "Unknown action"
+
+#: InterfaceManager/__init__.py:1312
+msgid "err-vlan-fail"
+msgstr "Searched vlan is incorrect"
+
+#: InterfaceManager/__init__.py:1313
+msgid "err-vlan-not-on-device"
+msgstr "Vlan not found on this device"
+
+#: InterfaceManager/__init__.py:1314
+msgid "Export"
+msgstr "Export"
+
+#: InterfaceManager/__init__.py:1315
+msgid "Fail"
+msgstr "Fail"
+
+#: InterfaceManager/__init__.py:1316
+msgid "fail-vlan"
+msgstr "Failed Vlan"
+
+#: InterfaceManager/__init__.py:1317
+msgid "Field"
+msgstr "Field"
+
+#: InterfaceManager/__init__.py:1318
+msgid "Filename"
+msgstr "Filename"
+
+#: InterfaceManager/__init__.py:1319
+msgid "frontview"
+msgstr "Front view"
+
+#: InterfaceManager/__init__.py:1320
+msgid "generated-mrtg"
+msgstr "Generated with MRTG"
+
+#: InterfaceManager/__init__.py:1322
+msgid "iface-dev-cfg"
+msgstr "Interface configuration"
+
+#: InterfaceManager/__init__.py:1323
+msgid "iface-dev-status"
+msgstr "Interface status"
+
+#: InterfaceManager/__init__.py:1324
+msgid "Inactive"
+msgstr "Inactive"
+
+#: InterfaceManager/__init__.py:1325
+msgid "Internal-mod"
+msgstr "Internal modules"
+
+#: InterfaceManager/__init__.py:1327
+msgid "ip-network"
+msgstr "IP network"
+
+#: InterfaceManager/__init__.py:1328
+msgid "Label"
+msgstr "Label"
+
+#: InterfaceManager/__init__.py:1329
+msgid "MAB-dead"
+msgstr "Dead Vlan"
+
+#: InterfaceManager/__init__.py:1330
+msgid "MAB-dead-tooltip"
+msgstr "Allowed Vlan when Radius server is unreachable"
+
+#: InterfaceManager/__init__.py:1331
+msgid "MAB-fail-tooltip"
+msgstr "Allowed Vlan when authentication failed"
+
+#: InterfaceManager/__init__.py:1332
+msgid "MAB-noresp"
+msgstr "No Response Vlan"
+
+#: InterfaceManager/__init__.py:1333
+msgid "MAB-noresp-tooltip"
+msgstr "Allowed Vlan when Radius server doesn't respond"
+
+#: InterfaceManager/__init__.py:1334
+msgid "MAB-opt"
+msgstr "MAB options"
+
+#: InterfaceManager/__init__.py:1335
+msgid "MAC-addr"
+msgstr "MAC address"
+
+#: InterfaceManager/__init__.py:1336
+msgid "MAC-addr-iface"
+msgstr "Interface MAC address"
+
+#: InterfaceManager/__init__.py:1337
+msgid "Match-MAC-addr"
+msgstr "Match MAC address"
+
+#: InterfaceManager/__init__.py:1343
+msgid "MTU"
+msgstr "MTU"
+
+#: InterfaceManager/__init__.py:1344
+msgid "multi-auth"
+msgstr "Multi Auth"
+
+#: InterfaceManager/__init__.py:1345
+msgid "multi-domain"
+msgstr "Multi Domain"
+
+#: InterfaceManager/__init__.py:1346
+msgid "multi-host"
+msgstr "Multi Host"
+
+#: InterfaceManager/__init__.py:1347
+msgid "must-confirm"
+msgstr "You must confirm modification"
+
+#: InterfaceManager/__init__.py:1348
+msgid "must-verify-ports"
+msgstr "You must verify is ports are concerned"
+
+#: InterfaceManager/__init__.py:1349
+msgid "native-vlan"
+msgstr "Native Vlan"
+
+#: InterfaceManager/__init__.py:1351
+msgid "new-vlanid"
+msgstr "New Vlan ID"
+
+#: InterfaceManager/__init__.py:1353
+msgid "Offline"
+msgstr "Offline"
+
+#: InterfaceManager/__init__.py:1354
+msgid "old-vlanid"
+msgstr "Old Vlan ID"
+
+#: InterfaceManager/__init__.py:1355
+msgid "on"
+msgstr "on"
+
+#: InterfaceManager/__init__.py:1356
+msgid "OS"
+msgstr "OS"
+
+#: InterfaceManager/__init__.py:1359
+msgid "Place"
+msgstr "Place"
+
+#: InterfaceManager/__init__.py:1361
+msgid "Portlist"
+msgstr "Port list"
+
+#: InterfaceManager/__init__.py:1362
+msgid "portsecurity"
+msgstr "PortSecurity"
+
+#: InterfaceManager/__init__.py:1363
+msgid "portsec-enable"
+msgstr "Enable PortSecurity"
+
+#: InterfaceManager/__init__.py:1364
+msgid "portsec-maxmac"
+msgstr "Maximum MAC address"
+
+#: InterfaceManager/__init__.py:1365
+msgid "portsec-maxmac-tooltip"
+msgstr ""
+"MAC address number before PostSecurity uses the selected protection mode for "
+"each new MAC address"
+
+#: InterfaceManager/__init__.py:1366
+msgid "portsec-status"
+msgstr "PortSecurity status"
+
+#: InterfaceManager/__init__.py:1367
+msgid "portsec-violmode"
+msgstr "Protection mode"
+
+#: InterfaceManager/__init__.py:1368
+msgid "portsec-viol-tooltip"
+msgstr ""
+"Shutdown: shutdown the port when violation is performed<br />Drop traffic: "
+"drop all packets sent by connected host<br />Restrict: drop traffic and log"
+
+#: InterfaceManager/__init__.py:1369
+msgid "Power"
+msgstr "Power"
+
+#: InterfaceManager/__init__.py:1370
+msgid "Protect"
+msgstr "Drop traffic"
+
+#: InterfaceManager/__init__.py:1372
+msgid "req-sent"
+msgstr "Request in progress"
+
+#: InterfaceManager/__init__.py:1373
+msgid "Restore"
+msgstr "Restore"
+
+#: InterfaceManager/__init__.py:1374
+msgid "restore-in-progress"
+msgstr "Restore in progress"
+
+#: InterfaceManager/__init__.py:1375
+msgid "Restrict"
+msgstr "Drop and notify"
+
+#: InterfaceManager/__init__.py:1377
+msgid "rule-discover-device"
+msgstr "Discovering devices"
+
+#: InterfaceManager/__init__.py:1378
+msgid "rule-export-cfg"
+msgstr "Export configurations"
+
+#: InterfaceManager/__init__.py:1379
+msgid "rule-import-plugs"
+msgstr "Import a device port/room/plug CSV file"
+
+#: InterfaceManager/__init__.py:1380
+msgid "rule-save-devices"
+msgstr "Global configuration save"
+
+#: InterfaceManager/__init__.py:1381
+msgid "Running-Cfg"
+msgstr "Running Config"
+
+#: InterfaceManager/__init__.py:1383
+msgid "save-all-switches"
+msgstr "Save running-config on all devices"
+
+#: InterfaceManager/__init__.py:1384
+msgid "saveorder-launched"
+msgstr "Save order launched, please wait"
+
+#: InterfaceManager/__init__.py:1385
+msgid "saveorder-terminated"
+msgstr "Save finished !"
+
+#: InterfaceManager/__init__.py:1386
+msgid "Save-switch"
+msgstr "Save running-config"
+
+#: InterfaceManager/__init__.py:1387
+msgid "search-ports"
+msgstr "Port search in progress"
+
+#: InterfaceManager/__init__.py:1389
+msgid "Serialnb"
+msgstr "Serial Number"
+
+#: InterfaceManager/__init__.py:1390
+msgid "Server-addr"
+msgstr "Server address"
+
+#: InterfaceManager/__init__.py:1391
+msgid "Server-type"
+msgstr "Server type"
+
+#: InterfaceManager/__init__.py:1392
+msgid "Shut"
+msgstr "Shutdown"
+
+#: InterfaceManager/__init__.py:1393
+msgid "Shutdown"
+msgstr "Shutdown"
+
+#: InterfaceManager/__init__.py:1394
+msgid "Shutdown-ports"
+msgstr "Shutdown ports"
+
+#: InterfaceManager/__init__.py:1395
+msgid "single-host"
+msgstr "Single Host"
+
+#: InterfaceManager/__init__.py:1396
+msgid "Speed"
+msgstr "Speed"
+
+#: InterfaceManager/__init__.py:1398
+msgid "ssh-link-state"
+msgstr "SSH link state"
+
+#: InterfaceManager/__init__.py:1399
+msgid "Startup-Cfg"
+msgstr "Startup Config"
+
+#: InterfaceManager/__init__.py:1401
+msgid "Success"
+msgstr "Success"
+
+#: InterfaceManager/__init__.py:1402
+#, fuzzy
+msgid "sure-remove-device"
+msgstr "Are you sure you want to remove device "
+
+#: InterfaceManager/__init__.py:1403
+msgid "switch-view"
+msgstr "Switch view"
+
+#: InterfaceManager/__init__.py:1404
+msgid "Switchon-ports"
+msgstr "Switch on ports"
+
+#: InterfaceManager/__init__.py:1405
+msgid "switchport-mode"
+msgstr "Switchport Mode"
+
+#: InterfaceManager/__init__.py:1406
+msgid "tip-discover-devices"
+msgstr ""
+"A list of IP addresses. You must specify a unique IP address per line.<br /"
+">This can take a long time to execute.<br />If Apache request expires before "
+"request was finished, please increase max_execution_time value in the /usr/"
+"local/etc/php.ini file and restart Apache."
+
+#: InterfaceManager/__init__.py:1407
+msgid "tip-import-plug-room"
+msgstr ""
+"Import a port list linked with plug and room numbers. You must have 4 fields:"
+"<ul><li>Network device: the exact name of the device</li><li>Port: the exact "
+"name of the device port</li><li>Plug: an ID which is the plug</li><li>Room: "
+"Room where arrives the plug</li></ul>"
+
+#: InterfaceManager/__init__.py:1408
+msgid "title-dhcpsnooping"
+msgstr "DHCP Snooping"
+
+#: InterfaceManager/__init__.py:1409
+msgid "title-global-fct"
+msgstr "Global functions"
+
+#: InterfaceManager/__init__.py:1410
+msgid "title-import-plug-room"
+msgstr "Import plug and room for device ports (CSV)"
+
+#: InterfaceManager/__init__.py:1411
+msgid "title-managerights"
+msgstr "Rights management"
+
+#: InterfaceManager/__init__.py:1412
+msgid "title-network-device-mgmt"
+msgstr "Network devices management"
+
+#: InterfaceManager/__init__.py:1413
+msgid "title-port-modiflist"
+msgstr "Port list concerned by modification"
+
+#: InterfaceManager/__init__.py:1414
+msgid "title-restore-startup"
+msgstr "Restore startup-config"
+
+#: InterfaceManager/__init__.py:1415
+msgid "title-retag"
+msgstr "Replace VLAN tag"
+
+#: InterfaceManager/__init__.py:1416
+msgid "title-router-switch"
+msgstr "Routers and switches"
+
+#: InterfaceManager/__init__.py:1417
+msgid "title-transfer-conf"
+msgstr "Transfer configuration"
+
+#: InterfaceManager/__init__.py:1418
+msgid "title-WiFi-AP"
+msgstr "WiFi Access points"
+
+#: InterfaceManager/__init__.py:1419
+msgid "tooltip-backup"
+msgstr ""
+"Launch immediately an export order for each startup configuration to "
+"registered backup server specified into Z-Eye data sources servers"
+
+#: InterfaceManager/__init__.py:1420
+msgid "tooltip-port-desc"
+msgstr "Describe the port. Doesn't affect the operation"
+
+#: InterfaceManager/__init__.py:1421
+msgid "tooltip-dhcpsnoopingen"
+msgstr "Enable DHCP Snooping function"
+
+#: InterfaceManager/__init__.py:1422
+msgid "tooltip-dhcpsnoopingmatch"
+msgstr "Enable MAC matching"
+
+#: InterfaceManager/__init__.py:1423
+msgid "tooltip-dhcpsnoopingopt"
+msgstr "Enable insertion of option 82 into local DHCP Relay"
+
+#: InterfaceManager/__init__.py:1424
+msgid "tooltip-dhcpsnoopingvlan"
+msgstr "VLAN list on which apply DHCP snooping"
+
+#: InterfaceManager/__init__.py:1425
+msgid "tooltip-plug"
+msgstr "The plug number"
+
+#: InterfaceManager/__init__.py:1426
+msgid "tooltip-room"
+msgstr "Room where the plug arrives"
+
+#: InterfaceManager/__init__.py:1427
+msgid "tooltip-save"
+msgstr ""
+"Launch immediately a save order for each running configuration to startup "
+"configuration"
+
+#: InterfaceManager/__init__.py:1428
+msgid "tooltip-saveone"
+msgstr ""
+"Launch immediately a save order to copy running configuration on startup "
+"configuration"
+
+#: InterfaceManager/__init__.py:1429
+msgid "tooltip-shut"
+msgstr "Shutdown/Switch on the port"
+
+#: InterfaceManager/__init__.py:1430
+msgid "tooltip-speed"
+msgstr "Force link speed on the port. Auto: negociate link speed (recommanded)"
+
+#: InterfaceManager/__init__.py:1431
+msgid "transfer-way"
+msgstr "Transfer way"
+
+#: InterfaceManager/__init__.py:1433
+msgid "Unavailable"
+msgstr "Unavailable"
+
+#: InterfaceManager/__init__.py:1434
+msgid "unk-answer"
+msgstr "Unknown response"
+
+#: InterfaceManager/__init__.py:1435
+msgid "Uptime"
+msgstr "Uptime"
+
+#: InterfaceManager/__init__.py:1437
+msgid "Use-DHCP-opt-82"
+msgstr "Use DHCP option 82"
+
+#: InterfaceManager/__init__.py:1439
+msgid "Verify-ports"
+msgstr "Verify concerned ports"
+
+#: InterfaceManager/__init__.py:1440
+msgid "Version"
+msgstr "Version"
+
+#: InterfaceManager/__init__.py:1441
+msgid "Violation"
+msgstr "Violation"
+
+#: InterfaceManager/__init__.py:1442
+msgid "voice-vlan"
+msgstr "Voice Vlan"
+
+#: InterfaceManager/__init__.py:1443
+msgid "Vlan"
+msgstr "Vlan"
+
+#: InterfaceManager/__init__.py:1444
+msgid "VLANlist"
+msgstr "Vlan List"
+
+#: InterfaceManager/__init__.py:1445
+msgid "VTP-domain"
+msgstr "VTP domain"
+
+#: InterfaceManager/__init__.py:1446
+msgid "warn-step"
+msgstr "Warn step (MB)"
+
+#: InterfaceManager/__init__.py:1447
+#, fuzzy
+msgid "enable-pwd"
+msgstr "Enabled"
+
+#: InterfaceManager/__init__.py:1448
+#, fuzzy
+msgid "enable-pwd-repeat"
+msgstr "Repeat password"
+
+#: InterfaceManager/__init__.py:1449
+#, fuzzy
+msgid "sent-req"
+msgstr "Sent time"
+
+#: InterfaceManager/__init__.py:1450
+#, fuzzy
+msgid "SSH-pwd"
+msgstr "Password"
+
+#: InterfaceManager/__init__.py:1451
+#, fuzzy
+msgid "SSH-pwd-repeat"
+msgstr "Repeat password"
+
+#: InterfaceManager/__init__.py:1452
+#, fuzzy
+msgid "tooltip-voicevlan"
+msgstr "VLAN number (802.1Q tag)"
+
+#: InterfaceManager/__init__.py:1456
+msgid "confirm-remove-backupsrv"
+msgstr "Are you sure you want to remove backup server "
+
+#: InterfaceManager/__init__.py:1459
+msgid "device"
+msgstr "Device"
+
+#: InterfaceManager/__init__.py:1460
+msgid "DHCP-Snooping-mgmt"
+msgstr "DHCP Snooping Mgmt (device)"
+
+#: InterfaceManager/__init__.py:1463
+msgid "err-no-backup-found"
+msgstr "No backup server found"
+
+#: InterfaceManager/__init__.py:1466
+msgid "err-snmpgid-not-found"
+msgstr "This community/group doesn't exist (anymore)"
+
+#: InterfaceManager/__init__.py:1467
+msgid "Export-cfg"
+msgstr "Configuration export"
+
+#: InterfaceManager/__init__.py:1477
+msgid "New-Server"
+msgstr "New Server"
+
+#: InterfaceManager/__init__.py:1481
+msgid "Portmod-cdp"
+msgstr "Modify CDP (port)"
+
+#: InterfaceManager/__init__.py:1482
+msgid "Portmod-dhcpsnooping"
+msgstr "Modify DHCP snooping (port)"
+
+#: InterfaceManager/__init__.py:1483
+msgid "Portmod-portsec"
+msgstr "Modify port security (port)"
+
+#: InterfaceManager/__init__.py:1484
+msgid "Portmod-voicevlan"
+msgstr "Modify voice VLAN (port)"
+
+#: InterfaceManager/__init__.py:1485 engine/snmpmgmt/Models/__init__.py:27
+msgid "Reading"
+msgstr "Reading"
+
+#: InterfaceManager/__init__.py:1486
+msgid "Read-port-stats"
+msgstr "Reading<br />(port stats)"
+
+#: InterfaceManager/__init__.py:1487
+msgid "Read-ssh-portinfos"
+msgstr "Reading port informations (via SSH)"
+
+#: InterfaceManager/__init__.py:1488
+msgid "Read-ssh-showstart"
+msgstr "Reading startup configuration (via SSH)"
+
+#: InterfaceManager/__init__.py:1489
+msgid "Read-ssh-showrun"
+msgstr "Reading running configuration (via SSH)"
+
+#: InterfaceManager/__init__.py:1490
+msgid "Read-switch-details"
+msgstr "Reading<br />(device features)"
+
+#: InterfaceManager/__init__.py:1491
+msgid "Read-switch-modules"
+msgstr "Reading<br />(device modules list)"
+
+#: InterfaceManager/__init__.py:1492
+msgid "Read-switch-vlan"
+msgstr "Reading<br />(device vlan list)"
+
+#: InterfaceManager/__init__.py:1493
+msgid "Remove-Switch"
+msgstr "Remove a device"
+
+#: InterfaceManager/__init__.py:1494
+msgid "Restore-startup-cfg"
+msgstr "Restore startup config"
+
+#: InterfaceManager/__init__.py:1495
+msgid "Retag-vlan"
+msgstr "Replace VLAN tag"
+
+#: InterfaceManager/__init__.py:1498
+msgid "rule-manage-serverbackup"
+msgstr "Backup server management"
+
+#: InterfaceManager/__init__.py:1501
+msgid "server-path"
+msgstr "Server path"
+
+#: InterfaceManager/__init__.py:1502
+msgid "Set-switch-sshpwd"
+msgstr "Modify ssh logins for connecting to devices"
+
+#: InterfaceManager/__init__.py:1504
+msgid "srv-type"
+msgstr "Server type"
+
+#: InterfaceManager/__init__.py:1505
+msgid "title-device-backup"
+msgstr "Backup servers"
+
+#: InterfaceManager/__init__.py:1506
+msgid "title-edit-backup-switch-server"
+msgstr "Edit backup server"
+
+#: InterfaceManager/__init__.py:1507
+msgid "title-rightsbysnmp"
+msgstr "By SNMP community"
+
+#: InterfaceManager/__init__.py:1508
+msgid "title-rightsbyswitch"
+msgstr "By device"
+
+#: InterfaceManager/__init__.py:1509
+msgid "title-switchrightsmgmt"
+msgstr "Network devices rights management"
+
+#: InterfaceManager/__init__.py:1515
+msgid "Write-port-mon"
+msgstr "Modification (port monitoring)"
+
+#: InterfaceManager/__init__.py:1516
+#, fuzzy
+msgid "rule-manage-backupservers"
+msgstr "DHCP Server management"
+
+#: InterfaceManager/__init__.py:1518
+msgid "Adding"
+msgstr "Adding..."
+
+#: InterfaceManager/__init__.py:1519
+msgid "Add-to-new-group"
+msgstr "Add new group"
+
+#: InterfaceManager/__init__.py:1520
+msgid "attr-mail"
+msgstr "Mail attribute"
+
+#: InterfaceManager/__init__.py:1521
+msgid "attr-name"
+msgstr "Name Attribute"
+
+#: InterfaceManager/__init__.py:1522
+msgid "attr-subname"
+msgstr "Subname Attribute"
+
+#: InterfaceManager/__init__.py:1523
+msgid "attr-uid"
+msgstr "UID Attribut"
+
+#: InterfaceManager/__init__.py:1524
+msgid "base-dn"
+msgstr "Base DN"
+
+#: InterfaceManager/__init__.py:1525
+msgid "confirm-removedirectory"
+msgstr "Are you sure to want to remove directory '%s' ?"
+
+#: InterfaceManager/__init__.py:1526
+msgid "confirm-removeuser"
+msgstr "Are you sure to want to remove user '%s' ?"
+
+#: InterfaceManager/__init__.py:1527
+msgid "Directory"
+msgstr "Directory"
+
+#: InterfaceManager/__init__.py:1528
+msgid "Editing"
+msgstr "Editing..."
+
+#: InterfaceManager/__init__.py:1530
+msgid "err-invalid-bad-data"
+msgstr "Some informations are missing or invalid"
+
+#: InterfaceManager/__init__.py:1531
+msgid "err-invalid-user"
+msgstr "Invalid user"
+
+#: InterfaceManager/__init__.py:1532
+msgid "err-ldap-bad-data"
+msgstr "Invalid LDAP datas, unable to connect to server"
+
+#: InterfaceManager/__init__.py:1533
+msgid "err-ldap-exist"
+msgstr "Server already exists"
+
+#: InterfaceManager/__init__.py:1534
+msgid "err-ldap-not-exist"
+msgstr "This LDAP server doesn't exist"
+
+#: InterfaceManager/__init__.py:1535
+msgid "err-mail"
+msgstr "Malformed mail address"
+
+#: InterfaceManager/__init__.py:1536
+msgid "err-pwd-complex"
+msgstr "Password isn't complex (major, minor chars and numerics, minimal)"
+
+#: InterfaceManager/__init__.py:1538
+msgid "err-pwd-short"
+msgstr "Password is too short (%s minimum)"
+
+#: InterfaceManager/__init__.py:1539
+msgid "err-pwd-unk"
+msgstr "Unknown password error"
+
+#: InterfaceManager/__init__.py:1540
+msgid "err-user-already-exists"
+msgstr "User already exists"
+
+#: InterfaceManager/__init__.py:1541
+msgid "err-user-not-found"
+msgstr "User not found"
+
+#: InterfaceManager/__init__.py:1542
+msgid "Extern"
+msgstr "External"
+
+#: InterfaceManager/__init__.py:1546
+msgid "import-user"
+msgstr "Import user from directory"
+
+#: InterfaceManager/__init__.py:1547
+msgid "inscription"
+msgstr "Inscription"
+
+#: InterfaceManager/__init__.py:1548
+msgid "Intern"
+msgstr "Internal"
+
+#: InterfaceManager/__init__.py:1549
+msgid "last-conn"
+msgstr "Last connection"
+
+#: InterfaceManager/__init__.py:1550
+msgid "last-ip"
+msgstr "Last IP"
+
+#: InterfaceManager/__init__.py:1551
+msgid "ldap-addr"
+msgstr "LDAP IP address"
+
+#: InterfaceManager/__init__.py:1552
+msgid "ldap-filter"
+msgstr "LDAP filter"
+
+#: InterfaceManager/__init__.py:1553
+msgid "ldap-port"
+msgstr "LDAP port"
+
+#: InterfaceManager/__init__.py:1558
+msgid "new-directory"
+msgstr "New directory"
+
+#: InterfaceManager/__init__.py:1562
+msgid "port"
+msgstr "Port"
+
+#: InterfaceManager/__init__.py:1564
+msgid "root-dn"
+msgstr "Root DN"
+
+#: InterfaceManager/__init__.py:1565
+msgid "root-pwd"
+msgstr "Root Pwd"
+
+#: InterfaceManager/__init__.py:1568
+msgid "SSL"
+msgstr "SSL"
+
+#: InterfaceManager/__init__.py:1570
+msgid "rule-import-user"
+msgstr "Import LDAP users"
+
+#: InterfaceManager/__init__.py:1571
+msgid "rule-modify-directory"
+msgstr "Modify directories"
+
+#: InterfaceManager/__init__.py:1572
+msgid "rule-modify-user"
+msgstr "Modify users"
+
+#: InterfaceManager/__init__.py:1574
+msgid "tip-password"
+msgstr "You can let the password fields empty to not change the password"
+
+#: InterfaceManager/__init__.py:1575
+msgid "title-directory"
+msgstr "Directory edition"
+
+#: InterfaceManager/__init__.py:1576
+msgid "title-directorymgmt"
+msgstr "Directory management"
+
+#: InterfaceManager/__init__.py:1577
+msgid "title-user-dont-exist"
+msgstr "This user doesn't exist !"
+
+#: InterfaceManager/__init__.py:1579
+msgid "title-user-mod"
+msgstr "User edition"
+
+#: InterfaceManager/__init__.py:1580
+msgid "tooltip-attr-mail"
+msgstr "LDAP attribute for mail"
+
+#: InterfaceManager/__init__.py:1581
+msgid "tooltip-attr-name"
+msgstr "LDAP attribute for name"
+
+#: InterfaceManager/__init__.py:1582
+msgid "tooltip-attr-subname"
+msgstr "LDAP attribute for subname"
+
+#: InterfaceManager/__init__.py:1583
+msgid "tooltip-attr-uid"
+msgstr "LDAP attribute for subname"
+
+#: InterfaceManager/__init__.py:1584
+msgid "tooltip-base-dn"
+msgstr "LDAP search path"
+
+#: InterfaceManager/__init__.py:1585
+msgid "tooltip-ldap-filter"
+msgstr "LDAP filter.<br /><i>(objectclass=*)</i> means no filter"
+
+#: InterfaceManager/__init__.py:1586
+msgid "tooltip-root-dn"
+msgstr ""
+"LDAP users who can read ldap users and their attributes in base DN branch"
+
+#: InterfaceManager/__init__.py:1589
+msgid "filter-ldap"
+msgstr ""
+
+#: InterfaceManager/__init__.py:1591
+msgid "Account-parameters"
+msgstr "Account parameters"
+
+#: InterfaceManager/__init__.py:1592
+msgid "Android-options"
+msgstr "Android options"
+
+#: InterfaceManager/__init__.py:1593
+msgid "API-Key"
+msgstr "API key"
+
+#: InterfaceManager/__init__.py:1594
+msgid "App-Lang"
+msgstr "Interface language"
+
+#: InterfaceManager/__init__.py:1595
+msgid "Disconnect-after"
+msgstr "Disconnect after"
+
+#: InterfaceManager/__init__.py:1596
+msgid "Enable-Monitoring"
+msgstr "Enable monitoring tab"
+
+#: InterfaceManager/__init__.py:1597
+msgid "err-bad-lang"
+msgstr "Unsupported language"
+
+#: InterfaceManager/__init__.py:1598
+msgid "tooltip-disconnect-after"
+msgstr ""
+"This value set a maximum inactivity time before Z-Eye disconnect your account"
+
+#: InterfaceManager/__init__.py:1601
+#, fuzzy
+msgid "Supervision"
+msgstr "Supervision"
+
+#: InterfaceManager/__init__.py:1602
+msgid "Speed reporting"
+msgstr "Speed reporting"
+
+#: InterfaceManager/__init__.py:1603
+#, fuzzy
+msgid "DNS management"
+msgstr "DNS management"
+
+#: InterfaceManager/__init__.py:1604
+#, fuzzy
+msgid "Hypervision"
+msgstr "Hypervision"
+
+#: InterfaceManager/__init__.py:1605
+#, fuzzy
+msgid "Users and rights"
+msgstr "Users and rights"
+
+#: InterfaceManager/__init__.py:1606
+msgid "Z-Eye groups management"
+msgstr "Z-Eye groups management"
+
+#: InterfaceManager/__init__.py:1607
+#, fuzzy
+msgid "Icinga sensors"
+msgstr "Icinga sensors"
+
+#: InterfaceManager/__init__.py:1608
+msgid "Install"
+msgstr "Install"
+
+#: InterfaceManager/__init__.py:1609
+msgid "DHCP/IP management"
+msgstr "DHCP/IP management"
+
+#: InterfaceManager/__init__.py:1610
+#, fuzzy
+msgid "IP manager"
+msgstr "IP Manager"
+
+#: InterfaceManager/__init__.py:1611
+msgid "Z-Eye Engine"
+msgstr "Z-Eye Engine"
+
+#: InterfaceManager/__init__.py:1612
+msgid "Z-Eye logs"
+msgstr "Z-Eye logs"
+
+#: InterfaceManager/__init__.py:1613
+msgid "Maps"
+msgstr "Maps"
+
+#: InterfaceManager/__init__.py:1614
+msgid "Netdisco collect engine"
+msgstr "Netdisco collect engine"
+
+#: InterfaceManager/__init__.py:1615
+#, fuzzy
+msgid "RADIUS servers"
+msgstr "RADIUS servers"
+
+#: InterfaceManager/__init__.py:1617
+#, fuzzy
+msgid "Security reports"
+msgstr "Security reports"
+
+#: InterfaceManager/__init__.py:1618
+#, fuzzy
+msgid "SNMP communities"
+msgstr "SNMP communities"
+
+#: InterfaceManager/__init__.py:1619
+msgid "SNORT IDS engine"
+msgstr "SNORT IDS engine"
+
+#: InterfaceManager/__init__.py:1620
+#, fuzzy
+msgid "Network devices management"
+msgstr "Network devices management"
+
+#: InterfaceManager/__init__.py:1621
+msgid "Network devices (rights & backup)"
+msgstr "Network devices (rights & backup)"
+
+#: InterfaceManager/__init__.py:1622
+#, fuzzy
+msgid "User management"
+msgstr "User management"
+
+#: engine/snmpmgmt/Forms/__init__.py:38
+msgid "Err-Object-Not-Exists"
+msgstr "The requested object doesn't exists"
+
+#: templates/footer.html:3
+msgid "by"
+msgstr "by"

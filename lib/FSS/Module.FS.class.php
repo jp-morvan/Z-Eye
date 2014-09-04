@@ -1,6 +1,6 @@
 <?php
 	/*
-        * Copyright (c) 2010-2013, Loïc BLOT, CNRS <http://www.unix-experience.fr>
+        * Copyright (c) 2010-2014, Loïc BLOT, CNRS <http://www.unix-experience.fr>
         * All rights reserved.
         *
         * Redistribution and use in source and binary forms, with or without
@@ -28,15 +28,93 @@
         * either expressed or implied, of the FreeBSD Project.
         */
 
-	class FSModule {
-		function FSModule($locales) { $this->loc = $locales; }
+	abstract class FSModule {
+		function __construct() {
+			$this->modulename = "";
+			$this->menutitle = "";
+			$this->menu = "";
+			$this->menupriority = 0;
+			$this->scheduleclass = NULL;
+			$this->rulesclass = NULL;
+		}
 
-		public function Load() { FS::$iMgr->printError("Unknown module !"); }
+		public function Load() { FS::$iMgr->printError("err-unk-module"); }
+		public function LoadForAndroid() { return "{'code': 7}"; }
+		public function handlePostDatas($act) {}
+		public function getIfaceElmt() {}
+
 		public function setModuleId($id) { $this->mid = $id; }
-		public function getMenuTitle() { return $this->loc->s("menu-title"); }
-		public function getLoc() { return $this->loc; }
+		public function getModuleId() { return $this->mid; }
+		public function getMenuTitle() { return $this->menutitle; }
+		public function getName() { return $this->modulename; }
 
+		public function log($level,$str,$user=NULL) {
+			if ($user === NULL) {
+				$user = FS::$sessMgr->getUserName();
+			}
+			FS::$log->i($user,$this->modulename,$level,$str);
+		}
+
+		public function getRulesClass() { return $this->rulesclass; }
+		public function getMenu() { return $this->menu; }
+		public function getMenuPriority() { return $this->menupriority; }
+
+		// Footer Plugin
+		public function loadFooterPlugin() {}
+
+		/*
+		 * The title is the label on the footer bar
+		 * Content is a clickable element (NOT IMPLEMENTED)
+		 */
+		protected function registerFooterPlugin($title,$content) {
+			$this->removeFooterPlugin();
+			FS::$iMgr->js(
+				sprintf("$('<div id=\"footer_%s\" style=\"float: right;\"><div id=\"footerPluginTitle\">%s</div><div id=\"footerPluginContent\">%s</div></div>').appendTo('#footer #content');",
+					$this->genFooterPluginName(),
+					FS::$secMgr->cleanForJS($title),
+					FS::$secMgr->cleanForJS($content)
+				)
+			);
+		}
+
+		protected function removeFooterPlugin() {
+			FS::$iMgr->js(
+				sprintf("$('#footer_%s').remove();",
+					$this->genFooterPluginName()
+				)
+			);
+		}
+
+		protected function setFooterPluginTitle($title) {
+			FS::$iMgr->js(
+				sprintf("$('#footer_%s #footerPluginTitle').html('%s');",
+					$this->genFooterPluginName(),
+					FS::$secMgr->cleanForJS($title)
+				)
+			);
+		}
+
+		protected function setFooterPluginContent($content) {
+			FS::$iMgr->js(
+				sprintf("$('#footer_%s #footerPluginContent').html('%s');",
+					$this->genFooterPluginName(),
+					FS::$secMgr->cleanForJS($content)
+				)
+			);
+		}
+
+		private function genFooterPluginName() {
+			return FS::$iMgr->formatHTMLId($this->modulename);
+		}
+
+		// Attributes
 		protected $mid;
-		protected $loc;
+		protected $modulename;
+		protected $rulesclass;
+		protected $scheduleclass;
+
+		protected $menu;
+		protected $menutitle;
+		protected $menupriority;
 	}
 ?>

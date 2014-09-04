@@ -1,6 +1,6 @@
 <?php
 	/*
-        * Copyright (c) 2010-2013, Loïc BLOT, CNRS <http://www.unix-experience.fr>
+        * Copyright (c) 2010-2014, Loïc BLOT, CNRS <http://www.unix-experience.fr>
         * All rights reserved.
         *
         * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@
 	define('MAX_LINE_LENGHT',4096);
 	
 	class FSFileMgr {
-		function FSFileMgr() {
+		function __construct() {
 			$this->file = NULL;
 			$this->open_mode = "";
 			$this->path = "";

@@ -1,6 +1,6 @@
 <?php
 	/*
-        * Copyright (c) 2010-2013, Loïc BLOT, CNRS <http://www.unix-experience.fr>
+        * Copyright (c) 2010-2014, Loïc BLOT, CNRS <http://www.unix-experience.fr>
         * All rights reserved.
         *
         * Redistribution and use in source and binary forms, with or without
@@ -29,6 +29,7 @@
         */
 
 	class FSLogger {
+		function __construct() {}
 		function Log() {}
 		
 		/*
@@ -40,9 +41,10 @@
 
 		// Insert function
 		public static function i($user,$module,$level,$str) {
-			FS::$secMgr->SecuriseStringForDB($str);
-			FS::$secMgr->SecuriseStringForDB($module);
-			FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."logs","date,module,level,_user,txt","NOW(),'".$module."','".$level."','".$user."','".$str."'");
+			FS::$secMgr->SecuriseString($str);
+			FS::$secMgr->SecuriseString($module);
+			FS::$dbMgr->Insert(PGDbConfig::getDbPrefix()."logs","date,module,level,_user,txt","NOW(),'".$module.
+				"','".$level."','".$user."','".$str."'");
 		}
 	};	
 ?>
